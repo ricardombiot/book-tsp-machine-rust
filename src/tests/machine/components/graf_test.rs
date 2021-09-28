@@ -1,4 +1,4 @@
-use crate::tsp::components::graf::Grafo;
+use crate::tsp::machine::components::graf::Grafo;
 use crate::tsp::utils::alias::{Color, Weight};
 
 #[test]

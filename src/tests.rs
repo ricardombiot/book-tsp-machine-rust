@@ -1,12 +1,14 @@
 #[cfg(test)]
 mod hello;
 
-pub mod components {
+pub mod actions {
     #[cfg(test)]
-    mod graf_test;
+    mod database_actions_test;
+}
 
-    pub mod actions {
+pub mod machine {
+    pub mod components {
         #[cfg(test)]
-        mod database_actions_test;
+        mod graf_test;
     }
 }

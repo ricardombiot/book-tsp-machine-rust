@@ -1,7 +1,7 @@
 use std::fmt;
 use std::collections::HashMap;
 use crate::tsp::utils::alias::{Color, Km, ActionId, ActionsIdSet};
-use crate::tsp::components::actions::action::Action;
+use crate::tsp::actions::action::Action;
 
 
 pub type TableActionIdToAction = HashMap<ActionId, Action>;

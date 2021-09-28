@@ -1,4 +1,4 @@
-use crate::tsp::components::actions::database_actions::DatabaseActions;
+use crate::tsp::actions::database_actions::DatabaseActions;
 use crate::tsp::utils::alias::{Color, Step, Km, ActionsIdSet};
 use crate::tsp::utils::generator_ids;
 

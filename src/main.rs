@@ -1,6 +1,10 @@
 pub mod tsp {
     pub mod utils;
-    pub mod components;
+    pub mod machine;
+    pub mod actions {
+        pub mod database_actions;
+        pub mod action;
+    }
 }
 //mod tsp;
 

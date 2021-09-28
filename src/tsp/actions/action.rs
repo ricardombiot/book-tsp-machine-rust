@@ -4,7 +4,7 @@ use crate::tsp::utils::{alias::{Color, Km, ActionId, ActionsIdSet, Step}, genera
 
 pub struct PathGraph;
 
-pub type TablePathGraphsByLenght = HashMap<Step, PathGraph>;
+pub type TablePathGraphsByLenght = HashMap<Step, Box<PathGraph>>;
 
 pub struct Action {
     id : ActionId,
