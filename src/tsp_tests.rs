@@ -1,6 +1,4 @@
 
-
-
 pub mod actions {
     #[cfg(test)]
     mod database_actions_test;
