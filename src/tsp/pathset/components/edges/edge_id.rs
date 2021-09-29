@@ -26,6 +26,6 @@ impl EdgeId {
 
 impl fmt::Display for EdgeId {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        return write!(f, "{}.{}", self.origin_id(), self.destine_id());
+        return write!(f, "{}-->{}", self.origin_id(), self.destine_id());
     }
 }
