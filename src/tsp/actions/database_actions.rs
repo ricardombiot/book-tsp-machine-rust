@@ -3,7 +3,6 @@ use std::collections::HashMap;
 use crate::tsp::utils::alias::{Color, Km, ActionId, ActionsIdSet};
 use crate::tsp::actions::action::Action;
 
-
 pub type TableActionIdToAction = HashMap<ActionId, Action>;
 
 pub struct DatabaseActions {
