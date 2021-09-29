@@ -61,6 +61,12 @@ impl Action {
     }
 }
 
+impl fmt::Display for Action {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        return write!(f, "Action( ID:{} KM: {} COLOR: {} )", self.id, self.km, self.up_color);
+    }
+}
+
 fn _new(n : Color, km: Km, up_color: Color) -> Action { 
     let id = generator_ids::get_action_id(n, km, up_color);
     let props_parents = ActionsIdSet::new();
@@ -68,11 +74,4 @@ fn _new(n : Color, km: Km, up_color: Color) -> Action {
     let max_length_graph = 0;
     let valid = true;
     Action {id, km, up_color, props_parents, props_graph, max_length_graph, valid } 
-}
-
-
-impl fmt::Display for Action {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        return write!(f, "Action( ID:{} KM: {} COLOR: {} )", self.id, self.km, self.up_color);
-    }
 }

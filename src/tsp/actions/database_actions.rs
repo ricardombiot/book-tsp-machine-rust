@@ -15,8 +15,8 @@ pub struct DatabaseActions {
 
 impl DatabaseActions {
     pub fn new(n: Color, b_max: Km, color_origin: Color) -> Self { 
-        let mut instance = DatabaseActions::_new(n, b_max, color_origin);
-        DatabaseActions::_init(&mut instance);
+        let mut instance = _new(n, b_max, color_origin);
+        instance._init();
         return instance;
     }
 
@@ -35,11 +35,6 @@ impl DatabaseActions {
 }
 
 impl DatabaseActions {   
-
-    fn _new(n: Color, b_max: Km, color_origin: Color) -> Self { 
-        let table : TableActionIdToAction = TableActionIdToAction::new();
-        Self { n, b_max, color_origin, table } 
-    }
 
     fn _init(&mut self){
         let action_init = Action::new_init(self.n, self.b_max,self.color_origin);
@@ -62,4 +57,9 @@ impl fmt::Display for DatabaseActions {
 
         return write!(f, "{}", txt);
     }
+}
+
+fn _new(n: Color, b_max: Km, color_origin: Color) -> DatabaseActions { 
+    let table : TableActionIdToAction = TableActionIdToAction::new();
+    DatabaseActions { n, b_max, color_origin, table } 
 }
