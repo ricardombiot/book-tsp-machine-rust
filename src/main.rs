@@ -5,6 +5,7 @@ pub mod tsp {
         pub mod database_actions;
         pub mod action;
     }
+    pub mod pathset;
 }
 //mod tsp;
 

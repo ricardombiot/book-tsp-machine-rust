@@ -1,4 +1,4 @@
-use crate::tsp::utils::alias::{Color, Km, ActionId};
+use crate::tsp::utils::alias::{Color, Km, ActionId, InfoActionId};
 
 pub fn get_action_id(n : Color, km : Km, up_color : Color) -> ActionId {
     let row = km * n as u32;
@@ -7,7 +7,7 @@ pub fn get_action_id(n : Color, km : Km, up_color : Color) -> ActionId {
     return action_id;
 }
  
-pub fn get_info_id(n : Color, id : ActionId) -> (Km, Color) {
+pub fn get_info_id(n : Color, id : ActionId) -> InfoActionId {
     let mut km : Km = 0;
     if id != 0 {
         let round_km = ((id-1) as f32 / (n as f32)) as f32;
@@ -17,3 +17,5 @@ pub fn get_info_id(n : Color, id : ActionId) -> (Km, Color) {
 
     return (km, color);
 }
+
+

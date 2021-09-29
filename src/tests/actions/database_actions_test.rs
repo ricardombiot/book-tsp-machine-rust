@@ -1,11 +1,11 @@
 use crate::tsp::actions::database_actions::DatabaseActions;
-use crate::tsp::utils::alias::{Color, Step, Km, ActionsIdSet};
+use crate::tsp::utils::alias::{Color, Km, ActionsIdSet};
 use crate::tsp::utils::generator_ids;
 
 #[test]
 fn init_database_actions() {
     let n : Color = 5;
-    let b_max : Step = 100;
+    let b_max : Km = 100;
     let color_origin : Color = 0;
 
     let db = DatabaseActions::new(n, b_max,color_origin);
@@ -29,7 +29,7 @@ fn init_database_actions() {
 #[test]
 fn register_up_database_actions() {
     let n : Color = 5;
-    let b_max : Step = 100;
+    let b_max : Km = 100;
     let color_origin : Color = 0;
 
     let mut db = DatabaseActions::new(n, b_max,color_origin);

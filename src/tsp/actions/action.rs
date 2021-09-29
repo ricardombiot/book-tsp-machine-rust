@@ -21,14 +21,14 @@ pub struct Action {
 impl Action {
     pub fn new_init(n : Color, _b_max: Km, up_origin_color: Color) -> Self { 
         let km : Km = 0 as Km;
-        return Action::_new(n, km,up_origin_color)
+        return _new(n, km,up_origin_color)
     }
 
     pub fn new_up(n: usize, km: u32, up_color: usize, parents: ActionsIdSet) -> Action {
-        let mut action = Action::_new(n, km,  up_color);
+        let mut action = _new(n, km,  up_color);
         action.props_parents = parents;
 
-        //....
+        //.... TODO .... //
         return action;
     }
 
@@ -61,15 +61,13 @@ impl Action {
     }
 }
 
-impl Action {
-    fn _new(n : Color, km: Km, up_color: Color) -> Self { 
-        let id = generator_ids::get_action_id(n, km, up_color);
-        let props_parents = ActionsIdSet::new();
-        let props_graph = TablePathGraphsByLenght::new();
-        let max_length_graph = 0;
-        let valid = true;
-        Self {id, km, up_color, props_parents, props_graph, max_length_graph, valid } 
-    }
+fn _new(n : Color, km: Km, up_color: Color) -> Action { 
+    let id = generator_ids::get_action_id(n, km, up_color);
+    let props_parents = ActionsIdSet::new();
+    let props_graph = TablePathGraphsByLenght::new();
+    let max_length_graph = 0;
+    let valid = true;
+    Action {id, km, up_color, props_parents, props_graph, max_length_graph, valid } 
 }
 
 

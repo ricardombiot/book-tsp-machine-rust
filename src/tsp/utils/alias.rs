@@ -3,6 +3,7 @@ use std::collections::HashSet;
 // Con la actionid podemos identificar
 // (Km, Color) donde se realizo.
 pub type ActionId = u32 ;
+pub type InfoActionId = (Km, Color);
 
 //El step dentro de un path
 pub type  Step = u32;
@@ -15,8 +16,8 @@ pub type Color = usize ;
 pub type Weight = u32 ;
 
 
-
 pub type UniqueNodeKey = u32;
+
 
 pub type ActionsIdSet = HashSet<ActionId>;
 pub type SetSteps = HashSet<Step>;
