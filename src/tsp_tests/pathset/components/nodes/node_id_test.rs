@@ -10,11 +10,12 @@ pub fn test_get_info_node_id_root(){
     let destine_info_expected : InfoActionId = (0,0);
     let origin_info_expected : InfoActionId = (0,0);
 
-    let node_id = NodeId::new_root(n, b_max, step, action_id);
+    let node_id = NodeId::new_root(n, b_max, action_id);
 
     let (destine_info, origin_info) = node_id.get_info_node_id(n);
 
     assert_eq!(node_id.key(), 1 as UniqueNodeKey); 
+    assert_eq!(node_id.step(), step); 
     assert_eq!(node_id.action_id(), action_id); 
     assert_eq!(node_id.action_parent_id(), action_id); 
    
@@ -38,6 +39,7 @@ pub fn test_get_info_node_id(){
     let (destine_info, origin_info) = node_id.get_info_node_id(n);
 
     assert_eq!(node_id.key(), 1606 as UniqueNodeKey); 
+    assert_eq!(node_id.step(), step); 
     assert_eq!(node_id.action_id(), action_id); 
     assert_eq!(node_id.action_parent_id(), action_parent_id); 
    

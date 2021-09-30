@@ -2,6 +2,7 @@ use crate::tsp::pathset::components::nodes::node_id::NodeId;
 use std::collections::HashSet;
 use std::fmt;
 
+#[derive(Debug,PartialEq, Eq,Clone)]
 pub struct EdgeId {
     origin_id : NodeId,
     destine_id : NodeId

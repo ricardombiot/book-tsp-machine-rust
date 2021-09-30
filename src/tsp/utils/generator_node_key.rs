@@ -18,3 +18,10 @@ pub fn get_info_by_actions(n : Color, action_id : ActionId, action_parent_id : A
     return (destine_info, origin_info);
 }
 
+pub fn get_max_unique_node_key(n : Color, b : Km) -> UniqueNodeKey {
+    let n_u32 = n as u32;
+    let steps_max = n as u32;
+    
+    // $ O(b^2*n^3) $ 
+    return b.pow(2) * steps_max * n_u32.pow(2);
+}

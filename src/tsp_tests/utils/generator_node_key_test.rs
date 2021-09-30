@@ -16,7 +16,8 @@ fn test_not_colisions_keys(n : Color, b_max : Km){
 
     let mut set_keys : HashSet<UniqueNodeKey> = HashSet::new();
     let mut total_keys = 0;
-    let max_keys_expected = b_max.pow(2)*(n as u32).pow(3);
+    let max_keys_expected = generator_node_key::get_max_unique_node_key(n, b_max);
+    //b_max.pow(2)*(n as u32).pow(3);
     let mut max_key : UniqueNodeKey = 0 ;
     let mut min_key : UniqueNodeKey = 0 ;
     let mut flag_first_key = true;

@@ -2,6 +2,8 @@ use crate::tsp::utils::alias::{Color, Km, Step, ActionId, UniqueNodeKey, InfoAct
 use crate::tsp::utils::generator_node_key;
 use std::collections::HashSet;
 use std::fmt;
+
+#[derive(Debug, Eq, Clone)]
 pub struct NodeId {
     key : UniqueNodeKey,
     step : Step,
@@ -16,7 +18,8 @@ impl NodeId {
         return _new(n, b_max, step, action_id, Some(action_parent_id));
     }
 
-    pub fn new_root(n : Color, b_max : Km, step : Step, action_id : ActionId) -> Self {
+    pub fn new_root(n : Color, b_max : Km, action_id : ActionId) -> Self {
+        let step: Step = 0 as Step;
         return _new(n, b_max, step, action_id, None);
     }
 
@@ -48,6 +51,12 @@ impl NodeId {
 impl fmt::Display for NodeId {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         return write!(f, "K{}", self.key);
+    }
+}
+
+impl PartialEq for NodeId {
+    fn eq(&self, node_id_b: &Self) -> bool {
+        self.key == node_id_b.key()
     }
 }
 

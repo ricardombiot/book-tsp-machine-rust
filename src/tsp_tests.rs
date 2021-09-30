@@ -24,5 +24,13 @@ pub mod pathset {
         pub mod nodes {
             pub mod node_id_test;
         }
+
+        pub mod edges {
+            pub mod edge_test;
+        }
+
+        pub mod owners {
+            pub mod owners_test;
+        }
     }
 }

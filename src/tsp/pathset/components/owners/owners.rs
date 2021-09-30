@@ -7,7 +7,7 @@ use std::collections::HashMap;
 #[derive(Clone)]
 pub struct OwnersByStep {
     // The space of all possible keys
-    bbnn : UniqueNodeKey,
+    bbnnn : UniqueNodeKey,
     // Group of set of nodes id key by step
     dict : HashMap<Step, OwnersFixedSet>,
     // The last step
@@ -17,11 +17,11 @@ pub struct OwnersByStep {
 }
 
 impl OwnersByStep {
-    pub fn new(bbnn: UniqueNodeKey) -> Self { 
+    pub fn new(bbnnn: UniqueNodeKey) -> Self { 
         let dict = HashMap::new();
         let max_step: Step = 0;
         let valid = true;
-        Self { bbnn, dict, max_step, valid } 
+        Self { bbnnn, dict, max_step, valid } 
     }
 
     pub fn derive(&self) -> Self {
@@ -29,11 +29,11 @@ impl OwnersByStep {
     }
 
     pub fn empty_derive(&self) -> Self {
-        return Self::new(self.bbnn);
+        return Self::new(self.bbnnn);
     }
 
     pub fn get_step_owners(&self, step : Step) -> Option<&OwnersFixedSet>{
-        if !self.dict.contains_key(&step) {
+        if self.dict.contains_key(&step) {
             let borrow_owners_step: Option<&OwnersFixedSet> = self.dict.get(&step);
             return borrow_owners_step;
         }else{
@@ -42,7 +42,7 @@ impl OwnersByStep {
     }
 
     pub fn get_mut_step_owners(&mut self, step : Step) -> Option<&mut OwnersFixedSet>{
-        if !self.dict.contains_key(&step) {
+        if self.dict.contains_key(&step) {
             let mut_borrow_owners_step : Option<&mut OwnersFixedSet> = self.dict.get_mut(&step);
             return mut_borrow_owners_step;
         }else{
@@ -50,11 +50,14 @@ impl OwnersByStep {
         }
     }
 
-    pub fn push(&mut self, step : Step, node_id : NodeId){
+    pub fn push(&mut self, node_id : &NodeId){
+        self.push_key(node_id.step(), node_id.key())
+    }
+    pub fn push_key(&mut self, step : Step, key : UniqueNodeKey){
         self._if_dont_existe_create_step(step);
 
         match self.get_mut_step_owners(step) {
-            Some(owners_in_step) => owners_in_step.push(node_id.key()),
+            Some(owners_in_step) => owners_in_step.push(key),
             None => {}
         }
 
@@ -63,11 +66,14 @@ impl OwnersByStep {
         }
     }
 
-    pub fn pop(&mut self, step : Step, node_id : NodeId){
+    pub fn pop(&mut self, node_id : &NodeId){
+        self.pop_key(node_id.step(), node_id.key())
+    }
+    pub fn pop_key(&mut self, step : Step, key : UniqueNodeKey){
         let mut flag_isempty = false;
         match self.get_mut_step_owners(step) {
             Some(owners_in_step) => {
-                owners_in_step.pop(node_id.key());
+                owners_in_step.pop(key);
 
                 if owners_in_step.isempty() {
                     flag_isempty = true;
@@ -92,21 +98,26 @@ impl OwnersByStep {
         }
     }
 
-    pub fn have(&self, step : Step, node_id : NodeId) -> bool {
+    pub fn have(&self, node_id : &NodeId) -> bool {
+        return self.have_key(node_id.step(), node_id.key());
+    }
+    pub fn have_key(&self, step : Step, key : UniqueNodeKey) -> bool {
         match self.get_step_owners(step) {
             None => return false,
             Some(owners_in_step) => {
-                return owners_in_step.have(node_id.key());
+                return owners_in_step.have(key);
             }
         }
     }
 
     pub fn union(&mut self, owners_b : &OwnersByStep) {
         if self._can_be_valid_operation(&owners_b){
-            for step in 0..self.max_step() {
+            println!("Making union...");
+            for step in 0..self.max_step()+1 {
                let borrow_owners_set_a = self.get_mut_step_owners(step).unwrap();
                let borrow_owners_set_b = owners_b.get_step_owners(step).unwrap();
 
+               println!("Step {} ...", step);
                borrow_owners_set_a.union(borrow_owners_set_b);
             }
         }else{
@@ -115,19 +126,30 @@ impl OwnersByStep {
     }
 
     pub fn intersect(&mut self, owners_b : &OwnersByStep) {
+        self._intersect_loop_short(owners_b, false);
+    }
+    pub fn intersect_quick(&mut self, owners_b : &OwnersByStep) {
+        self._intersect_loop_short(owners_b, true);
+    }
+    fn _intersect_loop_short(&mut self, owners_b : &OwnersByStep, loop_short: bool) {
         let max_step : Step = std::cmp::min(self.max_step, owners_b.max_step());
         if self._are_both_valids(owners_b) {
-            for step in 0..max_step {
+            for step in 0..max_step+1 {
                 let opt_owners_set_a = self.get_mut_step_owners(step);
                 let opt_owners_set_b = owners_b.get_step_owners(step);
 
                 match (opt_owners_set_a,opt_owners_set_b) {
-                    (Some(borrow_owners_set_a), Some(borrow_owners_set_b)) => 
-                        borrow_owners_set_a.intersect(borrow_owners_set_b),
+                    (Some(borrow_owners_set_a), Some(borrow_owners_set_b)) => {
+                        borrow_owners_set_a.intersect(borrow_owners_set_b);
+
+                        if borrow_owners_set_a.isempty() {
+                            self.valid = false;
+                        }
+                    },
                     (_, _) => self.valid = false,
                 }
 
-                if !self.valid {
+                if !self.valid && loop_short {
                     return;
                 }
             }
@@ -155,20 +177,24 @@ impl OwnersByStep {
 
 impl PartialEq for OwnersByStep {
     fn eq(&self, owners_b: &Self) -> bool {
-        if !self._can_be_valid_operation(owners_b) {
+        if self.bbnnn != owners_b.bbnnn {
             return false;
         }else{
-            let max_step = self.max_step();
-            for step in 0..max_step {
-                let owners_set_a  = self.get_step_owners(step).unwrap();
-                let owners_set_b  = owners_b.get_step_owners(step).unwrap();
+            if !self._can_be_valid_operation(owners_b) {
+                return false;
+            }else{
+                let max_step = self.max_step();
+                for step in 0..max_step {
+                    let owners_set_a  = self.get_step_owners(step).unwrap();
+                    let owners_set_b  = owners_b.get_step_owners(step).unwrap();
 
-                if !owners_set_a.eq(owners_set_b) {
-                    return false;
+                    if !owners_set_a.eq(owners_set_b) {
+                        return false;
+                    }
                 }
-            }
 
-            return true;
+                return true;
+            }
         }
     }
 }
@@ -177,7 +203,7 @@ impl PartialEq for OwnersByStep {
 impl OwnersByStep {
 
     fn _create_step_set(&mut self, step : Step) {
-        let owners = OwnersFixedSet::new(self.bbnn);
+        let owners = OwnersFixedSet::new(self.bbnnn);
         self.dict.insert(step, owners);
     }
 
@@ -185,8 +211,8 @@ impl OwnersByStep {
         if !self.dict.contains_key(&step) {
             self._create_step_set(step);
 
-            if step > 0 as Step {
-                let last_step_dont_exist = self.dict.contains_key(&(step-1));
+            if step > (0 as Step) {
+                let last_step_dont_exist = !self.dict.contains_key(&(step-1));
                 if last_step_dont_exist {
                     self.valid = false;
                 }

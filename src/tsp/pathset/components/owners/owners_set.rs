@@ -36,15 +36,36 @@ impl OwnersFixedSet {
     }
 
     pub fn union(&mut self, owners_set_b : &OwnersFixedSet){
-        self.nobinary_set.union(&owners_set_b.nobinary_set);
+        println!("____");
+        println!("Before union");
+        println!("{}", self);
+        println!("{}", owners_set_b);
+        
+        for key in owners_set_b.nobinary_set.iter() {
+            self.push(*key);
+        }
+    
+       // let union : HashSet<UniqueNodeKey> = self.nobinary_set.union(&(owners_set_b.nobinary_set));
+        println!("After union");
+        println!("{}", self);
     }
 
     pub fn intersect(&mut self, owners_set_b : &OwnersFixedSet){
-        self.nobinary_set.intersection(&owners_set_b.nobinary_set);
+        let mut keys_to_remove : Vec<UniqueNodeKey> = Vec::new();
+        for key in self.nobinary_set.iter() {
+            if !owners_set_b.have(*key) {
+                keys_to_remove.push(*key);
+            }
+        }
+
+        for key in keys_to_remove.iter(){
+            self.pop(*key);
+        }
     }
 
     pub fn to_list(&mut self){
         //@TODO
+        //self.nobinary_set.iter().collect()
     }
 
     pub fn count(&self) -> usize {
