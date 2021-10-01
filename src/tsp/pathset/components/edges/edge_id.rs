@@ -3,29 +3,33 @@ use std::collections::HashSet;
 use std::fmt;
 
 #[derive(Debug,PartialEq, Eq,Clone)]
-pub struct EdgeId<'a,'b> {
-    origin_id : &'a NodeId,
-    destine_id : &'b NodeId
+pub struct EdgeId {
+    origin_id : NodeId,
+    destine_id : NodeId
 }
 pub type EdgesIdSet = HashSet<NodeId> ;
 
-impl<'a,'b> EdgeId<'a,'b> {
-    pub fn new(origin_id: &'a NodeId, destine_id: &'b NodeId) -> Self { Self { origin_id, destine_id } }
+impl EdgeId {
+    pub fn new(origin_id: &NodeId, destine_id: &NodeId) -> Self { 
+        let origin_id = origin_id.clone();
+        let destine_id = destine_id.clone();
+        Self { origin_id, destine_id } 
+    }
 
     /// Get a reference to the edge id's origin id.
-    pub fn origin_id(&self) -> &'a NodeId {
+    pub fn origin_id(&self) -> &NodeId {
         &self.origin_id
     }
 
     /// Get a reference to the edge id's destine id.
-    pub fn destine_id(&self) -> &'b NodeId {
+    pub fn destine_id(&self) -> &NodeId {
         &self.destine_id
     }
 }
 
 
 
-impl<'a,'b> fmt::Display for EdgeId<'a,'b> {
+impl fmt::Display for EdgeId {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         return write!(f, "{}-->{}", self.origin_id(), self.destine_id());
     }
