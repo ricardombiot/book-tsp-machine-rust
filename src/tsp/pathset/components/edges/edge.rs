@@ -8,7 +8,7 @@ pub struct Edge {
 }
 
 impl Edge {
-    pub fn new(origin_id : NodeId, destine_id : NodeId) -> Edge {
+    pub fn new(origin_id : &NodeId, destine_id : &NodeId) -> Edge {
         let id : EdgeId = EdgeId::new(origin_id, destine_id);
         Edge{id}
     }

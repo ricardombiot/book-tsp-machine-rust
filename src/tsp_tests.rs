@@ -22,6 +22,7 @@ pub mod utils {
 pub mod pathset {
     pub mod components {
         pub mod nodes {
+            pub mod node_test;
             pub mod node_id_test;
         }
 

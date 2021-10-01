@@ -1,6 +1,7 @@
-use crate::tsp::utils::alias::{UniqueNodeKey, Step};
+use crate::tsp::utils::alias::{UniqueNodeKey, Step, Color, Km};
 use crate::tsp::pathset::components::owners::owners_set::OwnersFixedSet;
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
+use crate::tsp::utils::generator_node_key;
 
 use std::collections::HashMap;
 
@@ -22,6 +23,11 @@ impl OwnersByStep {
         let max_step: Step = 0;
         let valid = true;
         Self { bbnnn, dict, max_step, valid } 
+    }
+
+    pub fn seed(n : Color, b_max : Km) -> Self {
+        let bbnnn= generator_node_key::get_max_unique_node_key(n, b_max);
+        OwnersByStep::new(bbnnn)
     }
 
     pub fn derive(&self) -> Self {

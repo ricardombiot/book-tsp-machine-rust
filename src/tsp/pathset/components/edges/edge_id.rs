@@ -10,7 +10,11 @@ pub struct EdgeId {
 pub type EdgesIdSet = HashSet<NodeId> ;
 
 impl EdgeId {
-    pub fn new(origin_id: NodeId, destine_id: NodeId) -> Self { Self { origin_id, destine_id } }
+    pub fn new(origin_id: &NodeId, destine_id: &NodeId) -> Self { 
+        let origin_id = origin_id.clone();
+        let destine_id = destine_id.clone();
+        Self { origin_id, destine_id } 
+    }
 
     /// Get a reference to the edge id's origin id.
     pub fn origin_id(&self) -> &NodeId {

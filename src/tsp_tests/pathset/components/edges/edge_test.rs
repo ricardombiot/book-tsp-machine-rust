@@ -28,7 +28,7 @@ pub fn test_create_edge_checking_ids(){
     assert_eq!(node_destine_id.key(), key_expected);
     
     
-    let edge = Edge::new(node_origin_id.clone(), node_destine_id.clone());
+    let edge = Edge::new(&node_origin_id, &node_destine_id);
 
     let ok_origin = edge.id().origin_id().eq(&node_origin_id);
     let ok_destine = edge.id().destine_id().eq(&node_destine_id);

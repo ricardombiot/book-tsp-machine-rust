@@ -52,7 +52,7 @@ impl OwnersFixedSet {
 
     pub fn intersect(&mut self, owners_set_b : &OwnersFixedSet){
         let mut keys_to_remove : Vec<UniqueNodeKey> = Vec::new();
-        for key in self.nobinary_set.iter() {
+        for key  in self.nobinary_set.iter() {
             if !owners_set_b.have(*key) {
                 keys_to_remove.push(*key);
             }
