@@ -1,4 +1,5 @@
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
+use crate::tsp::pathset::components::nodes::node::Node;
 use crate::tsp::pathset::components::edges::edge_id::EdgeId;
 use std::collections::HashMap;
 

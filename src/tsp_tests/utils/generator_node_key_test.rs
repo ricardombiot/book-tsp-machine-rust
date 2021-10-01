@@ -1,9 +1,7 @@
-//use crate::tsp::utils::alias::{Color, Km, Step , ActionId, UniqueNodeKey};
+use crate::tsp::utils::alias::{Color, Km, Step , ActionId, UniqueNodeKey};
 use crate::tsp::utils::generator_ids;
 use crate::tsp::utils::generator_node_key;
 use std::collections::HashSet;
-
-use super::tsp::utils::alias::{Color, Km, Step , ActionId, UniqueNodeKey};
 
 #[test]
 fn test_hamiltonian_colisions_keys(){
