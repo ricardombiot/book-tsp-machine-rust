@@ -5,6 +5,7 @@ pub mod components {
     }
 
     pub mod nodes {
+        pub mod node;
         pub mod node_id;
     }
 

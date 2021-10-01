@@ -3,13 +3,13 @@ use crate::tsp::pathset::components::edges::edge_id::EdgeId;
 use std::fmt;
 
 #[derive(Debug,PartialEq, Eq,Clone)]
-pub struct Edge {
-    id : EdgeId
+pub struct Edge<'a,'b> {
+    id : EdgeId<'a,'b>
 }
 
-impl Edge {
-    pub fn new(origin_id : NodeId, destine_id : NodeId) -> Edge {
-        let id : EdgeId = EdgeId::new(origin_id, destine_id);
+impl<'a,'b> Edge<'a,'b> {
+    pub fn new(origin_id : &'a NodeId, destine_id : &'b NodeId) -> Edge<'a,'b> {
+        let id : EdgeId<'a,'b> = EdgeId::new(origin_id, destine_id);
         Edge{id}
     }
 
@@ -28,7 +28,7 @@ impl Edge {
 }
 
 
-impl fmt::Display for Edge {
+impl<'a,'b> fmt::Display for Edge<'a,'b> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         return write!(f, "Edge({})", self.id);
     }

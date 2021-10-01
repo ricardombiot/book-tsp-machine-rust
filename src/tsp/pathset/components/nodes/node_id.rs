@@ -59,6 +59,13 @@ impl PartialEq for NodeId {
         self.key == node_id_b.key()
     }
 }
+use std::hash::{Hash, Hasher};
+
+impl Hash for NodeId {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.key.hash(state);
+    }
+}
 
 fn _new(n : Color, b_max : Km, step : Step, action_id : ActionId, action_parent_id : Option<ActionId>) -> NodeId {
     let my_action_parent_id = match action_parent_id {
