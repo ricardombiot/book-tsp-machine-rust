@@ -10,7 +10,7 @@ pub mod tsp {
 //mod tsp;
 
 #[cfg(test)]
-mod tsp_tests;
+mod tests;
 
 fn main() {
     println!("Hello, world!");
