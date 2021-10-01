@@ -1,4 +1,5 @@
 use crate::tsp::pathset::components::nodes::node::Node;
+use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 
 impl Node {
     pub fn join(&mut self, node_join : &Node){
@@ -8,14 +9,10 @@ impl Node {
     }
 
     fn _union_parents(&mut self, node_join : &Node){
-       for (parent_id, _edge_id) in node_join.parents.iter() {
-            self.add_parent_id(parent_id);
-       }
+        self.parents.union(&node_join.parents);
     }
 
     fn _union_sons(&mut self, node_join : &Node){
-        for (son_id, _edge_id) in node_join.sons.iter() {
-            self.add_son_id(son_id);
-        }
+        self.sons.union(&node_join.sons);
     }
 }

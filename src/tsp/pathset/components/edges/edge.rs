@@ -20,10 +20,12 @@ impl Edge {
 
     pub fn build() {
         //@TODO
+        todo!()
     }
 
     pub fn destroy() {
         //@TODO
+        todo!()
     }
 }
 

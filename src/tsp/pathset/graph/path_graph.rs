@@ -1,12 +1,17 @@
-use std::collections::HashMap;
+use crate::tsp::utils::alias::{Color, Km, Step, ActionId};
+use crate::tsp::pathset::components::owners::owners::OwnersByStep;
 
-use crate::tsp::utils::alias::{Color, Step, ActionId, ActionsIdSet};
+use crate::tsp::pathset::components::nodes::node_id::NodesIdSet;
+use crate::tsp::pathset::graph::path_graph::table_edges::TableEdges;
+use crate::tsp::pathset::graph::path_graph::table_lines::TableLines;
+use crate::tsp::pathset::graph::path_graph::table_color_nodes::TableColorNodes;
+use crate::tsp::pathset::graph::path_graph::table_nodes_by_action::TableNodesByAction;
 
-pub type TableNodes = HashMap<ActionId, HashMap<NodeId, Node>>;
-pub type TableEdges = HashMap<EdgeId, Edge>;
-pub type TableLines = HashMap<Step, NodesIdSet>;
-pub type TableColorNodes = HashMap<Color, NodesIdSet>;
-
+pub mod table_edges;
+pub mod table_lines;
+pub mod table_color_nodes;
+pub mod table_nodes;
+pub mod table_nodes_by_action;
 
 pub struct PathGraph {
     // N of nodes
@@ -21,7 +26,7 @@ pub struct PathGraph {
     owners : OwnersByStep,
 
     // dictionary of nodes by actionid and node id
-    table_nodes : TableNodes,
+    table_nodes : TableNodesByAction,
     // dictionary of edges by edge id
     table_edges : TableEdges,
     // dictionary of node id by line
@@ -39,4 +44,8 @@ pub struct PathGraph {
     max_review_stages : u32,
     // flag that say if the graph is valid
     valid : bool
+}
+
+impl PathGraph {
+    
 }

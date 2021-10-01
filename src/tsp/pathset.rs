@@ -14,9 +14,8 @@ pub mod components {
         pub mod owners_set;
     }
 }
-/*
+
 pub mod graph {
     pub mod path_graph;
 
 }
-*/

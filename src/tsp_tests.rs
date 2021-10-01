@@ -16,6 +16,8 @@ pub mod machine {
 pub mod utils {
     mod generator_ids_test;
     mod generator_node_key_test;
+
+    mod inmutable_dict_test;
 }
 
 #[cfg(test)]

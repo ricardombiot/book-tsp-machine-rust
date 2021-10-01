@@ -1,5 +1,6 @@
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
 use std::collections::HashSet;
+use std::hash::{Hash, Hasher};
 use std::fmt;
 
 #[derive(Debug,PartialEq, Eq,Clone)]
@@ -32,5 +33,14 @@ impl EdgeId {
 impl fmt::Display for EdgeId {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         return write!(f, "{}-->{}", self.origin_id(), self.destine_id());
+    }
+}
+
+
+
+impl Hash for EdgeId {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.origin_id.hash(state);
+        self.destine_id.hash(state);
     }
 }
