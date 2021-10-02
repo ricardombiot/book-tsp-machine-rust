@@ -16,7 +16,7 @@ impl DictEdgeIdByNodeId {
 
     pub fn add_edge_id(&mut self, origin_id: &NodeId, destine_id: &NodeId, key : &NodeId){
         let edge_id = EdgeId::new(origin_id, destine_id);
-        self.put( &key, &edge_id);
+        self.put(key.clone(), edge_id);
     }   
 }
 
@@ -29,6 +29,10 @@ impl InmutableDictCommons<NodeId, EdgeId> for DictEdgeIdByNodeId {
 
     fn dict_mut(&mut self) -> &mut InmutableDict<NodeId, EdgeId>  {
         &mut self.dict
+    }
+
+    fn dict_mut_life<'user>(&'user mut self) -> &'user mut InmutableDict<NodeId, EdgeId> {
+        &mut self.dict   
     }
 
 }

@@ -17,16 +17,16 @@ pub struct PathGraph {
     // N of nodes
     n : Color,
     // max km target (B)
-    b : Km,
+    b_max : Km,
     // Next step (length of step)
     next_step : Step,
     // Color origin (node origin)
     color_origin : Color,
     // Owners of graph
-    owners : OwnersByStep,
+    owners_graph : OwnersByStep,
 
     // dictionary of nodes by actionid and node id
-    table_nodes : TableNodesByAction,
+    table_nodes_by_action : TableNodesByAction,
     // dictionary of edges by edge id
     table_edges : TableEdges,
     // dictionary of node id by line
@@ -46,6 +46,6 @@ pub struct PathGraph {
     valid : bool
 }
 
-impl PathGraph {
-    
-}
+pub mod impl_constructor;
+pub mod impl_init;
+pub mod impl_add_node;

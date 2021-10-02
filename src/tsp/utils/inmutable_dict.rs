@@ -5,15 +5,20 @@ pub trait DictInmutableWapper<K,V> where K : Hash + Eq + Clone, V: Clone{
     
     fn dict(&self) -> & HashMap<K, V> ;
     fn dict_mut(&mut self) -> &mut HashMap<K, V> ;
+    fn dict_mut_life<'user>(&'user mut self) -> &'user mut HashMap<K, V> ;
 
     fn insert(&mut self, key : &K, value : &V){
         if !self.contains_key(key){
-            self.update(key, value);
+            self.update_borrows(key, value);
         }
     }
 
-    fn update(&mut self, key : &K, value : &V){
+    fn update_borrows(&mut self, key : &K, value : &V){
         self.dict_mut().insert(key.clone(), value.clone());
+    }
+
+    fn update(&mut self, key : K, value : V){
+        self.dict_mut().insert(key, value);
     }
 
     fn get(&self, key : &K) -> Option<V>{
@@ -25,6 +30,13 @@ pub trait DictInmutableWapper<K,V> where K : Hash + Eq + Clone, V: Clone{
         return result;
     }
 
+    fn get_mut<'user>(&'user mut self, key : &'user K) -> Option<&'user mut V>{
+        let dict : &'user mut HashMap<K, V> = self.dict_mut_life();
+        let value_mutable : Option<&'user mut V> = dict.get_mut(key);
+        return value_mutable;
+    }
+
+
     fn contains_key(&self, key : &K) -> bool {
         self.dict().contains_key(key)
     }
@@ -33,6 +45,10 @@ pub trait DictInmutableWapper<K,V> where K : Hash + Eq + Clone, V: Clone{
         if self.contains_key(&key){
             self.dict_mut().remove(key);
         }
+    }
+
+    fn pop(&mut self, key : &K) -> Option<V> { 
+        self.dict_mut().remove(key)
     }
 
     fn is_empty(&self)-> bool {
@@ -100,6 +116,10 @@ impl<K,V> DictInmutableWapper<K,V> for InmutableDict<K,V> where
         &mut self.dict
     }
 
+    fn dict_mut_life<'user>(&'user mut self) -> &'user mut HashMap<K, V> {
+        &mut self.dict
+    }
+
 }
 
 
@@ -109,11 +129,27 @@ V: Clone {
 
     fn dict(&self) -> & InmutableDict<K, V> ;
     fn dict_mut(&mut self) -> &mut InmutableDict<K, V> ;
+    fn dict_mut_life<'user>(&'user mut self) -> &'user mut InmutableDict<K, V>;
 
-
-    fn put(&mut self, key : &K, value : &V) {
-        self.dict_mut().update(key, value);
+    fn put_borrows(&mut self, key : &K, value : &V) {
+        self.dict_mut().update_borrows(key, value);
     } 
+
+    fn put(&mut self, key : K, value : V) {
+        self.dict_mut().update(key, value);
+    }
+
+    fn put_ifnew_borrows(&mut self, key : &K, value : &V) {
+        if !self.have(key) {
+            self.dict_mut().update_borrows(key, value);
+        }
+    } 
+
+    fn put_ifnew(&mut self, key : K, value : V) {
+        if !self.have(&key) {
+            self.dict_mut().update(key, value);
+        }
+    }
 
     fn have(&self, key : &K) -> bool {
         self.dict().contains_key(key)
@@ -125,6 +161,14 @@ V: Clone {
 
     fn get(&self, key : &K) -> Option<V> {
         return self.dict().get(key)
+    }
+
+    fn get_mut<'user>(&'user mut self, key : &'user K) -> Option<&'user mut V> {
+        return self.dict_mut_life().get_mut(key);
+    } 
+
+    fn pop(&mut self, key : &K) -> Option<V> {
+        return self.dict_mut().pop(key);
     }
 
     fn is_empty(&self)-> bool {

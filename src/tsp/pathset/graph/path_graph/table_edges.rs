@@ -22,4 +22,8 @@ impl InmutableDictCommons<EdgeId, Edge> for TableEdges {
     fn dict_mut(&mut self) -> &mut InmutableDict<EdgeId, Edge>  {
         &mut self.table
     }
+
+    fn dict_mut_life<'user>(&'user mut self) -> &'user mut InmutableDict<EdgeId, Edge>  {
+        &mut self.table
+    }
 }

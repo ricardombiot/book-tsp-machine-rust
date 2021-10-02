@@ -13,6 +13,11 @@ impl TableLines {
         let table = InmutableDict::new();
         TableLines{table}
     }
+
+    pub fn add_line(&mut self, step: Step){
+        let set_nodes = NodesIdSet::new();
+        self.put(step, set_nodes);
+    }
 }
 
 impl InmutableDictCommons<Step, NodesIdSet> for TableLines {
@@ -21,6 +26,10 @@ impl InmutableDictCommons<Step, NodesIdSet> for TableLines {
     }
 
     fn dict_mut(&mut self) -> &mut InmutableDict<Step, NodesIdSet>  {
+        &mut self.table
+    }
+
+    fn dict_mut_life<'user>(&'user mut self) -> &'user mut InmutableDict<Step, NodesIdSet>  {
         &mut self.table
     }
 }

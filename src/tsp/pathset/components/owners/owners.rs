@@ -26,6 +26,11 @@ impl OwnersByStep {
     }
 
     pub fn seed(n : Color, b_max : Km) -> Self {
+        // Para poder hacer un join con origin
+        // tenemos que añadir un km más
+        let n = n + 1;
+        let b_max = b_max + 1;
+    
         let bbnnn= generator_node_key::get_max_unique_node_key(n, b_max);
         OwnersByStep::new(bbnnn)
     }

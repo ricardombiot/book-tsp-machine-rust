@@ -24,13 +24,13 @@ pub struct Node {
 
 impl Node {
     pub fn new_root(n : Color, b_max : Km, color : Color, owners_graph : &OwnersByStep, action_id : ActionId) -> Self {
-        Node::_new(n, b_max, 0 as Step, color, owners_graph, action_id, None)
+        Node::create(n, b_max, 0 as Step, color, owners_graph, action_id, None)
     }
     pub fn new(n : Color, b_max : Km, step : Step, color : Color, owners_graph : &OwnersByStep, action_id : ActionId, action_parent_id : ActionId) -> Self {
-        Node::_new(n, b_max, step, color, owners_graph, action_id, Some(action_parent_id))
+        Node::create(n, b_max, step, color, owners_graph, action_id, Some(action_parent_id))
     }
 
-    pub fn _new(n : Color, b_max : Km, step : Step, color : Color, owners_graph : &OwnersByStep, action_id : ActionId, action_parent_id : Option<ActionId>) -> Self {
+    pub fn create(n : Color, b_max : Km, step : Step, color : Color, owners_graph : &OwnersByStep, action_id : ActionId, action_parent_id : Option<ActionId>) -> Self {
         let parents  = DictEdgeIdByNodeId::new();
         let sons = DictEdgeIdByNodeId::new();
         let owners : OwnersByStep = owners_graph.derive();
@@ -66,6 +66,10 @@ impl Node {
 
     pub fn step(&self) -> Step {
         self.step
+    }
+
+    pub fn action_id(&self) -> ActionId {
+        self.action_id
     }
 
 }
