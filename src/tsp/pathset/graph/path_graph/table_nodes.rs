@@ -14,6 +14,27 @@ impl TableNodes {
         TableNodes{table}
     }
 
+    pub fn apply_node<F,R>(&self,node_id : & NodeId, func: F) -> Result<R,String> 
+        where F : Fn(&Node) -> R {
+            match self.get(node_id) {
+                None => return Err("not_found_node_id".to_string()),
+                Some(node) =>  { 
+                    let result : R = func(node);
+                    return Ok(result)
+                }
+            }
+    }
+
+    pub fn apply_mut_node<F,R>(&mut self,node_id : & NodeId, func: F) -> Result<R,String> where F : Fn(&mut Node) -> R {
+        match self.get_mut(node_id) {
+            None => return Err("not_found_node_id".to_string()),
+            Some(node) => {
+                let result : R = func(node);
+                return Ok(result)
+            }    
+        }
+    }
+
     pub fn add_node(&mut self, node : Node){
         self._put_node(node);
     }

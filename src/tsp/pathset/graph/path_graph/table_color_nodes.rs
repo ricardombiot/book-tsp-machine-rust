@@ -19,12 +19,8 @@ impl TableColorNodes {
         let color = node.color();
         self._if_not_exist_init_set(node.color());
 
-        let mut set_colors = self.table.get_mut(&color).unwrap();
+        let set_colors = self.table.get_mut(&color).unwrap();
         set_colors.insert(node.id().clone());
-        /* 
-        let mut set_colors = self.pop(&color).unwrap();
-        set_colors.insert(node.id().clone());
-        self.put(color, set_colors);*/
     }
 
     fn _if_not_exist_init_set(&mut self, color : Color){

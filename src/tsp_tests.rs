@@ -18,6 +18,8 @@ pub mod utils {
     mod generator_node_key_test;
 
     mod inmutable_dict_test;
+
+    mod mutable_test;
 }
 
 #[cfg(test)]

@@ -1,16 +1,34 @@
+use crate::tsp::actions::database_actions::TableActionIdToAction;
 use crate::tsp::utils::alias::{Color, Km, Step, ActionId};
 use crate::tsp::pathset::graph::path_graph::PathGraph;
 use crate::tsp::pathset::components::nodes::node::Node;
+use crate::tsp::pathset::components::nodes::node_id::NodeId;
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
+use crate::tsp::pathset::graph::path_graph::table_nodes_by_action::TableNodesByAction;
 
 
 impl PathGraph {
+    /*pub(super) fn _get_mut_node<'user>(&'user mut self,action_id: &'user ActionId, node_id : &'user NodeId) -> Option<&'user mut Node> {
+        let option_node : Option<&'user mut Node> = self.table_nodes_by_action.get_node_mut(action_id, node_id);
+        return option_node;
+    }
+
+    pub(super) fn _get_node<'user>(&'user self,action_id: &'user ActionId, node_id : &'user NodeId) -> Option<&'user Node> {
+       // let table_nodes_by_action : &'user TableNodesByAction = &self.table_nodes_by_action;
+        
+        let option_node : Option<&'user Node> = self.table_nodes_by_action.get_node(action_id, node_id);
+        return option_node;
+    }*/
+
+
     pub(super) fn _add_node(&mut self,node : Node) {
-        let action_id = node.action_id();
-        let node_id = node.id().clone();
+        let action_id : ActionId = node.action_id();
+        let node_id: NodeId = node.id().clone();
 
         self.table_nodes_by_action.add_node(node);
-        let node: &mut Node = self.table_nodes_by_action.get_node_mut(&action_id, &node_id).unwrap();
+
+        //let node : & Node = &self._get_node(&action_id, &node_id).unwrap();
+        let node = self.table_nodes_by_action.get_node(&action_id, &node_id).unwrap();
         self.table_color_nodes.add_node_color(node);
         
 

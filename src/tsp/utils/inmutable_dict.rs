@@ -1,11 +1,21 @@
 use std::collections::HashMap;
 use std::hash::Hash;
 
+use crate::tsp::pathset::components::nodes::node::Node;
+
 pub trait DictInmutableWapper<K,V> where K : Hash + Eq + Clone, V: Clone{
     
     fn dict(&self) -> & HashMap<K, V> ;
     fn dict_mut(&mut self) -> &mut HashMap<K, V> ;
-    fn dict_mut_life<'user>(&'user mut self) -> &'user mut HashMap<K, V> ;
+    //fn dict_mut_life<'user>(&'user mut self) -> &'user mut HashMap<K, V> ;
+
+    fn dict_mut_life<'user>(&'user mut self) -> &'user mut HashMap<K, V> {
+        self.dict_mut()
+    }
+
+    fn dict_life<'user>(&'user self) -> &'user HashMap<K, V> {
+        self.dict()
+    }
 
     fn insert(&mut self, key : &K, value : &V){
         if !self.contains_key(key){
@@ -21,10 +31,10 @@ pub trait DictInmutableWapper<K,V> where K : Hash + Eq + Clone, V: Clone{
         self.dict_mut().insert(key, value);
     }
 
-    fn get(&self, key : &K) -> Option<V>{
-        let result = match self.dict().get(key) {
+    fn get<'user>(&'user self, key : &'user K) -> Option<&'user V>{
+        let result : Option<&'user V> = match self.dict_life().get(key) {
             None => None,
-            Some(value) => Some(value.clone())
+            Some(value) => Some(value)
         };
 
         return result;
@@ -159,7 +169,7 @@ V: Clone {
         self.dict_mut().remove(key);
     }
 
-    fn get(&self, key : &K) -> Option<V> {
+    fn get<'user>(&'user self, key : &'user K) -> Option<&'user V> {
         return self.dict().get(key)
     }
 
@@ -179,7 +189,31 @@ V: Clone {
         return self.dict().to_list();
     }
 
-    fn union(&mut self, other : &dyn InmutableDictCommons<K, V>){
+    
+    fn apply<R,F>(&self, key: &K, func: F) -> Option<R> 
+        where F : Fn(&V) -> R {
+            match self.dict().get(key) {
+                None => None,
+                Some(item) => {
+                    let result = func(&item);
+                    Some(result)
+                }
+            }
+    }
+
+    fn apply_mut<F>(&mut self, key: &K, func: F) 
+        where F : Fn(&mut V)  {
+            match self.dict_mut().get_mut(key) {
+                None => (),
+                Some(item) => {
+                    func(item);
+                }  
+            }
+    }
+
+    fn union(&mut self, other : &Self){
         self.dict_mut().union(&other.dict());
     }
 }
+
+
