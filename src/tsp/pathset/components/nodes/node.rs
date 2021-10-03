@@ -60,16 +60,16 @@ impl Node {
         &self.owners
     }
 
-    pub fn color(&self) -> &Color {
-        &self.color
+    pub fn color(&self) -> Color {
+        self.color.clone()
     }
 
-    pub fn step(&self) -> &Step {
-        &self.step
+    pub fn step(&self) -> Step {
+        self.step.clone()
     }
 
-    pub fn action_id(&self) -> &ActionId {
-        &self.action_id
+    pub fn action_id(&self) -> ActionId {
+        self.action_id.clone()
     }
 
 

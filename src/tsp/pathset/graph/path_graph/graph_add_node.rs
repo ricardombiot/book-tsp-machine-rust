@@ -12,8 +12,8 @@ impl PathGraph {
     pub(super) fn _add_node(&mut self,mut node : Node) {
         //let action_id : ActionId = node.action_id().clone();
         let node_id: NodeId = node.id().clone();
-        let step : Step = node.step().clone();
-        let color : Color = node.color().clone();
+        let step : Step = node.step();
+        let color : Color = node.color();
 
         node.push_owner_myself();
 

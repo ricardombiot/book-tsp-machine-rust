@@ -46,6 +46,7 @@ pub struct PathGraph {
     valid : bool
 }
 
-pub mod impl_constructor;
-pub mod impl_init;
-pub mod impl_add_node;
+pub mod graph_constructor;
+pub mod graph_init;
+pub mod graph_add_node;
+pub mod graph_delete_node;

@@ -36,12 +36,15 @@ impl TableNodesByAction {
         } 
     }
 
+    pub(super) fn _delete_node(&mut self, node_id : &NodeId){
+        todo!()
+    }
 
     pub fn add_node(&mut self, node : Node){
         let action_id : ActionId = node.action_id().clone();
         self._if_not_exist_init_action(action_id);
 
-        let mut table_nodes = self.table.get_mut(&action_id).unwrap();
+        let table_nodes = self.table.get_mut(&action_id).unwrap();
         table_nodes.add_node(node);
         /*let mut table_nodes = self.table.pop(&action_id).unwrap();
         table_nodes.add_node(node);
@@ -75,21 +78,13 @@ impl TableNodesByAction {
         self.put(action_id , table_nodes);
     }
 
-    pub(crate) fn _push_node_as_new_owner(&mut self, node_id: &NodeId){
+    pub(super) fn _push_node_as_new_owner(&mut self, node_id: &NodeId){
         let list_action_id = self.table.to_list_keys();
         for action_id in list_action_id.iter() {
-            let mut table_nodes = self.table.get_mut(action_id).unwrap();
-           // list_node_id = self.table_nodes
+            let table_nodes = self.table.get_mut(action_id).unwrap();
 
             table_nodes._push_node_as_new_owner(node_id);
         }
-        /*
-
-        for (action_id, table_nodes_action) in graph.table_nodes
-        # $ O(N) $ nodes by action
-        for (node_id, node) in table_nodes_action
-            PathNode.push_owner!(node, node_owner)
-        end*/
     }
 }
 

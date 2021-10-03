@@ -1,7 +1,7 @@
 
 use crate::tsp::pathset::components::nodes::node::Node;
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
-use crate::tsp::utils::inmutable_dict::{DictInmutableWapper, InmutableDict, InmutableDictCommons};
+use crate::tsp::utils::inmutable_dict::{InmutableDict, InmutableDictCommons};
 
 #[derive(Clone)]
 pub struct TableNodes {
@@ -14,7 +14,7 @@ impl TableNodes {
         TableNodes{table}
     }
 
-    pub(crate) fn _push_node_as_new_owner(&mut self, node_id: &NodeId){
+    pub(super) fn _push_node_as_new_owner(&mut self, node_id: &NodeId){
         let list_nodes_id = self.table.to_list_keys();
         for current_node_id in list_nodes_id.iter() {
             let node = self.get_mut(current_node_id).unwrap();
