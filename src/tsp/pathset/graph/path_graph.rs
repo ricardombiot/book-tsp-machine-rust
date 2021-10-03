@@ -13,6 +13,7 @@ pub mod table_color_nodes;
 pub mod table_nodes;
 pub mod table_nodes_by_action;
 
+#[derive(Clone)]
 pub struct PathGraph {
     // N of nodes
     n : Color,
@@ -52,3 +53,5 @@ pub mod graph_add_node;
 pub mod graph_delete;
 pub mod graph_delete_node;
 pub mod graph_delete_edges;
+pub mod graph_getters;
+pub mod graph_join;

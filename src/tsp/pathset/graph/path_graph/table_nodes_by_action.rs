@@ -16,6 +16,20 @@ impl TableNodesByAction {
         TableNodesByAction{table}
     }
 
+    /*
+    pub fn join(&mut self, table_to_join : &TableNodesByAction){
+        let list_actions_id_to_join = table_to_join.dict().to_list_keys() ;
+
+        for action_id in list_actions_id_to_join {
+            let table_nodes_to_join = table_to_join.get(&action_id).unwrap();
+            let table_nodes = self.table.get_mut(&action_id);
+            match table_nodes {
+                None => self.put(action_id.clone(), table_nodes_to_join.clone()),
+                Some(table_nodes) => table_nodes.join(&table_nodes_to_join)
+            }
+        }
+    }*/
+
     pub(super) fn delete_node(&mut self, node_id : &NodeId){
         let action_id = node_id.action_id();
         let table_nodes = self.table.get_mut(&action_id);
@@ -150,5 +164,9 @@ impl InmutableDictCommons<ActionId, TableNodes> for TableNodesByAction {
 
     fn dict_mut_life<'user>(&'user mut self) -> &'user mut InmutableDict<ActionId, TableNodes>  {
         &mut self.table
+    }
+
+    fn join_item(original_table_nodes : &mut TableNodes, table_nodes_join: &TableNodes) {
+        original_table_nodes.join(table_nodes_join)
     }
 }

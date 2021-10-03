@@ -22,13 +22,12 @@ impl PathGraph {
                 }
             }
 
-
             //# $ O(N^4) $ deleting all nodes
             self._apply_node_deletes()
         }
     }
 
-    fn _save_to_delete(&mut self, node_id : NodeId) {
+    pub(super) fn _save_to_delete(&mut self, node_id : NodeId) {
         self.nodes_to_delete.insert(node_id.clone());
         self.owners_graph.pop(&node_id);
         self.required_review_ownwers = true;

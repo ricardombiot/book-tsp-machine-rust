@@ -105,11 +105,6 @@ V: Clone {
         }
     }
 
-    pub fn union(&mut self, other : &InmutableDict<K,V>) {
-        for (key, value) in other.dict.iter() {
-            self.insert(key, value);
-        }
-    }
 }
 
 
@@ -140,6 +135,24 @@ V: Clone {
     fn dict(&self) -> & InmutableDict<K, V> ;
     fn dict_mut(&mut self) -> &mut InmutableDict<K, V> ;
     fn dict_mut_life<'user>(&'user mut self) -> &'user mut InmutableDict<K, V>;
+
+    fn join_item(original : &mut V, join : &V);
+
+    fn join(&mut self, other: &Self){
+        self.join_table(other.dict())
+    }
+
+    fn join_table(&mut self, other : &InmutableDict<K,V>) {
+        for (join_key, join_value) in other.dict.iter() {
+            if self.have(join_key){
+                let value_original = self.get_mut(join_key).unwrap();
+
+                Self::join_item(value_original, join_value);
+            }else{
+                self.dict_mut().update(join_key.clone(), join_value.clone());
+            }
+        }
+    }
 
     fn put_borrows(&mut self, key : &K, value : &V) {
         self.dict_mut().update_borrows(key, value);
@@ -215,9 +228,10 @@ V: Clone {
             }
     }
 
+    /*
     fn union(&mut self, other : &Self){
         self.dict_mut().union(&other.dict());
-    }
+    }*/
 }
 
 

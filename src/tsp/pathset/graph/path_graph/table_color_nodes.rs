@@ -58,4 +58,10 @@ impl InmutableDictCommons<Color, NodesIdSet> for TableColorNodes {
     fn dict_mut_life<'user>(&'user mut self) -> &'user mut InmutableDict<Color, NodesIdSet>  {
         &mut self.table
     }
+
+    fn join_item(original_set : &mut NodesIdSet, join_set: &NodesIdSet) {
+        for node_id in join_set.iter() {
+            original_set.insert(node_id.clone());
+        }
+    }
 }

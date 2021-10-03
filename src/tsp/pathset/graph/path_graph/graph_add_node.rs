@@ -21,14 +21,12 @@ impl PathGraph {
         self.table_color_nodes.add_node(&color, &node_id);
         self.table_lines.add_node(&step, &node_id);
         self.table_nodes_by_action._push_node_as_new_owner(&node_id);
-        //self._push_node_as_new_owner(&node_id);
         self.owners_graph.push(&node_id);
-
     }
 
-    pub fn _push_node_as_new_owner(&mut self, node_id : &NodeId) {
+   /* pub fn _push_node_as_new_owner(&mut self, node_id : &NodeId) {
         self.table_nodes_by_action._push_node_as_new_owner(node_id);
-    }
+    }*/
 }
 
 /*

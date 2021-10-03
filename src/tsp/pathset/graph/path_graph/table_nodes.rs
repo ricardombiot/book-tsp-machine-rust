@@ -14,6 +14,20 @@ impl TableNodes {
         TableNodes{table}
     }
 
+    pub fn join(&mut self, table_to_join : &TableNodes){
+        let list_nodes_to_join = table_to_join.dict().to_list();
+
+        for (node_id, node_join) in list_nodes_to_join {
+            if self.have(&node_id){
+                let node = self.get_mut(&node_id).unwrap();
+                node.join(&node_join);
+            }else{
+                self.put(node_id, node_join);
+            }
+        }
+    }
+
+
     pub(super) fn _push_node_as_new_owner(&mut self, node_id: &NodeId){
         let list_nodes_id = self.table.to_list_keys();
         for current_node_id in list_nodes_id.iter() {
@@ -74,5 +88,9 @@ impl InmutableDictCommons<NodeId, Node> for TableNodes {
 
     fn dict_mut_life<'user>(&'user mut self) -> &'user mut InmutableDict<NodeId, Node>  {
         &mut self.table
+    }
+
+    fn join_item(original_node : &mut Node, node_join: &Node) {
+        original_node.join(node_join);
     }
 }
