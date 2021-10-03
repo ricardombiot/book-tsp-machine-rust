@@ -1,6 +1,7 @@
 use crate::tsp::pathset::components::edges::edge_id::EdgeId;
 use crate::tsp::pathset::components::edges::edge::Edge;
-use crate::tsp::utils::inmutable_dict::{DictInmutableWapper, InmutableDict, InmutableDictCommons};
+use crate::tsp::pathset::components::nodes::node_id::NodeId;
+use crate::tsp::utils::inmutable_dict::{InmutableDict, InmutableDictCommons};
 
 #[derive(Clone)]
 pub struct TableEdges {
@@ -11,6 +12,11 @@ impl TableEdges {
     pub fn new() -> Self{
         let table = InmutableDict::new();
         TableEdges{table}
+    }
+
+    pub fn build_edge(&mut self, node_parent_id: & NodeId, node_son_id: & NodeId){
+        let edge = Edge::new(node_parent_id, node_son_id);
+        self.put(edge.id().clone(), edge);
     }
 
 }

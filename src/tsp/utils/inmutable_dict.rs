@@ -1,8 +1,6 @@
 use std::collections::HashMap;
 use std::hash::Hash;
 
-use crate::tsp::pathset::components::nodes::node::Node;
-
 pub trait DictInmutableWapper<K,V> where K : Hash + Eq + Clone, V: Clone{
     
     fn dict(&self) -> & HashMap<K, V> ;
@@ -202,11 +200,10 @@ V: Clone {
         return self.dict().to_list();
     }
 
-    fn to_list_keys(&self) -> Vec<(K)> {
+    fn to_list_keys(&self) -> Vec<K> {
         return self.dict().to_list_keys();
     }
 
-    
     fn apply<R,F>(&self, key: &K, func: F) -> Option<R> 
         where F : Fn(&V) -> R {
             match self.dict().get(key) {

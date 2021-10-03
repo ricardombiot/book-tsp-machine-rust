@@ -55,3 +55,4 @@ pub mod graph_delete_node;
 pub mod graph_delete_edges;
 pub mod graph_getters;
 pub mod graph_join;
+pub mod graph_make_up;

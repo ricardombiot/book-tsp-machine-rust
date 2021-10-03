@@ -1,5 +1,5 @@
 
-use crate::tsp::utils::alias::{Color, Km, Step, ActionId};
+use crate::tsp::utils::alias::{Step, ActionId};
 use crate::tsp::pathset::graph::path_graph::PathGraph;
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;

@@ -2,7 +2,7 @@
 use crate::tsp::utils::alias::ActionId;
 use crate::tsp::utils::inmutable_dict::{DictInmutableWapper, InmutableDict, InmutableDictCommons};
 use crate::tsp::pathset::graph::path_graph::table_nodes::TableNodes;
-use crate::tsp::pathset::components::nodes::node::{self, Node};
+use crate::tsp::pathset::components::nodes::node::Node;
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
 
 #[derive(Clone)]

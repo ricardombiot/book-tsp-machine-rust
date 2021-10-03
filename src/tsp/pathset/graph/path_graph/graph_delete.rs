@@ -1,19 +1,16 @@
-use crate::tsp::utils::alias::{Color, Km, Step, ActionId};
+use crate::tsp::utils::alias::{Color};
 use crate::tsp::pathset::graph::path_graph::PathGraph;
-use crate::tsp::pathset::components::nodes::node::Node;
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
 
-use super::table_nodes_by_action;
-
 impl PathGraph {
-    pub(super) fn _delete_node_by_color(&mut self, color : Color){
-        let exist_color = self.table_color_nodes.have(&color);
+    pub(super) fn _delete_node_by_color(&mut self, color : &Color){
+        let exist_color = self.table_color_nodes.have(color);
         if self.valid && exist_color {
             /* in each machine km, only can produce a action by color (origin node),
              each action can produce $ O(N) $ nodes by color then
              $ O(N^2) $ of each color*/
-            let set_nodes_by_color = self.table_color_nodes.get(&color).unwrap().clone();
+            let set_nodes_by_color = self.table_color_nodes.get(color).unwrap().clone();
             for node_id in set_nodes_by_color.iter() {
                 self._save_to_delete(node_id.clone());
 

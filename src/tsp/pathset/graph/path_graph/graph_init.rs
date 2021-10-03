@@ -1,4 +1,4 @@
-use crate::tsp::utils::alias::{Color, Km, Step, ActionId};
+use crate::tsp::utils::alias::{Color, Step, ActionId};
 use crate::tsp::pathset::graph::path_graph::PathGraph;
 use crate::tsp::pathset::components::nodes::node::Node;
 
