@@ -14,8 +14,16 @@ impl TableNodes {
         TableNodes{table}
     }
 
-    pub fn apply_node<F,R>(&self,node_id : & NodeId, func: F) -> Result<R,String> 
-        where F : Fn(&Node) -> R {
+    pub(crate) fn _push_node_as_new_owner(&mut self, node_id: &NodeId){
+        let list_nodes_id = self.table.to_list_keys();
+        for current_node_id in list_nodes_id.iter() {
+            let node = self.get_mut(current_node_id).unwrap();
+            node.push_owner(node_id);
+        }
+    }
+
+    pub fn apply_node<F,R>(&self,node_id : & NodeId, mut func: F) -> Result<R,String> 
+        where F : FnMut(&Node) -> R {
             match self.get(node_id) {
                 None => return Err("not_found_node_id".to_string()),
                 Some(node) =>  { 
@@ -25,7 +33,8 @@ impl TableNodes {
             }
     }
 
-    pub fn apply_mut_node<F,R>(&mut self,node_id : & NodeId, func: F) -> Result<R,String> where F : Fn(&mut Node) -> R {
+    pub fn apply_mut_node<F,R>(&mut self,node_id : &NodeId, mut func: F) -> Result<R,String> 
+    where F : FnMut(&mut Node) -> R {
         match self.get_mut(node_id) {
             None => return Err("not_found_node_id".to_string()),
             Some(node) => {

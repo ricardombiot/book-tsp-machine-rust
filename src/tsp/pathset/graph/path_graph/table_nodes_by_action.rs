@@ -17,7 +17,7 @@ impl TableNodesByAction {
     }
 
     pub fn apply_node<F,R>(&self, action_id : & ActionId, node_id : & NodeId, func: F) -> Result<R,String> 
-        where F : Fn(&Node) -> R {
+        where F : FnMut(&Node) -> R {
             match self.get(action_id) {
                 None => return Err("not_found_action_id".to_string()),
                 Some(table_nodes) => {
@@ -27,7 +27,7 @@ impl TableNodesByAction {
     }
 
     pub fn apply_mut_node<F,R>(&mut self, action_id : & ActionId, node_id : & NodeId, func: F) -> Result<R,String> 
-    where F : Fn(&mut Node) -> R {
+    where F : FnMut(&mut Node) -> R {
         match self.get_mut(action_id) {
             None => return Err("not_found_action_id".to_string()),
             Some(table_nodes) => {
@@ -38,7 +38,7 @@ impl TableNodesByAction {
 
 
     pub fn add_node(&mut self, node : Node){
-        let action_id : ActionId = node.action_id();
+        let action_id : ActionId = node.action_id().clone();
         self._if_not_exist_init_action(action_id);
 
         let mut table_nodes = self.table.get_mut(&action_id).unwrap();
@@ -73,6 +73,23 @@ impl TableNodesByAction {
     fn _if_not_exist_init_action(&mut self, action_id : ActionId){
         let table_nodes = TableNodes::new();
         self.put(action_id , table_nodes);
+    }
+
+    pub(crate) fn _push_node_as_new_owner(&mut self, node_id: &NodeId){
+        let list_action_id = self.table.to_list_keys();
+        for action_id in list_action_id.iter() {
+            let mut table_nodes = self.table.get_mut(action_id).unwrap();
+           // list_node_id = self.table_nodes
+
+            table_nodes._push_node_as_new_owner(node_id);
+        }
+        /*
+
+        for (action_id, table_nodes_action) in graph.table_nodes
+        # $ O(N) $ nodes by action
+        for (node_id, node) in table_nodes_action
+            PathNode.push_owner!(node, node_owner)
+        end*/
     }
 }
 

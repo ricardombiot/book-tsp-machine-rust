@@ -3,6 +3,7 @@ use crate::tsp::utils::alias::{Color};
 use crate::tsp::pathset::components::nodes::node_id::NodesIdSet;
 use crate::tsp::utils::inmutable_dict::{DictInmutableWapper, InmutableDict, InmutableDictCommons};
 use crate::tsp::pathset::components::nodes::node::Node;
+use crate::tsp::pathset::components::nodes::node_id::NodeId;
 
 #[derive(Clone)]
 pub struct TableColorNodes {
@@ -17,10 +18,17 @@ impl TableColorNodes {
 
     pub fn add_node_color(&mut self, node : &Node){
         let color = node.color();
-        self._if_not_exist_init_set(node.color());
+        self._if_not_exist_init_set(node.color().clone());
 
         let set_colors = self.table.get_mut(&color).unwrap();
         set_colors.insert(node.id().clone());
+    }
+
+    pub fn add_node(&mut self, color : &Color, node_id : &NodeId){
+        self._if_not_exist_init_set(color.clone());
+
+        let set_colors = self.table.get_mut(&color).unwrap();
+        set_colors.insert(node_id.clone());
     }
 
     fn _if_not_exist_init_set(&mut self, color : Color){
