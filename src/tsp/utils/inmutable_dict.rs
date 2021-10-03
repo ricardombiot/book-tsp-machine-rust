@@ -189,6 +189,10 @@ V: Clone {
         return self.dict().to_list();
     }
 
+    fn to_list_keys(&self) -> Vec<(K)> {
+        return self.dict().to_list_keys();
+    }
+
     
     fn apply<R,F>(&self, key: &K, func: F) -> Option<R> 
         where F : Fn(&V) -> R {

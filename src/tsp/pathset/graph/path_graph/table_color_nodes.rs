@@ -31,6 +31,15 @@ impl TableColorNodes {
         set_colors.insert(node_id.clone());
     }
 
+    pub fn delete_node(&mut self, color : &Color, node_id : &NodeId){
+        let set_colors = self.table.get_mut(&color).unwrap();
+        set_colors.remove(&node_id);
+
+        if set_colors.is_empty() {
+            self.delete(&color);
+        }
+    }
+
     fn _if_not_exist_init_set(&mut self, color : Color){
         let set_colors = NodesIdSet::new();
         self.put(color , set_colors);

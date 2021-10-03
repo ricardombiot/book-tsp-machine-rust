@@ -22,6 +22,12 @@ impl TableNodes {
         }
     }
 
+    pub(super) fn delete_node(&mut self, node_id : &NodeId){
+        if self.have(node_id){
+            self.delete(node_id);
+        }
+    }
+
     pub fn apply_node<F,R>(&self,node_id : & NodeId, mut func: F) -> Result<R,String> 
         where F : FnMut(&Node) -> R {
             match self.get(node_id) {

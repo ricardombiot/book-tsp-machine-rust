@@ -20,23 +20,10 @@ impl PathGraph {
         self.table_nodes_by_action.add_node(node);
         self.table_color_nodes.add_node(&color, &node_id);
         self.table_lines.add_node(&step, &node_id);
-        self._push_node_as_new_owner(&node_id);
+        self.table_nodes_by_action._push_node_as_new_owner(&node_id);
+        //self._push_node_as_new_owner(&node_id);
         self.owners_graph.push(&node_id);
 
-
-        //let node_mut = self.table_nodes_by_action.get_node_mut(action_id, node_id).unwrap();
-        //node_mut.push_owner_myself();
-
-       // let node = self.table_nodes_by_action.get_node(&action_id, &node_id).unwrap();
-
-        /*let myself = &self;
-        let borrow = &self.table_nodes_by_action;
-        let _ = borrow.apply_node(&action_id, &node_id, |node| {
-           
-        });*/
-
-
-        
     }
 
     pub fn _push_node_as_new_owner(&mut self, node_id : &NodeId) {

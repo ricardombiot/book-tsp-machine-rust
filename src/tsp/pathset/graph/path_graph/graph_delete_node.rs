@@ -1,132 +1,109 @@
+use crate::tsp::pathset::components::nodes::node_id::NodeId;
+use crate::tsp::pathset::components::edges::edge_id::EdgeId;
 use crate::tsp::utils::alias::{Color, Km, Step, ActionId};
 use crate::tsp::pathset::graph::path_graph::PathGraph;
-use crate::tsp::pathset::components::nodes::node::Node;
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
-use crate::tsp::pathset::components::nodes::node_id::NodeId;
 
-use super::table_nodes_by_action;
 
 impl PathGraph {
-    pub(super) fn _delete_node_by_color(&mut self, color : Color){
-        let exist_color = self.table_color_nodes.have(&color);
-        if self.valid && exist_color {
-            /* in each machine km, only can produce a action by color (origin node),
-             each action can produce $ O(N) $ nodes by color then
-             $ O(N^2) $ of each color*/
-            let set_nodes_by_color = self.table_color_nodes.get(&color).unwrap().clone();
-            for node_id in set_nodes_by_color.iter() {
-                self._save_to_delete(node_id.clone());
+    pub(super) fn _delete_node(&mut self, node_id : &NodeId){
+        let exists = self._have_node(node_id);
+        if self.valid && exists {
+            let action_id : ActionId = node_id.action_id();
+            let node = self.table_nodes_by_action.get_node(&action_id, &node_id).unwrap();
+            let color : &Color = &node.color();
+            let step : &Step = &node.step();
+            let parents = node.parents_list();
+            let sons = node.sons_list();
 
-                if !self.valid {
-                    break;
-                }
-            }
+            self.table_color_nodes.delete_node(color, node_id);
+            self.table_lines.delete_node(step, node_id);
 
-
-            //# $ O(N^4) $ deleting all nodes
-            self._apply_node_deletes()
+            self._delete_edges_parents(parents);
+            self._delete_edges_sons(sons);
+            self._table_nodes_delete_node(node_id);
         }
     }
 
-    fn _save_to_delete(&mut self, node_id : NodeId) {
-        self.nodes_to_delete.insert(node_id.clone());
-        self.owners_graph.pop(&node_id);
-        self.required_review_ownwers = true;
-        self.valid = self.owners_graph.valid();
+
+    pub(super) fn _have_node(&self, node_id : &NodeId) -> bool {
+        self.table_nodes_by_action.have_node(node_id)
     }
 
-    pub(super) fn _apply_node_deletes(&mut self){
-        /*
-        # It will be execute less than $ O(N^3) $ delete total nodes
-        # before will detected that graph is unvalid and avoid
-        # the execution of delete nodes.
-        */
-        let have_nodes_to_delete = !self.nodes_to_delete.is_empty();
-        if self.valid && have_nodes_to_delete {
-            let nodes_to_delete =  &self.nodes_to_delete;
-            let table_nodes_by_action =  &mut self.table_nodes_by_action;
-
-            for node_id in nodes_to_delete {
-                table_nodes_by_action._delete_node(node_id);
-            }
-        }
-        /*
-        if graph.valid
-            if !isempty(graph.nodes_to_delete)
-                node_id = pop!(graph.nodes_to_delete)
-    
-                # $ O(N) $
-                delete_node!(graph, node_id)
-    
-                graph.required_review_ownwers = true
-                apply_node_deletes!(graph)
-            end
-        end*/
+    fn _table_nodes_delete_node(&mut self, node_id : &NodeId) {
+        self.table_nodes_by_action.delete_node(node_id);
     }
 
 }
+
 /*
 
-# $ O(N^4) $
-function delete_node_by_color!(graph :: Graph, color :: Color)
-    if graph.valid
-        # in each machine km, only can produce a action by color (origin node),
-        # each action can produce $ O(N) $ nodes by color then
-        # $ O(N^2) $ of each color
-        for node_id in get_nodes_by_color(graph, color)
-            save_to_delete_node!(graph, node_id)
-
-            if !graph.valid
-                break
-            end
-        end
-
-        # $ O(N^4) $ deleting all nodes
-        apply_node_deletes!(graph)
-    end
-end
-
-function save_to_delete_node!(graph :: Graph, node_id :: NodeId)
-    if graph.valid
+# $ O(N) $
+function delete_node!(graph :: Graph, node_id :: NodeId)
+    if have_node(graph, node_id) && graph.valid
         node = get_node(graph, node_id)
-
-        if node != nothing
-            save_to_delete_node!(graph, node)
-        end
-    end
-end
-function save_to_delete_node!(graph :: Graph, node :: Node)
-    pop_owner_in_graph!(graph, node)
-    push!(graph.nodes_to_delete, node.id)
-end
-
-function pop_owner_in_graph!(graph :: Graph, node_owner :: Node)
-    if graph.valid
-        Owners.pop!(graph.owners, node_owner.step, node_owner.id)
-        graph.required_review_ownwers = true
-        make_validation_graph_by_owners!(graph)
+        make_delete_node!(graph, node)
     end
 end
 
-function make_validation_graph_by_owners!(graph :: Graph)
-    graph.valid = graph.owners.valid
+# $ O(N) $
+function make_delete_node!(graph :: Graph, node :: Node)
+    if graph.valid
+        delete_node_of_line!(graph, node)
+        delete_node_of_table_colors!(graph, node)
+        # $ O(N) $
+        delete_edges_parents!(graph, node)
+        # $ O(N) $
+        delete_edges_sons!(graph, node)
+        delete_node_of_table_nodes!(graph, node)
+    end
 end
 
-# Theoretical Maximum: $ O(N^3) nodes * O(N) = O(N^4) $
-function apply_node_deletes!(graph :: Graph)
-    # It will be execute less than $ O(N^3) $ delete total nodes
-    # before will detected that graph is unvalid and avoid
-    # the execution of delete nodes.
-    if graph.valid
-        if !isempty(graph.nodes_to_delete)
-            node_id = pop!(graph.nodes_to_delete)
+function delete_node_of_line!(graph :: Graph, node :: Node)
+    if haskey(graph.table_lines, node.step) && graph.valid
+        delete!(graph.table_lines[node.step], node.id)
+    end
+end
 
-            # $ O(N) $
-            delete_node!(graph, node_id)
+function delete_node_of_table_colors!(graph :: Graph, node :: Node)
+    if haskey(graph.table_color_nodes, node.color) && graph.valid
+        nodes_color = graph.table_color_nodes[node.color]
 
-            graph.required_review_ownwers = true
-            apply_node_deletes!(graph)
+        if node.id in nodes_color
+            pop!(nodes_color, node.id)
         end
+    end
+end
+
+# $ O(N) $
+function delete_edges_parents!(graph :: Graph, node :: Node)
+    if graph.valid
+        destine_id = node.id
+
+        # each node can have $ O(N-2) $  parents
+        for (origin_id, edge_id) in node.parents
+            delete_edge_by_id!(graph, edge_id)
+        end
+    end
+end
+
+# $ O(N) $
+function delete_edges_sons!(graph :: Graph, node :: Node)
+    if graph.valid
+        origin_id = node.id
+        # each node can have $ O(N-1) $ sons
+        for (destine_id, edge_id) in node.sons
+            delete_edge_by_id!(graph, edge_id)
+        end
+    end
+end
+
+function delete_node_of_table_nodes!(graph :: Graph, node :: Node)
+    action_group_node = graph.table_nodes[node.action_id]
+    delete!(action_group_node, node.id)
+
+    if isempty(action_group_node)
+        delete!(graph.table_nodes, node.action_id)
     end
 end
 

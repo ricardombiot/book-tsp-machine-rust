@@ -20,6 +20,10 @@ impl TableLines {
         set_line.insert(node_id.clone());
     }
 
+    pub fn delete_node(&mut self, step : &Step , node_id : &NodeId){
+        let set_line = self.table.get_mut(&step).unwrap();
+        set_line.remove(node_id);
+    }
 
     pub fn add_line(&mut self, step: Step){
         let set_nodes = NodesIdSet::new();

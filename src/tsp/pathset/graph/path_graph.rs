@@ -49,4 +49,6 @@ pub struct PathGraph {
 pub mod graph_constructor;
 pub mod graph_init;
 pub mod graph_add_node;
+pub mod graph_delete;
 pub mod graph_delete_node;
+pub mod graph_delete_edges;

@@ -1,3 +1,5 @@
+
+use crate::tsp::pathset::components::edges::edge_id::EdgeId;
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
 use crate::tsp::pathset::components::nodes::node::Node;
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
@@ -56,6 +58,14 @@ impl Node {
 
     pub fn have_sons(&self) -> bool {
         !self.sons.is_empty()
+    }
+
+    pub fn parents_list(&self) -> Vec<(NodeId, EdgeId)> {
+        self.parents.to_list()
+    }
+
+    pub fn sons_list(&self) -> Vec<(NodeId, EdgeId)> {
+        self.sons.to_list()
     }
 
 }
