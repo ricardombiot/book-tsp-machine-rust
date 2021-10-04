@@ -16,15 +16,11 @@ impl PathGraph {
             # Most probable less than N stages: $ O(N^8) $
             # $ O(Stages) * O(N^7) $
             */
-            //self._review_owners_all_graph();
+            self._review_owners_all_graph();
 
             //# $ O(N^3) $
             self._make_up(color, action_id)
         }
-    }
-
-    fn _review_owners_all_graph(&mut self){
-        todo!();
     }
 
     fn _make_up(&mut self, color : &Color, action_id : &ActionId){
@@ -48,7 +44,7 @@ impl PathGraph {
 
     fn _add_all_nodes_last_step_as_parents(&mut self, last_step: Step, node_son_id : NodeId){
         //# $ O(N) - Origin - Itself $ then $ O(N-2) $ parents by node
-        let set_nodes = self.table_lines.get(&last_step).unwrap();
+        let set_nodes = self.table_lines.get(&last_step).unwrap().clone();
         for node_parent_id in set_nodes.iter(){
             self._add_edge(node_parent_id, &node_son_id);
         }

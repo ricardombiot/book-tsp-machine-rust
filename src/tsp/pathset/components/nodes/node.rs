@@ -52,6 +52,10 @@ impl Node {
         self.id.is_root()
     }
 
+    pub fn is_valid(&self) -> bool {
+        self.owners.valid()
+    }
+
     pub fn id(&self) -> &NodeId {
         &self.id
     }

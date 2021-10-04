@@ -35,4 +35,7 @@ impl InmutableDictCommons<NodeId, EdgeId> for DictEdgeIdByNodeId {
         &mut self.dict   
     }
 
+    fn join_item(original : &mut EdgeId, other : &EdgeId) {
+    }
+
 }

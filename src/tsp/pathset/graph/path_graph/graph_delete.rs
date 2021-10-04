@@ -12,7 +12,7 @@ impl PathGraph {
              $ O(N^2) $ of each color*/
             let set_nodes_by_color = self.table_color_nodes.get(color).unwrap().clone();
             for node_id in set_nodes_by_color.iter() {
-                self._save_to_delete(node_id.clone());
+                self._save_to_delete(node_id);
 
                 if !self.valid {
                     break;
@@ -24,10 +24,14 @@ impl PathGraph {
         }
     }
 
-    pub(super) fn _save_to_delete(&mut self, node_id : NodeId) {
+    pub(super) fn _save_to_delete(&mut self, node_id : &NodeId) {
         self.nodes_to_delete.insert(node_id.clone());
-        self.owners_graph.pop(&node_id);
+        self.owners_graph.pop(node_id);
         self.required_review_ownwers = true;
+        self._make_validation_graph_by_owners();
+    }
+
+    pub(super) fn _make_validation_graph_by_owners(&mut self){
         self.valid = self.owners_graph.valid();
     }
 

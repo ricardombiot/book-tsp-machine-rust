@@ -9,10 +9,10 @@ impl Node {
     }
 
     fn _union_parents(&mut self, node_join : &Node){
-        self.parents.union(&node_join.parents);
+        self.parents.join(&node_join.parents);
     }
 
     fn _union_sons(&mut self, node_join : &Node){
-        self.sons.union(&node_join.sons);
+        self.sons.join(&node_join.sons);
     }
 }
