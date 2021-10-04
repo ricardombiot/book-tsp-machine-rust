@@ -1,8 +1,8 @@
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
 use crate::tsp::pathset::components::edges::edge_id::EdgeId;
 use crate::tsp::utils::inmutable_dict::{InmutableDict,InmutableDictCommons};
-
-#[derive(Clone)]
+use std::fmt::Debug;
+#[derive(Clone, Debug)]
 pub struct DictEdgeIdByNodeId {
     dict : InmutableDict<NodeId, EdgeId>
 }

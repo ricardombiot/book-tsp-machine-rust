@@ -1,9 +1,9 @@
 use crate::tsp::utils::alias::{UniqueNodeKey};
 use std::collections::HashSet;
 use std::fmt;
+use std::fmt::Debug;
 
-
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct OwnersFixedSet {
     nobinary_set : HashSet<UniqueNodeKey>
 }
@@ -36,18 +36,9 @@ impl OwnersFixedSet {
     }
 
     pub fn union(&mut self, owners_set_b : &OwnersFixedSet){
-        println!("____");
-        println!("Before union");
-        println!("{}", self);
-        println!("{}", owners_set_b);
-        
         for key in owners_set_b.nobinary_set.iter() {
             self.push(*key);
         }
-    
-       // let union : HashSet<UniqueNodeKey> = self.nobinary_set.union(&(owners_set_b.nobinary_set));
-        println!("After union");
-        println!("{}", self);
     }
 
     pub fn intersect(&mut self, owners_set_b : &OwnersFixedSet){

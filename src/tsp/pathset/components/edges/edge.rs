@@ -1,6 +1,7 @@
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
 use crate::tsp::pathset::components::edges::edge_id::EdgeId;
 use std::fmt;
+use std::fmt::Debug;
 
 #[derive(Debug,PartialEq, Eq,Clone)]
 pub struct Edge {

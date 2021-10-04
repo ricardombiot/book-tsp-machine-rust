@@ -4,8 +4,9 @@ use crate::tsp::pathset::components::nodes::node_id::NodesIdSet;
 use crate::tsp::utils::inmutable_dict::{DictInmutableWapper, InmutableDict, InmutableDictCommons};
 use crate::tsp::pathset::components::nodes::node::Node;
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
+use std::fmt::Debug;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct TableColorNodes {
     table : InmutableDict<Color, NodesIdSet>
 }

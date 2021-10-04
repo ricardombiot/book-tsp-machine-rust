@@ -2,8 +2,9 @@ use crate::tsp::pathset::components::edges::edge_id::EdgeId;
 use crate::tsp::pathset::components::edges::edge::Edge;
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
 use crate::tsp::utils::inmutable_dict::{InmutableDict, InmutableDictCommons};
+use std::fmt::Debug;
 
-#[derive(Clone)]
+#[derive(Clone,Debug)]
 pub struct TableEdges {
     table : InmutableDict<EdgeId, Edge>
 }

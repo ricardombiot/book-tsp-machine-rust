@@ -59,3 +59,62 @@ pub mod graph_make_up;
 pub mod graph_owners_review;
 pub mod graph_owners_filters;
 pub mod graph_owners_colors_review;
+
+impl PathGraph {
+    pub fn n(&self) -> Color {
+        self.n
+    }
+
+    pub fn b_max(&self) -> Km {
+        self.b_max
+    }
+
+
+    pub fn next_step(&self) -> Step {
+        self.next_step
+    }
+
+    pub fn color_origin(&self) -> Color {
+        self.color_origin
+    }
+
+    pub fn owners_graph(&self) -> &OwnersByStep {
+        &self.owners_graph
+    }
+
+    pub fn table_nodes_by_action(&self) -> &TableNodesByAction {
+        &self.table_nodes_by_action
+    }
+
+    pub fn table_edges(&self) -> &TableEdges {
+        &self.table_edges
+    }
+
+    pub fn table_lines(&self) -> &TableLines {
+        &self.table_lines
+    }
+
+    pub fn table_color_nodes(&self) -> &TableColorNodes {
+        &self.table_color_nodes
+    }
+
+    pub fn action_parent_id(&self) -> &Option<ActionId> {
+        &self.action_parent_id
+    }
+
+    pub fn nodes_to_delete(&self) -> &NodesIdSet {
+        &self.nodes_to_delete
+    }
+
+    pub fn required_review_ownwers(&self) -> bool {
+        self.required_review_ownwers
+    }
+
+    pub fn max_review_stages(&self) -> u32 {
+        self.max_review_stages
+    }
+
+    pub fn valid(&self) -> bool {
+        self.valid
+    }
+}

@@ -2,8 +2,9 @@
 use crate::tsp::pathset::components::nodes::node::Node;
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
 use crate::tsp::utils::inmutable_dict::{InmutableDict, InmutableDictCommons};
+use std::fmt::Debug;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct TableNodes {
     table : InmutableDict<NodeId, Node>
 }

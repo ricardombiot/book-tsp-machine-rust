@@ -1,4 +1,5 @@
 
+use crate::tsp::actions::action;
 use crate::tsp::utils::alias::{Color, Step, ActionId};
 use crate::tsp::pathset::graph::path_graph::PathGraph;
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
@@ -23,6 +24,9 @@ impl PathGraph {
         }
     }
 
+    pub fn make_up(&mut self, color : Color, action_id : ActionId){
+        self._make_up(&color, &action_id);
+    }
     fn _make_up(&mut self, color : &Color, action_id : &ActionId){
         let last_step = self.next_step - (1 as Step);
 
@@ -30,7 +34,7 @@ impl PathGraph {
         let node_id = node.id().clone();
         
         self._add_line();
-        self.next_step += 1 as Step;
+        //self.next_step += 1 as Step;
         self.action_parent_id = Some(action_id.clone());
         
         //# $ O(N^3) $

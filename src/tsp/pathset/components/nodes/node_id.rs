@@ -2,6 +2,7 @@ use crate::tsp::utils::alias::{Color, Km, Step, ActionId, UniqueNodeKey, InfoAct
 use crate::tsp::utils::generator_node_key;
 use std::collections::HashSet;
 use std::fmt;
+use std::fmt::Debug;
 
 #[derive(Debug, Eq, Clone)]
 pub struct NodeId {

@@ -4,8 +4,9 @@ use crate::tsp::utils::inmutable_dict::{DictInmutableWapper, InmutableDict, Inmu
 use crate::tsp::pathset::graph::path_graph::table_nodes::TableNodes;
 use crate::tsp::pathset::components::nodes::node::Node;
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
+use std::fmt::Debug;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct TableNodesByAction {
     table : InmutableDict<ActionId, TableNodes>
 }

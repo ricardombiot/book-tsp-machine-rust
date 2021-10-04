@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::hash::Hash;
+use std::fmt::Debug;
 
 pub trait DictInmutableWapper<K,V> where K : Hash + Eq + Clone, V: Clone{
     
@@ -64,15 +65,14 @@ pub trait DictInmutableWapper<K,V> where K : Hash + Eq + Clone, V: Clone{
     }
 }
 
-
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct InmutableDict<K,V> where K : Hash + Eq + Clone, V: Clone {
     dict : HashMap<K,V>,
 }
 
 impl<K,V> InmutableDict<K,V> where 
-K : Hash + Eq + Clone, 
-V: Clone {
+K : Hash + Eq + Clone + Debug, 
+V: Clone + Debug{
 
     pub fn new() -> Self {
         let dict : HashMap<K, V> = HashMap::new();
@@ -90,7 +90,7 @@ V: Clone {
 
     pub fn to_list_keys(&self) -> Vec<K> {
         let mut iterable_list : Vec<K> = Vec::new();
-        for (k, v ) in self.dict.iter() {
+        for (k, _v ) in self.dict.iter() {
             iterable_list.push(k.clone());
         }
 
@@ -127,8 +127,8 @@ impl<K,V> DictInmutableWapper<K,V> for InmutableDict<K,V> where
 
 
 pub trait InmutableDictCommons<K, V> where 
-K : Hash + Eq + Clone, 
-V: Clone {
+K : Hash + Eq + Clone + Debug, 
+V: Clone + Debug {
 
     fn dict(&self) -> & InmutableDict<K, V> ;
     fn dict_mut(&mut self) -> &mut InmutableDict<K, V> ;

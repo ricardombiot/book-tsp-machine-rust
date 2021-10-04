@@ -3,8 +3,9 @@ use crate::tsp::utils::alias::{Step};
 use crate::tsp::pathset::components::nodes::node_id::NodesIdSet;
 use crate::tsp::utils::inmutable_dict::{DictInmutableWapper, InmutableDict,InmutableDictCommons};
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
+use std::fmt::Debug;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct TableLines {
     table : InmutableDict<Step, NodesIdSet>
 }

@@ -1,7 +1,7 @@
 use crate::tsp::utils::alias::{Color};
 use crate::tsp::pathset::graph::path_graph::PathGraph;
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
-use crate::tsp::pathset::components::nodes::node_id::NodeId;
+use crate::tsp::pathset::components::nodes::node_id::{NodeId, NodesIdSet};
 
 impl PathGraph {
     pub(super) fn _delete_node_by_color(&mut self, color : &Color){
@@ -59,6 +59,8 @@ impl PathGraph {
                     break;
                 }
             }
+
+            self.nodes_to_delete = NodesIdSet::new();
         }
     }
 

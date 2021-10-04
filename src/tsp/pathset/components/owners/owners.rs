@@ -4,8 +4,9 @@ use crate::tsp::pathset::components::nodes::node_id::NodeId;
 use crate::tsp::utils::generator_node_key;
 
 use std::collections::HashMap;
+use std::fmt::Debug;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct OwnersByStep {
     // The space of all possible keys
     bbnnn : UniqueNodeKey,

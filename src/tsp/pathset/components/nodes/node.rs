@@ -3,12 +3,14 @@ use crate::tsp::pathset::components::nodes::node_id::NodeId;
 use crate::tsp::pathset::components::owners::owners::OwnersByStep;
 use crate::tsp::pathset::components::nodes::node::dict_edgeid_by_nodeid::DictEdgeIdByNodeId;
 
+use std::fmt::Debug;
+
 pub mod dict_edgeid_by_nodeid;
 pub mod node_parents_and_sons;
 pub mod node_owners;
 pub mod node_join;
 
-#[derive(Clone)]
+#[derive(Clone,Debug)]
 pub struct Node {
     id : NodeId,
     action_id : ActionId,
@@ -74,6 +76,15 @@ impl Node {
 
     pub fn action_id(&self) -> ActionId {
         self.action_id.clone()
+    }
+
+
+    pub fn parents(&self) -> &DictEdgeIdByNodeId{
+        &self.parents
+    }
+
+    pub fn sons(&self) -> &DictEdgeIdByNodeId{
+        &self.sons
     }
 
 

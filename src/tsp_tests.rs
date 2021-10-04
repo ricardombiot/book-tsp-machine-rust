@@ -23,7 +23,9 @@ pub mod utils {
 }
 
 #[cfg(test)]
-pub mod pathset {
+pub mod path_graph {
+    pub mod path_graph_test;
+
     pub mod components {
         pub mod nodes {
             pub mod node_test;
