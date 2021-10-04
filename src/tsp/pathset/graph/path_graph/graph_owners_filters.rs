@@ -4,6 +4,7 @@ use crate::tsp::pathset::graph::path_graph::PathGraph;
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
 use crate::tsp::pathset::graph::path_graph::OwnersByStep;
 use crate::tsp::pathset::components::nodes::node::Node;
+use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 
 impl PathGraph {
 
@@ -156,49 +157,25 @@ impl PathGraph {
     }
 
 
+    pub(super) fn _review_sons_filtering_by_parents_interection_owners(&mut self, step : &Step){
+        let current_step = step.clone();
+        let last_step = self.next_step - (1 as Step);
+        if current_step == last_step && self.valid {
+            // # $ O(N^2) $ nodes by step
+            let set_nodes = self.table_lines.get(&step).unwrap().clone();
+            for node_id in set_nodes {
+                let action_id : ActionId = node_id.action_id();
+                let node = self.table_nodes_by_action.get_node(&action_id, &node_id).unwrap();
+                
+                let check_parents = node.is_valid() && !self.was_saved_to_delete(&node_id);
+                if check_parents {
+                    // # $ O(N^4) $
+                    if self._filter_by_parents_intersection_owners(&node_id) {
+                        self._save_to_delete(&node_id);
+                    }
+                }
+            }
+        }
+    }
 
-    /*
-    # $ O(N^4) $
-function filter_by_parents_intersection_owners!(graph :: Graph, node :: Node) :: Bool
-    first_step = Step(0)
-    if node.step != first_step
-        owners_parents_union :: Union{OwnersByStep,Nothing} = nothing
-
-        # $ O(N) $
-        for (parent_node_id, edge_id) in node.parents
-            parent_node = get_node(graph, parent_node_id)
-
-            if parent_node.owners.valid
-                if owners_parents_union == nothing
-                    owners_parents_union = deepcopy(parent_node.owners)
-                else
-                    # $ O(N) Steps * O(N^2) = O(N^3) $
-                    Owners.union!(owners_parents_union, parent_node.owners)
-                end
-            end
-        end
-
-        if owners_parents_union == nothing
-            return true
-        elseif owners_parents_union.valid
-            # $ O(N^3) $
-            PathNode.intersect_owners!(node, owners_parents_union)
-            if !node.owners.valid
-                return true
-            else
-                # $ O(N) $
-                if node.step != Step(0)
-                    remove_sons_edges_arent_owner_node!(graph, node)
-                end
-
-                return false
-            end
-        else
-            return false
-        end
-    else
-        return false
-    end
-end
-    */
 }

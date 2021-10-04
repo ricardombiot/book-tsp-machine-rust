@@ -26,7 +26,7 @@ impl PathGraph {
     fn _make_up(&mut self, color : &Color, action_id : &ActionId){
         let last_step = self.next_step - (1 as Step);
 
-        let node = self._new_node(self.color_origin.clone(), action_id.clone());
+        let node = self._new_node(color.clone(), action_id.clone());
         let node_id = node.id().clone();
         
         self._add_line();

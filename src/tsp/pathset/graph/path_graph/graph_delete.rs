@@ -31,6 +31,10 @@ impl PathGraph {
         self._make_validation_graph_by_owners();
     }
 
+    pub(super) fn was_saved_to_delete(&self, node_id : &NodeId) -> bool {
+        self.nodes_to_delete.contains(node_id)
+    }
+
     pub(super) fn _make_validation_graph_by_owners(&mut self){
         self.valid = self.owners_graph.valid();
     }

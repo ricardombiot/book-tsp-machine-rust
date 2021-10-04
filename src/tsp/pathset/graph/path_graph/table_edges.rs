@@ -34,6 +34,6 @@ impl InmutableDictCommons<EdgeId, Edge> for TableEdges {
         &mut self.table
     }
 
-    fn join_item(original_edge : &mut Edge, join_edge: &Edge) {
+    fn join_item(_original_edge : &mut Edge, _join_edge: &Edge) {
     }
 }

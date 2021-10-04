@@ -72,9 +72,10 @@ impl TableNodes {
         self.put(node.id().clone(), node);
     }
 
+    /*
     fn get_node_mut<'user>(&'user mut self, node_id : &'user NodeId) -> Option<&'user mut Node>{
         self.get_mut(node_id)
-    }
+    } */
 }
 
 impl InmutableDictCommons<NodeId, Node> for TableNodes {
