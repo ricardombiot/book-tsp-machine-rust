@@ -26,6 +26,7 @@ pub mod utils {
 pub mod path_graph {
     pub mod path_graph_test;
     pub mod path_graph_delete_test;
+    pub mod path_graph_join_test;
 
     pub mod components {
         pub mod nodes {

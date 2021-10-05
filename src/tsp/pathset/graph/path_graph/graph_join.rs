@@ -3,7 +3,7 @@ use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 
 impl PathGraph {
 
-    pub fn join(&mut self, inmutable_graph_join : &PathGraph){
+    pub fn join(&mut self, inmutable_graph_join : &PathGraph) -> bool{
         let is_valid = self._is_valid_join(&inmutable_graph_join);
         if is_valid {
             
@@ -23,6 +23,10 @@ impl PathGraph {
             self._join_edges(graph_join);
 
             self._join_max_stages_review(graph_join);
+
+            return true;
+        }else{
+            return false;
         }
     }
 

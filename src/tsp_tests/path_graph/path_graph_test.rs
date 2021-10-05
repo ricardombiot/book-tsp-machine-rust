@@ -9,6 +9,27 @@ use crate::tsp::pathset::graph::path_graph::PathGraph;
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 use crate::tsp::utils::generator_ids;
 
+
+pub fn should_be_only_node_id(set_nodes : &NodesIdSet, expected_node_id : &NodeId){
+    // Only should be root node
+    assert_eq!(set_nodes.len(), 1);
+    let root_node_id = set_nodes.iter().next().unwrap();
+    //println!("{:?}", root_node_id);
+    let ok_root_id = root_node_id.eq(expected_node_id);
+    assert!(ok_root_id);
+}
+
+pub fn check_edge(graph : &PathGraph, origin_id: &NodeId, destine_id : &NodeId) -> EdgeId {
+    let id_edge = EdgeId::new(origin_id, destine_id);
+
+    let edge = graph.table_edges().get(&id_edge).unwrap();
+    assert_eq!(edge.id().destine_id(), destine_id);
+    assert_eq!(edge.id().origin_id(), origin_id);
+
+    return id_edge;
+}
+
+
 #[test]
 fn test_graph_init(){
     let n : Color = 4;
@@ -39,14 +60,7 @@ fn test_graph_init(){
     node_root.owners().have(&expected_node_id);
 }
 
-pub fn should_be_only_node_id(set_nodes : &NodesIdSet, expected_node_id : &NodeId){
-    // Only should be root node
-    assert_eq!(set_nodes.len(), 1);
-    let root_node_id = set_nodes.iter().next().unwrap();
-    //println!("{:?}", root_node_id);
-    let ok_root_id = root_node_id.eq(expected_node_id);
-    assert!(ok_root_id);
-}
+
 
 #[test]
 fn test_graph_make_up(){
@@ -80,13 +94,15 @@ fn test_graph_make_up(){
     should_be_only_node_id(set_nodes, &node_id_s1_2);
 
 
-    let origin_id = &node_id_s0_0;
+   /* let origin_id = &node_id_s0_0;
     let destine_id = &node_id_s1_2;
     let id_edge = EdgeId::new(origin_id, destine_id);
 
     let edge = graph.table_edges().get(&id_edge).unwrap();
     assert_eq!(edge.id().destine_id(), destine_id);
-    assert_eq!(edge.id().origin_id(), origin_id);
+    assert_eq!(edge.id().origin_id(), origin_id);*/
+
+    let id_edge = check_edge(&graph, &node_id_s0_0, &node_id_s1_2);
 
     // Parents 
     let node_s0_0 = graph.table_nodes_by_action().get_node(&action_id_s0_0, &node_id_s0_0).unwrap();
