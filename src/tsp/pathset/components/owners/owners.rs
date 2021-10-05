@@ -124,12 +124,12 @@ impl OwnersByStep {
 
     pub fn union(&mut self, owners_b : &OwnersByStep) {
         if self._can_be_valid_operation(&owners_b){
-            println!("Making union...");
+            //println!("Making union...");
             for step in 0..self.max_step()+1 {
                let borrow_owners_set_a = self.get_mut_step_owners(step).unwrap();
                let borrow_owners_set_b = owners_b.get_step_owners(step).unwrap();
 
-               println!("Step {} ...", step);
+               //println!("Step {} ...", step);
                borrow_owners_set_a.union(borrow_owners_set_b);
             }
         }else{

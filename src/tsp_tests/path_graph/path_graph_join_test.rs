@@ -1,14 +1,14 @@
 
 
 use crate::tsp::pathset::components::edges::edge_id::EdgeId;
-use crate::tsp::pathset::components::nodes::node::Node;
-use crate::tsp::utils::alias::{Color, Km, Step, UniqueNodeKey};
+use crate::tsp::pathset::components::owners::owners::OwnersByStep;
+use crate::tsp::utils::alias::{Color, Km, Step};
 use crate::tsp::pathset::components::nodes::node_id::{NodeId, NodesIdSet};
 use crate::tsp::pathset::graph::path_graph::PathGraph;
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 use crate::tsp::pathset::components::nodes::node::dict_edgeid_by_nodeid::DictEdgeIdByNodeId;
 use crate::tsp::utils::generator_ids;
-use crate::tsp_tests::path_graph::path_graph_test::{should_be_only_node_id, check_edge};
+use crate::tsp_tests::path_graph::path_graph_test::{check_edge};
 
 
 /*
@@ -169,8 +169,63 @@ fn test_join(){
  
 
     // TEST OWNERS
+    let owners_to_check = graph_join.owners_graph();
+    check_have_owners(owners_to_check, 0 as Step, vec![&node_id_s0_0]);
+    check_have_owners(owners_to_check, 1 as Step, vec![&node_id_s1_2, &node_id_s1_4]);
+    check_have_owners(owners_to_check, 2 as Step, vec![&node_id_s2_2, &node_id_s2_4]);
+    check_have_owners(owners_to_check, 3 as Step, vec![&node_id_s3_6_k22, &node_id_s3_6_k24]);
+
+    let owners_to_check = node_s0_0.owners();
+    check_have_owners(owners_to_check, 0 as Step, vec![&node_id_s0_0]);
+    check_have_owners(owners_to_check, 1 as Step, vec![&node_id_s1_2, &node_id_s1_4]);
+    check_have_owners(owners_to_check, 2 as Step, vec![&node_id_s2_2, &node_id_s2_4]);
+    check_have_owners(owners_to_check, 3 as Step, vec![&node_id_s3_6_k22, &node_id_s3_6_k24]);
 
 
+    let owners_to_check = node_s1_2.owners();
+    check_have_owners(owners_to_check, 0 as Step, vec![&node_id_s0_0]);
+    check_have_owners(owners_to_check, 1 as Step, vec![&node_id_s1_2]);
+    check_have_owners(owners_to_check, 2 as Step, vec![&node_id_s2_4]);
+    check_have_owners(owners_to_check, 3 as Step, vec![&node_id_s3_6_k24]);
+
+    let owners_to_check = node_s1_4.owners();
+    check_have_owners(owners_to_check, 0 as Step, vec![&node_id_s0_0]);
+    check_have_owners(owners_to_check, 1 as Step, vec![&node_id_s1_4]);
+    check_have_owners(owners_to_check, 2 as Step, vec![&node_id_s2_2]);
+    check_have_owners(owners_to_check, 3 as Step, vec![&node_id_s3_6_k22]);
+
+    let owners_to_check = node_s2_4.owners();
+    check_have_owners(owners_to_check, 0 as Step, vec![&node_id_s0_0]);
+    check_have_owners(owners_to_check, 1 as Step, vec![&node_id_s1_2]);
+    check_have_owners(owners_to_check, 2 as Step, vec![&node_id_s2_4]);
+    check_have_owners(owners_to_check, 3 as Step, vec![&node_id_s3_6_k24]);
+
+    let owners_to_check = node_s2_2.owners();
+    check_have_owners(owners_to_check, 0 as Step, vec![&node_id_s0_0]);
+    check_have_owners(owners_to_check, 1 as Step, vec![&node_id_s1_4]);
+    check_have_owners(owners_to_check, 2 as Step, vec![&node_id_s2_2]);
+    check_have_owners(owners_to_check, 3 as Step, vec![&node_id_s3_6_k22]);
+
+    let owners_to_check = node_s3_6_k24.owners();
+    check_have_owners(owners_to_check, 0 as Step, vec![&node_id_s0_0]);
+    check_have_owners(owners_to_check, 1 as Step, vec![&node_id_s1_2]);
+    check_have_owners(owners_to_check, 2 as Step, vec![&node_id_s2_4]);
+    check_have_owners(owners_to_check, 3 as Step, vec![&node_id_s3_6_k24]);
+
+    let owners_to_check = node_s3_6_k22.owners();
+    check_have_owners(owners_to_check, 0 as Step, vec![&node_id_s0_0]);
+    check_have_owners(owners_to_check, 1 as Step, vec![&node_id_s1_4]);
+    check_have_owners(owners_to_check, 2 as Step, vec![&node_id_s2_2]);
+    check_have_owners(owners_to_check, 3 as Step, vec![&node_id_s3_6_k22]);
+
+}
+
+fn check_have_owners(owners_to_check : &OwnersByStep, step: Step, list: Vec<&NodeId>){
+    let owners_set = owners_to_check.get_step_owners(step).unwrap();
+
+    for node_id in list {
+        assert!(owners_set.have(node_id.key()));
+    }
 }
 
 fn check_dict_edges_by_nodeid(dict : &DictEdgeIdByNodeId, list_keys : Vec<(&NodeId, &EdgeId)>){
@@ -195,260 +250,21 @@ fn check_set_nodes(set_nodes: &NodesIdSet, list_keys : Vec<&NodeId>){
     assert!(set_nodes.is_empty())
 }
 
+#[test]
+fn test_up_invalid_by_repeted_color(){
+    let n : Color = 10 as Color;
 
+    let graph_join_original = build_join();
 
+    let mut graph_join = graph_join_original.clone();
+    let action_id_s4_2 = generator_ids::get_action_id(n, 4 as Km, 2 as Color);
+    graph_join.up(2 as Color, action_id_s4_2);
+    assert_eq!(graph_join.valid(), false);
 
-/*
-function test_join()
-    n = Color(10)
-    b = Km(10)
+    let mut graph_join = graph_join_original.clone();
+    let action_id_s4_4 = generator_ids::get_action_id(n, 4 as Km, 4 as Color);
+    graph_join.up(4 as Color, action_id_s4_4);
+    assert_eq!(graph_join.valid(), false);
 
-    action_id_s0_0 = GeneratorIds.get_action_id(Color(n), Km(0), Color(0))
-    action_id_s1_2 = GeneratorIds.get_action_id(Color(n), Km(1), Color(2))
-    action_id_s1_4 = GeneratorIds.get_action_id(Color(n), Km(1), Color(4))
-    action_id_s2_4 = GeneratorIds.get_action_id(Color(n), Km(2), Color(4))
-    action_id_s2_2 = GeneratorIds.get_action_id(Color(n), Km(2), Color(2))
-    action_id_s3_6 = GeneratorIds.get_action_id(Color(n), Km(3), Color(6))
+}
 
-    node00_id = NodeIdentity.new(n, b, Step(0), action_id_s0_0)
-    node12_id = NodeIdentity.new(n, b, Step(1),action_id_s1_2, action_id_s0_0)
-    node14_id = NodeIdentity.new(n, b, Step(1), action_id_s1_4, action_id_s0_0)
-
-    node24_id = NodeIdentity.new(n, b, Step(2),action_id_s2_4, action_id_s1_2)
-    node22_id = NodeIdentity.new(n, b, Step(2),action_id_s2_2, action_id_s1_4)
-
-    node36_22_id = NodeIdentity.new(n, b, Step(3),action_id_s3_6, action_id_s2_2)
-    node36_24_id = NodeIdentity.new(n, b, Step(3),action_id_s3_6, action_id_s2_4)
-
-    ## Join
-    graph_join = build_join()
-
-    ## Edges
-
-    edge_00_12 = PathGraph.get_edge(graph_join, node00_id, node12_id)
-    @test edge_00_12.id.origin_id == node00_id
-    @test edge_00_12.id.destine_id == node12_id
-
-    edge_00_14 = PathGraph.get_edge(graph_join, node00_id, node14_id)
-    @test edge_00_14.id.origin_id == node00_id
-    @test edge_00_14.id.destine_id == node14_id
-
-    edge_12_24 = PathGraph.get_edge(graph_join, node12_id, node24_id)
-    @test edge_12_24.id.origin_id == node12_id
-    @test edge_12_24.id.destine_id == node24_id
-
-    edge_14_22 = PathGraph.get_edge(graph_join, node14_id, node22_id)
-    @test edge_14_22.id.origin_id == node14_id
-    @test edge_14_22.id.destine_id == node22_id
-
-    edge_22_36 = PathGraph.get_edge(graph_join, node22_id, node36_22_id)
-    @test edge_22_36.id.origin_id == node22_id
-    @test edge_22_36.id.destine_id == node36_22_id
-
-    edge_24_36 = PathGraph.get_edge(graph_join, node24_id, node36_24_id)
-    @test edge_24_36.id.origin_id == node24_id
-    @test edge_24_36.id.destine_id == node36_24_id
-
-    # testing nodes
-
-    @test PathGraph.get_nodes_by_color(graph_join, Color(0)) == NodesIdSet([node00_id])
-    @test PathGraph.get_nodes_by_color(graph_join, Color(2)) == NodesIdSet([node12_id, node22_id])
-    @test PathGraph.get_nodes_by_color(graph_join, Color(4)) == NodesIdSet([node14_id, node24_id])
-    @test PathGraph.get_nodes_by_color(graph_join, Color(6)) == NodesIdSet([node36_22_id, node36_24_id])
-
-
-    node00 = PathGraph.get_node(graph_join, node00_id)
-    @test PathNode.have_parents(node00) == false
-    @test PathNode.have_sons(node00) == true
-    @test haskey(node00.sons, node12_id) == true
-    @test node00.sons[node12_id] == edge_00_12.id
-    @test haskey(node00.sons, node14_id) == true
-    @test node00.sons[node14_id] == edge_00_14.id
-
-    node12 = PathGraph.get_node(graph_join, node12_id)
-    @test PathNode.have_parents(node12) == true
-    @test haskey(node12.parents, node00_id) == true
-    @test node12.parents[node00_id] == edge_00_12.id
-    @test PathNode.have_sons(node12) == true
-    @test haskey(node12.sons, node24_id) == true
-    @test node12.sons[node24_id] == edge_12_24.id
-
-    node14 = PathGraph.get_node(graph_join, node14_id)
-    @test PathNode.have_parents(node14) == true
-    @test haskey(node14.parents, node00_id) == true
-    @test node14.parents[node00_id] == edge_00_14.id
-    @test PathNode.have_sons(node14) == true
-    @test haskey(node14.sons, node22_id) == true
-    @test node14.sons[node22_id] == edge_14_22.id
-
-    node24 = PathGraph.get_node(graph_join, node24_id)
-    @test PathNode.have_parents(node24) == true
-    @test haskey(node24.parents, node12_id) == true
-    @test node24.parents[node12_id] == edge_12_24.id
-    @test PathNode.have_sons(node24) == true
-    @test haskey(node24.sons, node36_24_id) == true
-    @test node24.sons[node36_24_id] == edge_24_36.id
-
-    node22 = PathGraph.get_node(graph_join, node22_id)
-    @test PathNode.have_parents(node22) == true
-    @test haskey(node22.parents, node14_id) == true
-    @test node22.parents[node14_id] == edge_14_22.id
-    @test PathNode.have_sons(node22) == true
-    @test haskey(node22.sons, node36_22_id) == true
-    @test node22.sons[node36_22_id] == edge_22_36.id
-
-    node36_22 = PathGraph.get_node(graph_join, node36_22_id)
-    @test PathNode.have_parents(node36_22) == true
-    @test haskey(node36_22.parents, node22_id) == true
-    @test node36_22.parents[node22_id] == edge_22_36.id
-    @test PathNode.have_sons(node36_22) == false
-
-    node36_24 = PathGraph.get_node(graph_join, node36_24_id)
-    @test PathNode.have_parents(node36_24) == true
-    @test haskey(node36_24.parents, node24_id) == true
-    @test node36_24.parents[node24_id] == edge_24_36.id
-    @test PathNode.have_sons(node36_24) == false
-
-    #= Check Owners =#
-    list_all_nodes = [node00, node12, node14, node24, node22, node36_22, node36_24]
-    list_all_edges = [edge_00_12, edge_00_14, edge_12_24, edge_14_22, edge_22_36, edge_24_36]
-    list_nodes_12 = [node00, node12, node24, node36_24]
-    list_edges_12 = [edge_00_12, edge_12_24, edge_24_36]
-
-    list_nodes_14 = [node00, node14, node22, node36_22]
-    list_edges_14 = [edge_00_12, edge_14_22, edge_22_36]
-    # node00_id
-    @test Owners.have(graph_join.owners, Step(0), node00_id)
-
-    for node in list_all_nodes
-        PathNode.have_owner(node, Step(0), node00_id)
-    end
-    #=
-    for edge in list_all_edges
-        PathEdge.have_owner(edge, Step(0), node00_id)
-    end
-    =#
-
-    # node12_id
-    @test Owners.have(graph_join.owners, Step(1), node12_id)
-    for node in list_nodes_12
-        PathNode.have_owner(node, Step(1), node12_id)
-    end
-    #=
-    for edge in list_edges_12
-        PathEdge.have_owner(edge, Step(1), node12_id)
-    end
-    =#
-
-    for node in list_nodes_14
-        !PathNode.have_owner(node, Step(1), node12_id)
-    end
-    #=
-    for edge in list_edges_14
-        !PathEdge.have_owner(edge, Step(1), node12_id)
-    end
-    =#
-
-    # node24_id
-    @test Owners.have(graph_join.owners, Step(2), node24_id)
-    for node in list_nodes_12
-        PathNode.have_owner(node, Step(2), node24_id)
-    end
-    #=
-    for edge in list_edges_12
-        PathEdge.have_owner(edge, Step(2), node24_id)
-    end
-    =#
-
-
-    for node in list_nodes_14
-        !PathNode.have_owner(node, Step(2), node24_id)
-    end
-    #=
-    for edge in list_edges_14
-        !PathEdge.have_owner(edge, Step(2), node24_id)
-    end
-    =#
-
-    # node24_id
-    @test Owners.have(graph_join.owners, Step(3), node36_24_id)
-    for node in list_nodes_12
-        PathNode.have_owner(node, Step(3), node36_24_id)
-    end
-    #=
-    for edge in list_edges_12
-        PathEdge.have_owner(edge, Step(3), node36_24_id)
-    end
-    =#
-
-    for node in list_nodes_14
-        !PathNode.have_owner(node, Step(3), node36_24_id)
-    end
-    #=
-    for edge in list_edges_14
-        !PathEdge.have_owner(edge, Step(3), node36_24_id)
-    end
-    =#
-
-    # node14_id
-    @test Owners.have(graph_join.owners, Step(1), node14_id)
-    for node in list_nodes_14
-        PathNode.have_owner(node, Step(1), node14_id)
-    end
-    #=
-    for edge in list_edges_14
-        PathEdge.have_owner(edge, Step(1), node14_id)
-    end
-    =#
-
-    for node in list_nodes_12
-        !PathNode.have_owner(node, Step(1), node14_id)
-    end
-    #=
-    for edge in list_edges_12
-        !PathEdge.have_owner(edge, Step(1), node14_id)
-    end
-    =#
-
-    # node22_id
-    @test Owners.have(graph_join.owners, Step(2), node22_id)
-    for node in list_nodes_14
-        PathNode.have_owner(node, Step(2), node22_id)
-    end
-    #=
-    for edge in list_edges_14
-        PathEdge.have_owner(edge, Step(2), node22_id)
-    end
-    =#
-
-    for node in list_nodes_12
-        !PathNode.have_owner(node, Step(2), node22_id)
-    end
-    #=
-    for edge in list_edges_12
-        !PathEdge.have_owner(edge, Step(2), node22_id)
-    end
-    =#
-
-    # node36_22_id
-    @test Owners.have(graph_join.owners, Step(3), node36_22_id)
-    for node in list_nodes_14
-        PathNode.have_owner(node, Step(3), node36_22_id)
-    end
-    #=
-    for edge in list_edges_14
-        PathEdge.have_owner(edge, Step(3), node36_22_id)
-    end
-    =#
-
-    for node in list_nodes_12
-        !PathNode.have_owner(node, Step(3), node36_22_id)
-    end
-    #=
-    for edge in list_edges_12
-        !PathEdge.have_owner(edge, Step(3), node36_22_id)
-    end
-    =#
-
-end
-*/
