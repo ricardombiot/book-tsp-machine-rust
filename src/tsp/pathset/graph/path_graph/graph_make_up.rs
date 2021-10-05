@@ -7,10 +7,10 @@ use crate::tsp::pathset::components::nodes::node_id::NodeId;
 
 impl PathGraph {
 
-    pub fn up(&mut self, color : &Color, action_id : &ActionId){
+    pub fn up(&mut self, color : Color, action_id : ActionId){
         if self.valid {
             // # $ O(N^4) $ deleting all nodes
-            self._delete_node_by_color(color);
+            self._delete_node_by_color(&color);
 
             /*
             # Maximum theoretical $ O(N^{10}) $
@@ -20,7 +20,7 @@ impl PathGraph {
             self._review_owners_all_graph();
 
             //# $ O(N^3) $
-            self._make_up(color, action_id)
+            self._make_up(&color, &action_id)
         }
     }
 
@@ -28,22 +28,23 @@ impl PathGraph {
         self._make_up(&color, &action_id);
     }
     fn _make_up(&mut self, color : &Color, action_id : &ActionId){
-        let last_step = self.next_step - (1 as Step);
+        if self.valid {
+            let last_step = self.next_step - (1 as Step);
 
-        let node = self._new_node(color.clone(), action_id.clone());
-        let node_id = node.id().clone();
+            let node = self._new_node(color.clone(), action_id.clone());
+            let node_id = node.id().clone();
+            
+            self._add_line();
+            self.action_parent_id = Some(action_id.clone());
+            
+            //# $ O(N^3) $
+            self._add_node(node);
         
-        self._add_line();
-        //self.next_step += 1 as Step;
-        self.action_parent_id = Some(action_id.clone());
+            //# $ O(N) $
+            self._add_all_nodes_last_step_as_parents(last_step, node_id);
         
-        //# $ O(N^3) $
-        self._add_node(node);
-    
-        //# $ O(N) $
-        self._add_all_nodes_last_step_as_parents(last_step, node_id);
-    
-        self.next_step += 1 as Step;
+            self.next_step += 1 as Step;
+        }
     }
 
     fn _add_all_nodes_last_step_as_parents(&mut self, last_step: Step, node_son_id : NodeId){

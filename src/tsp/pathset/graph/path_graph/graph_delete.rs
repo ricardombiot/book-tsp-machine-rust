@@ -24,7 +24,7 @@ impl PathGraph {
         }
     }
 
-    pub(super) fn _save_to_delete(&mut self, node_id : &NodeId) {
+    pub fn _save_to_delete(&mut self, node_id : &NodeId) {
         self.nodes_to_delete.insert(node_id.clone());
         self.owners_graph.pop(node_id);
         self.required_review_ownwers = true;
@@ -39,7 +39,7 @@ impl PathGraph {
         self.valid = self.owners_graph.valid();
     }
 
-    pub(super) fn _apply_node_deletes(&mut self){
+    pub fn _apply_node_deletes(&mut self){
         /*
         # It will be execute less than $ O(N^3) $ delete total nodes
         # before will detected that graph is unvalid and avoid
