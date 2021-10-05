@@ -88,11 +88,11 @@ fn test_graph_make_up(){
     assert_eq!(edge.id().destine_id(), destine_id);
     assert_eq!(edge.id().origin_id(), origin_id);
 
-
+    // Parents 
     let node_s0_0 = graph.table_nodes_by_action().get_node(&action_id_s0_0, &node_id_s0_0).unwrap();
     let node_s1_2 = graph.table_nodes_by_action().get_node(&action_id_s1_2, &node_id_s1_2).unwrap();
 
-    // Parents 
+
     assert_eq!(node_s0_0.have_parents(), false);
     assert_eq!(node_s0_0.have_sons(), true);
     assert_eq!(node_s0_0.sons_list(), [(node_id_s1_2.clone(),id_edge.clone())]);
@@ -118,88 +118,95 @@ fn test_graph_make_up(){
 
 
 
-
-/* 
-
-function test_up_graph()
-    n = Color(10)
-    b = Km(20)
-    action_id_s0_0 = GeneratorIds.get_action_id(Color(n), Km(0), Color(0))
-    action_id_s1_2 = GeneratorIds.get_action_id(Color(n), Km(1), Color(2))
-    ## Create graph
-    graph = PathGraph.new(n, b, Color(0), action_id_s0_0)
-
-    PathGraph.make_up!(graph, Color(2), action_id_s1_2)
-    @test graph.next_step == Step(2)
-
-    ## Testing
-    node0_id = NodeIdentity.new(n, b, Step(0), action_id_s0_0)
-    node2_id = NodeIdentity.new(n, b, Step(1), action_id_s1_2, action_id_s0_0)
-
-    @test graph.table_color_nodes[Color(0)] == NodesIdSet([node0_id])
-    @test graph.table_lines[Step(0)] == NodesIdSet([node0_id])
-
-    @test graph.table_color_nodes[Color(2)] == NodesIdSet([node2_id])
-    @test graph.table_lines[Step(1)] == NodesIdSet([node2_id])
-
-    origin_id = node0_id
-    destine_id = node2_id
-
-    id_edge = EdgeIdentity.new(origin_id, destine_id)
-
-    edge = graph.table_edges[id_edge]
-    @test edge.id.origin_id == origin_id
-    @test edge.id.destine_id == destine_id
-
-    edge = PathGraph.get_edge(graph, node0_id, node2_id)
-    @test edge.id.origin_id == origin_id
-    @test edge.id.destine_id == destine_id
-
-    ## Check parents & Sons
-
-    node0 = PathGraph.get_node(graph, node0_id)
-    @test PathNode.have_parents(node0) == false
-    @test PathNode.have_sons(node0) == true
-    @test haskey(node0.sons, node2_id) == true
-    @test node0.sons[node2_id] == id_edge
-
-    node2 = PathGraph.get_node(graph, node2_id)
-    @test PathNode.have_parents(node2) == true
-    @test haskey(node2.parents, node0_id) == true
-    @test node2.parents[node0_id] == id_edge
-    @test PathNode.have_sons(node2) == false
-
-    ## Check owners
-
-    @test Owners.have(graph.owners, Step(0), node0_id)
-    @test PathNode.have_owner(node0, Step(0), node0_id)
-    @test PathNode.have_owner(node2, Step(0), node0_id)
-    #@test PathEdge.have_owner(edge, Step(0), node0_id)
-
-    @test Owners.have(graph.owners, Step(1), node2_id)
-    @test PathNode.have_owner(node0, Step(1), node2_id)
-    @test PathNode.have_owner(node2, Step(1), node2_id)
-    #@test PathEdge.have_owner(edge, Step(1), node2_id)
-
-end
-*/
-
 #[test]
 fn test_graph_make_second_up(){
-    let n : Color = 10 as Color;
-    let b_max = 20 as Km;
+    let n : Color = 6 as Color;
+    let b_max = 6 as Km;
+    let color_origin = 1 as Color;
 
-    let action_id_s0_0 = generator_ids::get_action_id(n, 0 as Km, 0 as Color); 
+    let action_id_s0_1 = generator_ids::get_action_id(n, 0 as Km, 1 as Color); 
     let action_id_s1_2 = generator_ids::get_action_id(n, 1 as Km, 2 as Color); 
     let action_id_s2_4 = generator_ids::get_action_id(n, 2 as Km, 4 as Color); 
     //## Create graph
-    let mut graph = PathGraph::new(n, b_max, 0 as Color, action_id_s0_0);
+    let mut graph = PathGraph::new(n, b_max, color_origin.clone(), action_id_s0_1);
     graph.make_up(2 as Color, action_id_s1_2);
     graph.make_up(4 as Color, action_id_s2_4);
 
     assert_eq!(graph.next_step(), 3 as Step);
     assert_eq!(graph.get_lenght(), 3 as Step);
-    //@test graph.next_step == Step(3)
+
+
+    //Testing
+    let node_id_s0_1 = NodeId::new_root(n, b_max, action_id_s0_1);
+    let node_id_s1_2 = NodeId::new(n,b_max, 1 as Step,action_id_s1_2, action_id_s0_1);
+    let node_id_s2_4 = NodeId::new(n,b_max, 2 as Step,action_id_s2_4, action_id_s1_2);
+
+
+    let set_nodes = graph.table_color_nodes().get(&color_origin).unwrap();
+    should_be_only_node_id(set_nodes, &node_id_s0_1);
+    let set_nodes = graph.table_lines().get(&(0 as Step)).unwrap();
+    should_be_only_node_id(set_nodes, &node_id_s0_1);
+
+    let set_nodes = graph.table_color_nodes().get(&(2 as Color)).unwrap();
+    should_be_only_node_id(set_nodes, &node_id_s1_2);
+    let set_nodes = graph.table_lines().get(&(1 as Step)).unwrap();
+    should_be_only_node_id(set_nodes, &node_id_s1_2);
+
+    let set_nodes = graph.table_color_nodes().get(&(4 as Color)).unwrap();
+    should_be_only_node_id(set_nodes, &node_id_s2_4);
+    let set_nodes = graph.table_lines().get(&(2 as Step)).unwrap();
+    should_be_only_node_id(set_nodes, &node_id_s2_4);
+
+
+    // Edges 
+
+    let origin_id = &node_id_s0_1;
+    let destine_id = &node_id_s1_2;
+    let id_edge_1_to_2 = EdgeId::new(origin_id, destine_id);
+
+    let edge_1_to_2 = graph.table_edges().get(&id_edge_1_to_2).unwrap();
+    assert_eq!(edge_1_to_2.id().destine_id(), destine_id);
+    assert_eq!(edge_1_to_2.id().origin_id(), origin_id);
+
+    let origin_id = &node_id_s1_2;
+    let destine_id = &node_id_s2_4;
+    let id_edge_2_to_4 = EdgeId::new(origin_id, destine_id);
+
+    let edge_2_to_4 = graph.table_edges().get(&id_edge_2_to_4).unwrap();
+    assert_eq!(edge_2_to_4.id().destine_id(), destine_id);
+    assert_eq!(edge_2_to_4.id().origin_id(), origin_id);
+
+
+    // Nodes
+
+    let node_s0_1 = graph.table_nodes_by_action().get_node(&action_id_s0_1, &node_id_s0_1).unwrap();
+    let node_s1_2 = graph.table_nodes_by_action().get_node(&action_id_s1_2, &node_id_s1_2).unwrap();
+    let node_s2_4 = graph.table_nodes_by_action().get_node(&action_id_s2_4, &node_id_s2_4).unwrap();
+
+    assert_eq!(node_s0_1.have_parents(), false);
+    assert_eq!(node_s0_1.have_sons(), true);
+    assert_eq!(node_s0_1.sons_list(), [(node_id_s1_2.clone(),id_edge_1_to_2.clone())]);
+
+    assert_eq!(node_s1_2.have_parents(), true);
+    assert_eq!(node_s1_2.have_sons(), true);
+    assert_eq!(node_s1_2.parents_list(), [(node_id_s0_1.clone(),id_edge_1_to_2.clone())]);
+    assert_eq!(node_s1_2.sons_list(), [(node_id_s2_4.clone(),id_edge_2_to_4.clone())]);
+
+    assert_eq!(node_s2_4.have_parents(), true);
+    assert_eq!(node_s2_4.have_sons(), false);
+    assert_eq!(node_s2_4.parents_list(), [(node_id_s1_2.clone(),id_edge_2_to_4.clone())]);
+
+    // Owners
+    assert!(graph.owners_graph().get_step_owners(0 as Step).unwrap().have(node_id_s0_1.key()));
+    assert!(graph.owners_graph().get_step_owners(1 as Step).unwrap().have(node_id_s1_2.key()));
+    assert!(graph.owners_graph().get_step_owners(2 as Step).unwrap().have(node_id_s2_4.key()));
+
+    for node_selected in [node_s0_1, node_s1_2, node_s2_4].iter() {
+        let owners_to_check =  node_selected.owners();
+        assert!(owners_to_check.get_step_owners(0 as Step).unwrap().have(node_id_s0_1.key()));
+        assert!(owners_to_check.get_step_owners(1 as Step).unwrap().have(node_id_s1_2.key()));
+        assert!(owners_to_check.get_step_owners(2 as Step).unwrap().have(node_id_s2_4.key()));
+    }
 
 }
 /*
