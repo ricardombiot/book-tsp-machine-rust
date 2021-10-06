@@ -28,6 +28,8 @@ pub mod path_graph {
     pub mod path_graph_delete_test;
     pub mod path_graph_join_test;
 
+    pub mod path_graph_multijoin_test;
+
     pub mod test_utils;
 
     pub mod components {

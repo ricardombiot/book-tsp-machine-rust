@@ -5,6 +5,9 @@ use crate::tsp::pathset::graph::path_graph::PathGraph;
 
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 use crate::tsp::utils::generator_ids;
+use crate::tsp_tests::path_graph::test_utils::{check_edge, should_be_only_node_id};
+
+
 
 
 

@@ -6,6 +6,7 @@ use crate::tsp::pathset::graph::path_graph::table_edges::TableEdges;
 use crate::tsp::pathset::graph::path_graph::table_lines::TableLines;
 use crate::tsp::pathset::graph::path_graph::table_color_nodes::TableColorNodes;
 use crate::tsp::pathset::graph::path_graph::table_nodes_by_action::TableNodesByAction;
+use std::fmt::Debug;
 
 pub mod table_edges;
 pub mod table_lines;
@@ -13,7 +14,7 @@ pub mod table_color_nodes;
 pub mod table_nodes;
 pub mod table_nodes_by_action;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct PathGraph {
     // N of nodes
     n : Color,

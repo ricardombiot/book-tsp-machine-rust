@@ -3,6 +3,23 @@ use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 
 impl PathGraph {
 
+    
+    pub fn reduce_join(mut list_path_graphs : Vec<&PathGraph>) -> Option<PathGraph> {
+        let last_graph = list_path_graphs.pop();
+        match last_graph {
+            None => None,
+            Some(last_graph) => {
+                let mut graph_join = last_graph.clone();
+                for inmutable_graph_join in list_path_graphs {
+                    graph_join.join(inmutable_graph_join);
+                }
+
+                return Some(graph_join);
+            }
+        }
+  
+    }
+
     pub fn join(&mut self, inmutable_graph_join : &PathGraph) -> bool{
         let is_valid = self._is_valid_join(&inmutable_graph_join);
         if is_valid {
