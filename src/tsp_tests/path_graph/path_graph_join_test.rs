@@ -1,14 +1,11 @@
 
 
-use crate::tsp::pathset::components::edges::edge_id::EdgeId;
-use crate::tsp::pathset::components::owners::owners::OwnersByStep;
 use crate::tsp::utils::alias::{Color, Km, Step};
-use crate::tsp::pathset::components::nodes::node_id::{NodeId, NodesIdSet};
+use crate::tsp::pathset::components::nodes::node_id::{NodeId};
 use crate::tsp::pathset::graph::path_graph::PathGraph;
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
-use crate::tsp::pathset::components::nodes::node::dict_edgeid_by_nodeid::DictEdgeIdByNodeId;
 use crate::tsp::utils::generator_ids;
-use crate::tsp_tests::path_graph::path_graph_test::{check_edge};
+use crate::tsp_tests::path_graph::test_utils::{check_edge,check_set_nodes, check_dict_edges_by_nodeid, check_have_owners};
 
 
 /*
@@ -71,7 +68,6 @@ fn build_join() -> PathGraph {
 fn test_join(){
     let n : Color = 10 as Color;
     let b_max = 10 as Km;
-    let color_origin = 0 as Color;
 
     let action_id_s0_0 = generator_ids::get_action_id(n, 0 as Km, 0 as Color); 
     let action_id_s1_2 = generator_ids::get_action_id(n, 1 as Km, 2 as Color); 
@@ -166,7 +162,7 @@ fn test_join(){
     assert_eq!(node_s3_6_k22.have_parents(), true);
     check_dict_edges_by_nodeid(node_s3_6_k22.parents(), vec![(&node_id_s2_2,&edge_22_36)]);
     assert_eq!(node_s3_6_k22.have_sons(), false);
- 
+
 
     // TEST OWNERS
     let owners_to_check = graph_join.owners_graph();
@@ -220,35 +216,7 @@ fn test_join(){
 
 }
 
-fn check_have_owners(owners_to_check : &OwnersByStep, step: Step, list: Vec<&NodeId>){
-    let owners_set = owners_to_check.get_step_owners(step).unwrap();
 
-    for node_id in list {
-        assert!(owners_set.have(node_id.key()));
-    }
-}
-
-fn check_dict_edges_by_nodeid(dict : &DictEdgeIdByNodeId, list_keys : Vec<(&NodeId, &EdgeId)>){
-    let mut dict = dict.clone();
-    for (node_id, edge_id) in list_keys {
-        assert!(dict.have(node_id));
-
-        let value_edge_id = dict.get(node_id).unwrap();
-
-        assert!(edge_id.eq(value_edge_id));
-        dict.delete(node_id);
-    }
-    assert!(dict.is_empty())
-
-}
-
-fn check_set_nodes(set_nodes: &NodesIdSet, list_keys : Vec<&NodeId>){
-    let mut set_nodes = set_nodes.clone();
-    for node_id in list_keys {
-        assert!(set_nodes.remove(node_id));
-    }
-    assert!(set_nodes.is_empty())
-}
 
 #[test]
 fn test_up_invalid_by_repeted_color(){

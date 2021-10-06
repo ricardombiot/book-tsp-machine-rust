@@ -1,6 +1,3 @@
-
-use crate::tsp::pathset::components::edges::edge_id;
-use crate::tsp::pathset::components::nodes::node::Node;
 use crate::tsp::utils::alias::{Color, Km, Step , ActionId};
 use crate::tsp::pathset::components::nodes::node_id::{NodeId,NodesIdSet};
 use crate::tsp::pathset::components::edges::edge_id::EdgeId;
@@ -9,25 +6,6 @@ use crate::tsp::pathset::graph::path_graph::PathGraph;
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 use crate::tsp::utils::generator_ids;
 
-
-pub fn should_be_only_node_id(set_nodes : &NodesIdSet, expected_node_id : &NodeId){
-    // Only should be root node
-    assert_eq!(set_nodes.len(), 1);
-    let root_node_id = set_nodes.iter().next().unwrap();
-    //println!("{:?}", root_node_id);
-    let ok_root_id = root_node_id.eq(expected_node_id);
-    assert!(ok_root_id);
-}
-
-pub fn check_edge(graph : &PathGraph, origin_id: &NodeId, destine_id : &NodeId) -> EdgeId {
-    let id_edge = EdgeId::new(origin_id, destine_id);
-
-    let edge = graph.table_edges().get(&id_edge).unwrap();
-    assert_eq!(edge.id().destine_id(), destine_id);
-    assert_eq!(edge.id().origin_id(), origin_id);
-
-    return id_edge;
-}
 
 
 #[test]

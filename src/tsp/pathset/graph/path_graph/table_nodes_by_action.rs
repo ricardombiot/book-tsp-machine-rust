@@ -113,7 +113,6 @@ impl TableNodesByAction {
         }
     }
 
-
     /*
     pub fn get_node_mut<'user>(&'user mut self, node_id : &'user NodeId) -> Option<&'user mut Node>{
         let action_id : &'user ActionId = &node_id.action_id().clone();
