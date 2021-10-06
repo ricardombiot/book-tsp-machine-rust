@@ -1,6 +1,7 @@
 use crate::tsp::utils::alias::{Km,Color, ActionsIdSet, ActionId};
 use crate::tsp::actions::action::Action;
 use crate::tsp::actions::database_actions::DatabaseActions;
+use crate::tsp::actions::execute_actions;
 
 #[derive(Clone, Debug)]
 pub struct TimelineCell {
@@ -33,15 +34,18 @@ impl TimelineCell {
         return self.action_id.is_some();
     }
 
-    pub fn execute(&mut self, db: & mut DatabaseActions){
+    pub fn execute(&mut self, db: & mut DatabaseActions) -> (bool, Option<u32>){
         let is_pending = !self.was_execute();
         if is_pending {
 
             let up_action_id = db.register_up(self.km, self.color, self.parents.clone());
-
-            // ... MORE ... execute action run!
-
             self.action_id = Some(up_action_id);
+            execute_actions::run(db, &up_action_id);
+
+            let action = db.get_action(&up_action_id).unwrap();
+            return (action.valid(), self.action_id.clone())
+        }else{
+            return (false, None)
         }
     }
 }

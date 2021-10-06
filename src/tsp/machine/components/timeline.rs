@@ -1,5 +1,5 @@
 
-use crate::tsp::utils::alias::{Color, Km};
+use crate::tsp::utils::alias::{Color, Km, Step};
 use crate::tsp::utils::inmutable_dict::{InmutableDictCommons,InmutableDict};
 pub mod table_cells_by_color;
 pub mod timeline_cell;
@@ -11,6 +11,17 @@ pub struct Timeline {
     table_cells : InmutableDict<Km, TableCellsByColor>
 }
 
+
+impl Timeline {
+    pub fn new() -> Self{
+        let table_cells = InmutableDict::new();
+        Timeline{table_cells}
+    }
+
+    pub fn get_mut_line<'user>(&'user mut self, line : &'user Step) -> Option<&'user mut TableCellsByColor>{
+        return self.get_mut(line);
+    }
+}
 
 impl InmutableDictCommons<Km, TableCellsByColor> for Timeline {
     fn dict(&self) -> & InmutableDict<Km, TableCellsByColor>  {
@@ -26,5 +37,6 @@ impl InmutableDictCommons<Km, TableCellsByColor> for Timeline {
     }
 
     fn join_item(table_cells : &mut TableCellsByColor, table_cells_join: &TableCellsByColor) {
+        todo!();
     }
 }
