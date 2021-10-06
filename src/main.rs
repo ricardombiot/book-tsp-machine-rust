@@ -5,6 +5,10 @@ pub mod tsp {
             pub mod timeline;
             pub mod graf;
         }
+
+        pub mod machines {
+            pub mod hal_machine;
+        }
     }
     pub mod actions {
         pub mod database_actions;

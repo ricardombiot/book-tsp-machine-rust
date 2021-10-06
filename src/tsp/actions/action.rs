@@ -1,9 +1,7 @@
 use std::fmt;
-use std::collections::HashMap;
 use crate::tsp::utils::{alias::{Color, Km, ActionId, ActionsIdSet, Step}, generator_ids};
 use crate::tsp::actions::table_graph_by_length::TableGraphByLenght;
 use crate::tsp::pathset::graph::path_graph::PathGraph;
-
 
 
 pub struct Action {
@@ -21,16 +19,22 @@ pub struct Action {
 
 impl Action {
 
-    pub fn new_init(n : Color, _b_max: Km, up_origin_color: Color) -> Self { 
-        let km : Km = 0 as Km;
-        return _new(n, km,up_origin_color)
-    }
-
     pub fn new_up(n: usize, km: u32, up_color: usize, parents: ActionsIdSet) -> Action {
         let mut action = _new(n, km,  up_color);
         action.props_parents = parents;
 
-        //.... TODO .... //
+        return action;
+    }
+
+    pub fn new_init(n : Color, b_max: Km, up_origin_color: Color) -> Self { 
+        let km : Km = 0 as Km;
+        let mut action = _new(n, km, up_origin_color);
+
+        action.max_length_graph = 0 as Step;
+
+        let graph_init = PathGraph::new(n, b_max, up_origin_color, action.id());
+        action.push_graph_by_lenght(graph_init);
+
         return action;
     }
 
@@ -70,6 +74,8 @@ impl Action {
     pub fn valid(&self) -> bool {
         self.valid
     }
+
+
 }
 
 impl fmt::Display for Action {
@@ -77,6 +83,7 @@ impl fmt::Display for Action {
         return write!(f, "Action( ID:{} KM: {} COLOR: {} )", self.id, self.km, self.up_color);
     }
 }
+
 
 fn _new(n : Color, km: Km, up_color: Color) -> Action { 
     let id = generator_ids::get_action_id(n, km, up_color);

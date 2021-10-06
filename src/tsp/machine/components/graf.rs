@@ -48,6 +48,19 @@ impl Grafo {
         return self.matriz[origin][destine]
     }
 
+    pub fn get_destines(&self, origin : &Color) -> Vec<(Color, Weight)>{
+        //let destines = self.matriz[origin.clone()];
+        let mut list: Vec<(Color, Weight)> = Vec::new();
+        for destine in 0..self.n {
+            let weight : Weight = self.get_weight(origin.clone(), destine.clone());
+            if weight > (0 as Weight) {
+                let tuple_destine = (destine.clone(), weight);
+                list.push(tuple_destine);
+            }
+        }
+        return list;
+    }
+
     pub fn add(&mut self, origin : Color,  destine : Color, weight : Weight){
         self.checking_valid_index(origin, destine);
 
