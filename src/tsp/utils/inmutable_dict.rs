@@ -97,6 +97,15 @@ V: Clone + Debug{
         return iterable_list;
     }
 
+    pub fn to_list_values(&self) -> Vec<V> {
+        let mut iterable_list : Vec<V> = Vec::new();
+        for (_k, v ) in self.dict.iter() {
+            iterable_list.push(v.clone());
+        }
+
+        return iterable_list;
+    }
+
     pub fn for_each<F>(&self, mut func : F) where F : FnMut(&K, &V) {
         for (key, value) in self.to_list().iter() {
             func(key, value)

@@ -19,13 +19,17 @@ impl DatabaseActions {
         return instance;
     }
 
-    pub fn register_up(&mut self, km : Km, up_color: Color, parents : ActionsIdSet){
+    pub fn register_up(&mut self, km : Km, up_color: Color, parents : ActionsIdSet) -> ActionId {
         let action_up = Action::new_up(self.n, km, up_color, parents);
-        self._register_action(action_up);
+        return self._register_action(action_up);
     }
 
-    pub fn get_action(&self, action_id : ActionId) -> Option<&Action> {
-        return self.table.get(&action_id);
+    pub fn get_action(&self, action_id : &ActionId) -> Option<&Action> {
+        return self.table.get(action_id);
+    }
+
+    pub fn get_mut_action(&mut self, action_id : &ActionId) -> Option<&mut Action> {
+        return self.table.get_mut(action_id);
     }
 
     pub fn remove(&mut self, action_id : ActionId){
@@ -40,8 +44,11 @@ impl DatabaseActions {
         self._register_action(action_init);
     }
 
-    fn _register_action(&mut self, action : Action){
-        self.table.insert(action.id(), action);
+    fn _register_action(&mut self, action : Action) -> ActionId {
+        let action_id = action.id();
+        self.table.insert(action_id.clone(), action);
+
+        return action_id;
     }
 
 }

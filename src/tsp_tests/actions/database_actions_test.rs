@@ -14,10 +14,10 @@ fn init_database_actions() {
     let init_action_id = generator_ids::get_action_id(n, init_km, color_origin);
     
     //println!("{}", db)
-    let action_option = db.get_action(init_action_id);
+    let action_option = db.get_action(&init_action_id);
     assert!(action_option.is_some());
 
-    let action = db.get_action(init_action_id).unwrap();
+    let action = db.get_action(&init_action_id).unwrap();
     //println!("{}",action);
     assert_eq!(action.id(), init_action_id);
     assert_eq!(action.km(), init_km);
@@ -48,10 +48,10 @@ fn register_up_database_actions() {
     let up_action_id = generator_ids::get_action_id(n, up_km, up_color);
     println!("{}", db);
 
-    let action_option = db.get_action(up_action_id);
+    let action_option = db.get_action(&up_action_id);
     assert!(action_option.is_some());
 
-    let action = db.get_action(up_action_id).unwrap();
+    let action = db.get_action(&up_action_id).unwrap();
     //println!("{}",action);
     assert_eq!(action.id(), up_action_id);
     assert_eq!(action.km(), up_km);
