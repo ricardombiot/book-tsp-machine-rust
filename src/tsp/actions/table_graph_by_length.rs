@@ -4,8 +4,6 @@ use crate::tsp::utils::inmutable_dict::{InmutableDictCommons,InmutableDict};
 use crate::tsp::pathset::graph::path_graph::PathGraph;
 use std::fmt::Debug;
 
-use super::database_actions::TableActionIdToAction;
-
 #[derive(Clone, Debug)]
 pub struct TableGraphByLenght {
     table : InmutableDict<Step, PathGraph>

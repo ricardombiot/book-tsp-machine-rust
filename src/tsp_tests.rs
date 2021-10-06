@@ -5,10 +5,14 @@ pub mod actions {
     mod action_test;
 }
 
+#[cfg(test)]
 pub mod machine {
     pub mod components {
-        #[cfg(test)]
         mod graf_test;
+    }
+
+    pub mod machines {
+        pub mod hal_machine_test;
     }
 }
 

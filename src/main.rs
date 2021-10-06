@@ -15,6 +15,7 @@ pub mod tsp {
         pub mod action;
         pub mod execute_actions;
         pub mod table_graph_by_length;
+        pub mod table_actions;
     }
     pub mod pathset;
 }

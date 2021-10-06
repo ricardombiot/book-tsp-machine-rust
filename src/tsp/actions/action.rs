@@ -3,7 +3,9 @@ use crate::tsp::utils::{alias::{Color, Km, ActionId, ActionsIdSet, Step}, genera
 use crate::tsp::actions::table_graph_by_length::TableGraphByLenght;
 use crate::tsp::pathset::graph::path_graph::PathGraph;
 
+use std::fmt::Debug;
 
+#[derive(Clone, Debug)]
 pub struct Action {
     id : ActionId,
     km : Km,
@@ -34,13 +36,18 @@ impl Action {
 
         let graph_init = PathGraph::new(n, b_max, up_origin_color, action.id());
         action.push_graph_by_lenght(graph_init);
+        action.was_execute = true;
 
         return action;
     }
 
+    pub fn fixed_as_executed(&mut self){
+        self.was_execute = true;
+    }
+
 
     pub fn push_graph_by_lenght(&mut self, graph_join : PathGraph){
-        self.props_graph.push_graph_by_lenght(graph_join)
+        self.props_graph.push_graph_by_lenght(graph_join);
     }
 
     pub fn was_execute(&self) -> bool {

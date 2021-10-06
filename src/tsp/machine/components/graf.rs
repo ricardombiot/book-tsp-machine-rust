@@ -8,6 +8,8 @@ pub struct Grafo {
     max_weight : Weight,
 }
 
+pub mod graf_generators;
+
 impl Grafo {
     pub fn new(n : Color) -> Grafo {
         return Grafo { 

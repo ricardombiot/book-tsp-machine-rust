@@ -100,17 +100,20 @@ impl PathGraph {
         let mut owners_parents_union : Option<OwnersByStep> = None;
         for (parent_node_id, _edge_id) in parents_list.iter() {
             let action_parent_id = parent_node_id.action_id();
-            let node_parent = self.table_nodes_by_action.get_node(&action_parent_id, parent_node_id).unwrap();
+            let node_parent = self.table_nodes_by_action.get_node(&action_parent_id, parent_node_id);
 
-            if node_parent.is_valid() {
-                match owners_parents_union.as_mut() {
-                    None => { 
-                        owners_parents_union = Some(node_parent.owners().derive()) 
+            match node_parent {
+                Some(node_parent) if node_parent.is_valid() => {
+                    match owners_parents_union.as_mut() {
+                        None => { 
+                            owners_parents_union = Some(node_parent.owners().derive()) 
+                        }
+                        Some(owners_union) => {
+                            owners_union.union(node_parent.owners());
+                        }
                     }
-                    Some(owners_union) => {
-                        owners_union.union(node_parent.owners());
-                    }
-                }
+                },
+                _ => ()
             }
         }
 

@@ -9,7 +9,8 @@ use crate::tsp::actions::action::Action;
 impl HamiltonianMachine {
     pub(super) fn send_destines(&mut self, origin : &Color){
         let cell = self.timeline.get_cell(&self.actual_km, &origin).unwrap().clone();
-        let opt_action = cell.get_action(&self.db);
+        let action_id = cell.action_id();
+        let opt_action = cell.get_action(&self.db, &action_id);
 
         match opt_action {
             Some(action) if action.valid() => {

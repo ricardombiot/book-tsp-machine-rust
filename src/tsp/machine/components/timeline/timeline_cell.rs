@@ -23,11 +23,12 @@ impl TimelineCell {
         self.parents.insert(parent_id);
     }
 
-    pub fn get_action<'user>(&'user self, db: &'user DatabaseActions) -> Option<&'user Action>{
-        match self.action_id {
-            None => None,
-            Some(action_id) => db.get_action(&action_id)
-        }
+    pub fn get_action<'user>(&'user self, db: &'user DatabaseActions, action_id : &'user ActionId) -> Option<&'user Action>{
+        return db.get_action(action_id);
+    }
+
+    pub fn action_id(&self) -> ActionId {
+        self.action_id.unwrap()
     }
 
     pub fn was_execute(&self) -> bool {

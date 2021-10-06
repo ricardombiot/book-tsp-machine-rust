@@ -17,7 +17,7 @@ impl HamiltonianMachine {
         }
     }
 
-    pub fn make_step(&mut self) -> bool {
+    fn make_step(&mut self) -> bool {
         if self.actual_km < self.n as Km {
             self.execute_line();
             self.actual_km += 1 as Km;
@@ -27,13 +27,14 @@ impl HamiltonianMachine {
         }
     }
 
-    pub fn execute_line(&mut self) {
+    fn execute_line(&mut self) {
         let list_origins = self.timeline.get(&self.actual_km).unwrap().to_list_keys();
         for origin in list_origins {
             if self.is_valid_origin(origin) {
-                let (is_valid, _action_id) = self.timeline.execute(&mut self.db, self.actual_km, origin);
-            
+                let (is_valid, action_id) = self.timeline.execute(&mut self.db, self.actual_km, origin);
+               
                 if is_valid {
+                    println!("Execute KM:{} Cell: {} -> OP: {} ({})", self.actual_km, origin, action_id.unwrap(), is_valid);
                     self.send_destines(&origin);
                 }
             }

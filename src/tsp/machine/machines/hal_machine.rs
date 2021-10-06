@@ -3,6 +3,9 @@ use crate::tsp::machine::components::graf::Grafo;
 use crate::tsp::machine::components::timeline::Timeline;
 use crate::tsp::actions::database_actions::DatabaseActions;
 
+use std::fmt::Debug;
+
+#[derive(Debug)]
 pub struct HamiltonianMachine {
     n : Color,
     actual_km : Km,

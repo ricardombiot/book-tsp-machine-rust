@@ -2,14 +2,23 @@ use std::fmt;
 use std::collections::HashMap;
 use crate::tsp::utils::alias::{Color, Km, ActionId, ActionsIdSet};
 use crate::tsp::actions::action::Action;
+use crate::tsp::actions::table_actions::TableActions;
+use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 
-pub type TableActionIdToAction = HashMap<ActionId, Action>;
 
+//#[derive(Debug)]
+//pub type TableActionIdToAction = HashMap<ActionId, Action>;
+
+use std::fmt::Debug;
+
+
+
+#[derive(Debug)]
 pub struct DatabaseActions {
     n: Color,
     b_max: Km,
     color_origin: Color,
-    table: TableActionIdToAction
+    table: TableActions
 }
 
 impl DatabaseActions {
@@ -24,16 +33,16 @@ impl DatabaseActions {
         return self._register_action(action_up);
     }
 
-    pub fn get_action(&self, action_id : &ActionId) -> Option<&Action> {
+    pub fn get_action<'user>(&'user self, action_id : &'user ActionId) -> Option<&'user Action> {
         return self.table.get(action_id);
     }
 
-    pub fn get_mut_action(&mut self, action_id : &ActionId) -> Option<&mut Action> {
+    pub fn get_mut_action<'user>(&'user mut self, action_id : &'user ActionId) -> Option<&'user mut Action> {
         return self.table.get_mut(action_id);
     }
 
     pub fn remove(&mut self, action_id : ActionId){
-        self.table.remove(&action_id);
+        self.table.delete(&action_id);
     }
 }
 
@@ -46,7 +55,7 @@ impl DatabaseActions {
 
     fn _register_action(&mut self, action : Action) -> ActionId {
         let action_id = action.id();
-        self.table.insert(action_id.clone(), action);
+        self.table.put(action_id.clone(), action);
 
         return action_id;
     }
@@ -57,7 +66,7 @@ impl DatabaseActions {
 impl fmt::Display for DatabaseActions {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let mut txt : String = String::new();
-        for (k, v ) in self.table.iter(){
+        for (k, v ) in self.table.to_list(){
             txt = format!("{} id: {}, val: {}\n", txt, k, v);
         }
 
@@ -66,6 +75,6 @@ impl fmt::Display for DatabaseActions {
 }
 
 fn _new(n: Color, b_max: Km, color_origin: Color) -> DatabaseActions { 
-    let table : TableActionIdToAction = TableActionIdToAction::new();
+    let table : TableActions = TableActions::new();
     DatabaseActions { n, b_max, color_origin, table } 
 }

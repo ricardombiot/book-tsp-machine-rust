@@ -9,6 +9,7 @@ impl PathGraph {
 
     pub fn up(&mut self, color : Color, action_id : ActionId){
         if self.valid {
+            println!("Step{}::UP::Color:{} - Act.Id{}", self.next_step, &color, &action_id);
             // # $ O(N^4) $ deleting all nodes
             self._delete_node_by_color(&color);
 

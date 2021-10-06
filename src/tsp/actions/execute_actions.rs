@@ -13,15 +13,23 @@ pub fn run(db : &mut DatabaseActions, action_id : &ActionId){
         Some(action) => {
             if !action.was_execute(){
                 reduce_map_up_parents(db, action_id);
+                fixed_action_as_executed(db, action_id);
             }
         }
     }
 }
 
+fn fixed_action_as_executed(db : &mut DatabaseActions, action_id : &ActionId){
+    let action = db.get_mut_action(action_id).unwrap();
+    action.fixed_as_executed();
+}
+
 fn reduce_map_up_parents(db : &mut DatabaseActions, action_id : &ActionId) {
+    println!("reduce_map_up_parents");
     let action = db.get_action(action_id).unwrap();
 
     let parents = action.props_parents().clone();
+    println!("{:?}",parents);
     let up_color = action.up_color();
 
     for parent_id in parents.iter() {
