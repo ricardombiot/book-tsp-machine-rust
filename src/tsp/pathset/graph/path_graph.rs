@@ -61,6 +61,8 @@ pub mod graph_owners_review;
 pub mod graph_owners_filters;
 pub mod graph_owners_colors_review;
 
+pub mod graph_to_dot;
+
 impl PathGraph {
     pub fn n(&self) -> Color {
         self.n

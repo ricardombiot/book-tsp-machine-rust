@@ -16,6 +16,8 @@ impl PathSolutionReader {
         let node = self.graph.table_nodes_by_action().get_node(&next_action_id, &next_node_id).unwrap();
 
         self.next_node_id = self._select_next(node);
+
+        println!("[{}] Selected: {:?}", self.step, self.next_node_id);
     }
 
     fn _select_next(&self, node : &Node) -> Option<NodeId> {

@@ -83,5 +83,17 @@ impl Grafo {
         self.add(destine, origin, weight);
     }
 
+    pub fn add_bidirectional_vec(&mut self, origin : Color,  list_destines  : Vec<Color>, weight : Weight){
+        for destine in list_destines{
+            self.add_bidirectional(origin.clone(), destine, weight.clone())
+        }
+    }
+
+    /*function add_bidirectional!( graf :: Grafo , origin :: Color, list_destines :: Array{Color, 1}, weight :: Weight = Weight(1))
+        for destine in list_destines
+            add_bidirectional!( graf, origin, destine)
+        end
+    end */
+
 }
 
