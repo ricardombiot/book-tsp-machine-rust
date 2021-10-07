@@ -19,3 +19,7 @@ pub mod graph {
     pub mod path_graph;
 
 }
+
+pub mod readers {
+    pub mod path_reader;
+}

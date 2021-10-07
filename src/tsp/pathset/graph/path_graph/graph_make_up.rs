@@ -9,7 +9,7 @@ impl PathGraph {
 
     pub fn up(&mut self, color : Color, action_id : ActionId){
         if self.valid {
-            println!("Step{}::UP::Color:{} - Act.Id{}", self.next_step, &color, &action_id);
+            //println!("Step{}::UP::Color:{} - Act.Id{}.{}", self.next_step, &color, &action_id, self.action_parent_id.unwrap());
             // # $ O(N^4) $ deleting all nodes
             self._delete_node_by_color(&color);
 
@@ -18,7 +18,7 @@ impl PathGraph {
             # Most probable less than N stages: $ O(N^8) $
             # $ O(Stages) * O(N^7) $
             */
-            self._review_owners_all_graph();
+            self.review_owners_all_graph();
 
             //# $ O(N^3) $
             self._make_up(&color, &action_id)

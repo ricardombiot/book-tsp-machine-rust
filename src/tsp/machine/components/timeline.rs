@@ -11,6 +11,8 @@ use crate::tsp::machine::components::timeline::table_cells_by_color::TableCellsB
 
 use self::timeline_cell::TimelineCell;
 
+use std::fmt::Debug;
+
 #[derive(Clone, Debug)]
 pub struct Timeline {
     table_cells : InmutableDict<Km, TableCellsByColor>

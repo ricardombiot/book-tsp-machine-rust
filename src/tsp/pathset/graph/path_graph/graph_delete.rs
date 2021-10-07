@@ -12,7 +12,7 @@ impl PathGraph {
              $ O(N^2) $ of each color*/
             let set_nodes_by_color = self.table_color_nodes.get(color).unwrap().clone();
             for node_id in set_nodes_by_color.iter() {
-                self._save_to_delete(node_id);
+                self.save_to_delete(node_id);
 
                 if !self.valid {
                     break;
@@ -20,11 +20,11 @@ impl PathGraph {
             }
 
             //# $ O(N^4) $ deleting all nodes
-            self._apply_node_deletes()
+            self.apply_node_deletes()
         }
     }
 
-    pub fn _save_to_delete(&mut self, node_id : &NodeId) {
+    pub fn save_to_delete(&mut self, node_id : &NodeId) {
         self.nodes_to_delete.insert(node_id.clone());
         self.owners_graph.pop(node_id);
         self.required_review_ownwers = true;
@@ -39,7 +39,7 @@ impl PathGraph {
         self.valid = self.owners_graph.valid();
     }
 
-    pub fn _apply_node_deletes(&mut self){
+    pub fn apply_node_deletes(&mut self){
         /*
         # It will be execute less than $ O(N^3) $ delete total nodes
         # before will detected that graph is unvalid and avoid

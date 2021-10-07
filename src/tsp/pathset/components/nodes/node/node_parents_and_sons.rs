@@ -1,4 +1,5 @@
 
+use crate::tsp::pathset::components::edges::edge::Edge;
 use crate::tsp::pathset::components::edges::edge_id::EdgeId;
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
 use crate::tsp::pathset::components::nodes::node::Node;
@@ -50,6 +51,10 @@ impl Node {
 
     pub fn delete_son(&mut self, son_id : &NodeId) {
         self.sons.delete(son_id);
+    }
+
+    pub fn take_one_son(&self) -> Option<(NodeId,EdgeId)> {
+        self.sons.take_one()
     }
 
     pub fn have_parents(&self) -> bool {

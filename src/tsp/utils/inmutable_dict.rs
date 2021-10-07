@@ -79,6 +79,40 @@ V: Clone + Debug{
         Self{dict}
     }
 
+    pub fn take_one(self) -> Option<(K,V)> {
+        if self.dict().is_empty() {
+            return None;
+
+        }else{
+            let (key, value) = self.dict_life().iter().next().unwrap();
+            
+            let tuple_item = (key.clone(), value.clone());
+            return Some(tuple_item);
+        }
+    }
+
+
+    pub fn take_list(&self, length : u32) -> Vec<(K,V)> {
+        
+        let mut len = 0;
+        let mut iterable_list : Vec<(K,V)> = Vec::new();
+
+        if len == length {
+            return iterable_list;
+        }
+
+        for (k, v ) in self.dict.iter() {
+            iterable_list.push((k.clone(),v.clone()));
+            len += 1;
+
+            if len == length {
+                return iterable_list;
+            }
+        }
+
+        return iterable_list;
+    }
+
     pub fn to_list(&self) -> Vec<(K,V)> {
         let mut iterable_list : Vec<(K,V)> = Vec::new();
         for (k, v ) in self.dict.iter() {
@@ -211,6 +245,20 @@ V: Clone + Debug {
 
     fn to_list_keys(&self) -> Vec<K> {
         return self.dict().to_list_keys();
+    }
+
+    fn take_one(&self) -> Option<(K, V)> {
+        if self.dict().is_empty() {
+            return None;
+
+        }else{
+            // Expensive compiler rust give many problems.
+            let list = self.dict().to_list();
+            let (key, value) = list.first().unwrap();
+            
+            let tuple_item = (key.clone(), value.clone());
+            return Some(tuple_item);
+        }
     }
 
     fn apply<R,F>(&self, key: &K, func: F) -> Option<R> 

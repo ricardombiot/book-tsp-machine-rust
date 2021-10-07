@@ -29,7 +29,7 @@ fn reduce_map_up_parents(db : &mut DatabaseActions, action_id : &ActionId) {
     let action = db.get_action(action_id).unwrap();
 
     let parents = action.props_parents().clone();
-    println!("{:?}",parents);
+    //println!("{:?}",parents);
     let up_color = action.up_color();
 
     for parent_id in parents.iter() {

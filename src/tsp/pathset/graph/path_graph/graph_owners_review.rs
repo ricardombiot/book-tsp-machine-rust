@@ -4,7 +4,7 @@ use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 
 impl PathGraph {
 
-    pub(super) fn _review_owners_all_graph(&mut self) {
+    pub fn review_owners_all_graph(&mut self) {
         self._recursive_review_owners_all_graph(1)
     }
 
@@ -21,7 +21,7 @@ impl PathGraph {
         # -yes, polynomial expensive function, but polynomial be-
         */
         if self.valid && self.required_review_ownwers {
-            //println!("_recursive_review_owners_all_graph = Stage:({})", stage);
+            println!("_recursive_review_owners_all_graph = Stage:({})", stage);
             self._save_max_review_stages(stage);
             //  # $ O(N^3) $
             self._rebuild_owners();
@@ -32,7 +32,7 @@ impl PathGraph {
             let should_nodes_to_delete = !self.nodes_to_delete.is_empty();
             if self.valid && should_nodes_to_delete {
                 self.required_review_ownwers = true;
-                self._apply_node_deletes();
+                self.apply_node_deletes();
                 self._recursive_review_owners_all_graph(stage + 1);
             }
         }
@@ -82,7 +82,7 @@ impl PathGraph {
         // # $ O(N) * O(N^2) * O(N^4) = O(N^7) $
 
         if self.valid && self.required_review_ownwers {
-            //println!("_review_owners_nodes_and_relationships");
+            println!("_review_owners_nodes_and_relationships");
             let mut step = self.next_step - 1;
             let mut stop_while = false;
             //# $ O(N) steps $
@@ -93,22 +93,26 @@ impl PathGraph {
 
                     //# $ O(N^3) $
                     if self._filter_by_intersection_owners(&node_id){
-                        self._save_to_delete(&node_id);
+                        self.save_to_delete(&node_id);
                     // # $ O(N^4) $
                     }else if self._filter_by_sons_intersection_owners(&node_id){
-                        self._save_to_delete(&node_id);
+                        self.save_to_delete(&node_id);
                     // # $ O(N^3) $
                     }else if self._filter_by_incoherence_colors(&node_id) {
-                        self._save_to_delete(&node_id);
+                        self.save_to_delete(&node_id);
                     }
                         
-                    if !self.valid {
+                    
+                    if self.valid {
+                        //stop_while = true;
                         break;
                     }
                 }
 
                 // # $ O(N^6) $
-                self._review_sons_filtering_by_parents_interection_owners(&step);
+                if self._continue_review() {
+                    self._review_sons_filtering_by_parents_interection_owners(&step);
+                }
 
                 if step == 0 as Step || !self.valid {
                     stop_while = true;
@@ -118,5 +122,9 @@ impl PathGraph {
             }
         }
     }   
+
+    fn _continue_review(&self) -> bool {
+        return self.nodes_to_delete.is_empty() && self.valid
+    }
     
 }

@@ -1,5 +1,10 @@
+use std::hash::{Hash, Hasher};
+
 use crate::tsp::utils::alias::{Color, Km, Step , ActionId, UniqueNodeKey, InfoActionId};
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
+use crate::tsp::utils::generator_ids;
+use std::collections::hash_map::DefaultHasher;
+use std::collections::HashSet;
 
 #[test]
 pub fn test_get_info_node_id_root(){
@@ -47,30 +52,41 @@ pub fn test_get_info_node_id(){
     assert_eq!(origin_info, origin_info_expected); 
 }
 
-/*
-function test_get_info_node_id()
-    n= Color(4)
-    b= Km(10)
 
-    node_id = NodeIdentity.new(n, b, Step(0), ActionId(1), nothing)
-    (info, info_parent) = NodeIdentity.get_info_node_id(n, node_id)
-
-    @test node_id.key == UniqueNodeKey(1)
-    @test info == (Km(0), Color(0))
-    @test info_parent == (Km(0), Color(0))
+#[test]
+fn test_node_ids_for_tsp(){
+    let n = 4 as Color;
+    let b_max = 10 as Km;
+    let max_step = n;
+    let mut set_hashes : HashSet<String> = HashSet::new();
 
 
-    node_id = NodeIdentity.new(n, b, Step(1), ActionId(6), ActionId(1))
-    (info, info_parent) = NodeIdentity.get_info_node_id(n, node_id)
+    for km_origin in 0..b_max {
+        for color_origin in 0..n {
+            let action_parent_id : ActionId = generator_ids::get_action_id(n, km_origin, color_origin);
 
-    @test node_id.key == UniqueNodeKey(1606)
-    @test info == (Km(1), Color(1))
-    @test info_parent == (Km(0), Color(0))
+            for step in 0..max_step {
 
-    node_id = NodeIdentity.new(n, b, Step(2), ActionId(10), ActionId(1))
-    (info, info_parent) = NodeIdentity.get_info_node_id(n, node_id)
+                for km_destine in km_origin..b_max {
+                    for color_destine in 0..n {
+                        let action_id : ActionId = generator_ids::get_action_id(n, km_destine, color_destine);
 
-    @test node_id.key == UniqueNodeKey(3210)
-    @test info == (Km(2), Color(1))
-    @test info_parent == (Km(0), Color(0))
-end*/
+                        let node_id = NodeId::new(n, b_max, step as Step, action_id, action_parent_id);
+                        let mut hasher = DefaultHasher::new();
+                        node_id.hash(&mut hasher);
+                        let node_id_hash = hasher.finish().to_string();
+
+                        if set_hashes.contains(&node_id_hash) {
+                            println!("Collision !!");
+                            assert!(false);
+                        }else{
+                            set_hashes.insert(node_id_hash);
+                        }
+
+                        //println!("{:x}",hasher.finish());
+                    }
+                }
+            }
+        }
+    }
+}
