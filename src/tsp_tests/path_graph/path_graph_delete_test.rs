@@ -30,9 +30,9 @@ fn test_graph_lazy_deleting(){
     let node_id_s2_4 = NodeId::new(n,b_max, 2 as Step,action_id_s2_4, action_id_s1_2);
 
     assert_eq!(graph.valid(), true);
-    graph._save_to_delete(&node_id_s1_2);
+    graph.save_to_delete(&node_id_s1_2);
     assert_eq!(graph.valid(), false);
-    graph._save_to_delete(&node_id_s2_4);
+    graph.save_to_delete(&node_id_s2_4);
 
 
     assert_eq!(graph.nodes_to_delete().is_empty(),false);
@@ -41,7 +41,7 @@ fn test_graph_lazy_deleting(){
     assert_eq!(nodes_to_remove, [node_id_s1_2.key().clone(), node_id_s2_4.key().clone()]);
 
     // Havent efect because is not valid;
-    graph._apply_node_deletes();
+    graph.apply_node_deletes();
     let mut nodes_to_remove : Vec<UniqueNodeKey> = graph.nodes_to_delete().clone().drain().map(|a| a.key()).collect();
     nodes_to_remove.sort();
     assert_eq!(nodes_to_remove, [node_id_s1_2.key().clone(), node_id_s2_4.key().clone()]);
@@ -99,7 +99,7 @@ fn test_lazy_delete_nodes_by_color(){
     assert_eq!(nodes_to_remove, [node_id_s1_2.clone()]);
 
     // Havent efect because is not valid;
-    graph._apply_node_deletes();
+    graph.apply_node_deletes();
     let nodes_to_remove : Vec<NodeId> = graph.nodes_to_delete().clone().drain().collect();
     assert_eq!(nodes_to_remove, [node_id_s1_2.clone()]);
 

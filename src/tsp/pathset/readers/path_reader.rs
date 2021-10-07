@@ -19,6 +19,10 @@ impl PathSolutionReader {
         path.calc();
         return path;
     }
+
+    pub fn route(&self) -> &Vec<Color>{
+        &self.route
+    }
 }
 
 

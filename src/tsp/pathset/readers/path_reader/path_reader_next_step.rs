@@ -44,7 +44,7 @@ impl PathSolutionReader {
     }
 
     fn _close_path(&mut self){
-        if self.is_origin_join {
+        if !self.is_origin_join {
             self.route.push(self.graph.color_origin());
             self.step += 1 as Step;
         }

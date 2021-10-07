@@ -18,3 +18,5 @@ pub struct HamiltonianMachine {
 pub mod hal_machine_constructor;
 pub mod hal_machine_send_destines;
 pub mod hal_machine_execute;
+
+pub mod hal_machine_solution;

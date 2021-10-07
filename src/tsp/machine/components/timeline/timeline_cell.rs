@@ -27,6 +27,10 @@ impl TimelineCell {
         return db.get_action(action_id);
     }
 
+    pub fn parents(&self) -> &ActionsIdSet {
+        &self.parents
+    }
+
     pub fn action_id(&self) -> ActionId {
         self.action_id.unwrap()
     }

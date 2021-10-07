@@ -1,5 +1,5 @@
 use std::fmt;
-use crate::tsp::utils::{alias::{Color, Km, ActionId, ActionsIdSet, Step}, generator_ids};
+use crate::tsp::utils::{alias::{Color, Km, ActionId, ActionsIdSet, Step}, generator_ids, inmutable_dict::InmutableDictCommons};
 use crate::tsp::actions::table_graph_by_length::TableGraphByLenght;
 use crate::tsp::pathset::graph::path_graph::PathGraph;
 
@@ -47,6 +47,11 @@ impl Action {
 
 
     pub fn push_graph_by_lenght(&mut self, graph_join : PathGraph){
+        let lenght = graph_join.get_lenght();
+        if lenght > self.max_length_graph {
+            self.max_length_graph = lenght;
+        }
+
         self.props_graph.push_graph_by_lenght(graph_join);
     }
 
@@ -82,6 +87,9 @@ impl Action {
         self.valid
     }
 
+    pub fn get_max_graph(&self) -> &PathGraph {
+        return self.props_graph.get(&self.max_length_graph).unwrap();
+    }
 
 }
 
