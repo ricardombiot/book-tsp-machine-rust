@@ -21,7 +21,7 @@ impl PathGraph {
         let table_nodes_by_action = TableNodesByAction::new();
         let table_color_nodes = TableColorNodes::new();
         let table_lines = TableLines::new();
-        let table_edges = TableEdges::new();
+        //let table_edges = TableEdges::new();
 
         let nodes_to_delete = NodesIdSet::new();
 
@@ -31,7 +31,7 @@ impl PathGraph {
         let max_review_stages = 0;
 
         let mut graph = PathGraph{n, b_max, next_step, color_origin, owners_graph,
-            table_nodes_by_action, table_edges,
+            table_nodes_by_action, 
             table_lines, table_color_nodes,
             action_parent_id, nodes_to_delete, 
             required_review_ownwers, max_review_stages, valid};

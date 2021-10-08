@@ -37,7 +37,7 @@ impl PathGraph {
             // # $ O(N^3) $
             self._join_color_nodes(graph_join);
             //# $ O(N^4) $
-            self._join_edges(graph_join);
+            //self._join_edges(graph_join);
 
             self._join_max_stages_review(graph_join);
 
@@ -72,9 +72,9 @@ impl PathGraph {
         self.table_color_nodes.join(&graph_join.table_color_nodes);
     }
 
-    fn _join_edges(&mut self, graph_join : &PathGraph){
-        self.table_edges.join(&graph_join.table_edges);
-    }
+    /*fn _join_edges(&mut self, graph_join : &PathGraph){
+        //self.table_edges.join(&graph_join.table_edges);
+    }*/
 
     fn _join_max_stages_review(&mut self, graph_join : &PathGraph){
         self.max_review_stages = std::cmp::max(self.max_review_stages, graph_join.max_review_stages);

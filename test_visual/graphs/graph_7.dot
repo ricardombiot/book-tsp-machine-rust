@@ -1,0 +1,134 @@
+digraph G {
+subgraph cluster_info {
+
+            subgraph cluster_3 {
+            style=filled;
+            color=lightgrey;
+            node [style=filled,color=white];
+            subgraph cluster_act_37 {
+label = "Action: 37" 
+step_37_28 [label=<6<BR /><FONT POINT-SIZE="8">ID: 37.28 KEY: 32737</FONT><BR /><FONT POINT-SIZE="8">Parents: 28.19</FONT><BR /><FONT POINT-SIZE="8">Sons: 50.37</FONT><BR /><FONT POINT-SIZE="8"> Km: 0: 1,</FONT><BR /><FONT POINT-SIZE="8"> Km: 1: 10019,</FONT><BR /><FONT POINT-SIZE="8"> Km: 2: 21828,</FONT><BR /><FONT POINT-SIZE="8"> Km: 3: 32737,</FONT><BR /><FONT POINT-SIZE="8"> Km: 4: 43650,</FONT><BR /><FONT POINT-SIZE="8"> Km: 5: 54956,</FONT><BR /><FONT POINT-SIZE="8"> Km: 6: 65565,</FONT><BR /><FONT POINT-SIZE="8"> Km: 7: 76473,</FONT><BR /><FONT POINT-SIZE="8"> Km: 8: 87282,</FONT><BR /><FONT POINT-SIZE="8"> Km: 9: 98194,</FONT>>]
+}
+
+            fontsize="10"
+            label = "Line 3";
+            }
+            subgraph cluster_8 {
+            style=filled;
+            color=lightgrey;
+            node [style=filled,color=white];
+            subgraph cluster_act_82 {
+label = "Action: 82" 
+step_82_73 [label=<1<BR /><FONT POINT-SIZE="8">ID: 82.73 KEY: 87282</FONT><BR /><FONT POINT-SIZE="8">Parents: 73.65</FONT><BR /><FONT POINT-SIZE="8">Sons: 94.82</FONT><BR /><FONT POINT-SIZE="8"> Km: 0: 1,</FONT><BR /><FONT POINT-SIZE="8"> Km: 1: 10019,</FONT><BR /><FONT POINT-SIZE="8"> Km: 2: 21828,</FONT><BR /><FONT POINT-SIZE="8"> Km: 3: 32737,</FONT><BR /><FONT POINT-SIZE="8"> Km: 4: 43650,</FONT><BR /><FONT POINT-SIZE="8"> Km: 5: 54956,</FONT><BR /><FONT POINT-SIZE="8"> Km: 6: 65565,</FONT><BR /><FONT POINT-SIZE="8"> Km: 7: 76473,</FONT><BR /><FONT POINT-SIZE="8"> Km: 8: 87282,</FONT><BR /><FONT POINT-SIZE="8"> Km: 9: 98194,</FONT>>]
+}
+
+            fontsize="10"
+            label = "Line 8";
+            }
+            subgraph cluster_2 {
+            style=filled;
+            color=lightgrey;
+            node [style=filled,color=white];
+            subgraph cluster_act_28 {
+label = "Action: 28" 
+step_28_19 [label=<7<BR /><FONT POINT-SIZE="8">ID: 28.19 KEY: 21828</FONT><BR /><FONT POINT-SIZE="8">Parents: 19.1</FONT><BR /><FONT POINT-SIZE="8">Sons: 37.28</FONT><BR /><FONT POINT-SIZE="8"> Km: 0: 1,</FONT><BR /><FONT POINT-SIZE="8"> Km: 1: 10019,</FONT><BR /><FONT POINT-SIZE="8"> Km: 2: 21828,</FONT><BR /><FONT POINT-SIZE="8"> Km: 3: 32737,</FONT><BR /><FONT POINT-SIZE="8"> Km: 4: 43650,</FONT><BR /><FONT POINT-SIZE="8"> Km: 5: 54956,</FONT><BR /><FONT POINT-SIZE="8"> Km: 6: 65565,</FONT><BR /><FONT POINT-SIZE="8"> Km: 7: 76473,</FONT><BR /><FONT POINT-SIZE="8"> Km: 8: 87282,</FONT><BR /><FONT POINT-SIZE="8"> Km: 9: 98194,</FONT>>]
+}
+
+            fontsize="10"
+            label = "Line 2";
+            }
+            subgraph cluster_5 {
+            style=filled;
+            color=lightgrey;
+            node [style=filled,color=white];
+            subgraph cluster_act_56 {
+label = "Action: 56" 
+step_56_50 [label=<5<BR /><FONT POINT-SIZE="8">ID: 56.50 KEY: 54956</FONT><BR /><FONT POINT-SIZE="8">Parents: 50.37</FONT><BR /><FONT POINT-SIZE="8">Sons: 65.56</FONT><BR /><FONT POINT-SIZE="8"> Km: 0: 1,</FONT><BR /><FONT POINT-SIZE="8"> Km: 1: 10019,</FONT><BR /><FONT POINT-SIZE="8"> Km: 2: 21828,</FONT><BR /><FONT POINT-SIZE="8"> Km: 3: 32737,</FONT><BR /><FONT POINT-SIZE="8"> Km: 4: 43650,</FONT><BR /><FONT POINT-SIZE="8"> Km: 5: 54956,</FONT><BR /><FONT POINT-SIZE="8"> Km: 6: 65565,</FONT><BR /><FONT POINT-SIZE="8"> Km: 7: 76473,</FONT><BR /><FONT POINT-SIZE="8"> Km: 8: 87282,</FONT><BR /><FONT POINT-SIZE="8"> Km: 9: 98194,</FONT>>]
+}
+
+            fontsize="10"
+            label = "Line 5";
+            }
+            subgraph cluster_7 {
+            style=filled;
+            color=lightgrey;
+            node [style=filled,color=white];
+            subgraph cluster_act_73 {
+label = "Action: 73" 
+step_73_65 [label=<2<BR /><FONT POINT-SIZE="8">ID: 73.65 KEY: 76473</FONT><BR /><FONT POINT-SIZE="8">Parents: 65.56</FONT><BR /><FONT POINT-SIZE="8">Sons: 82.73</FONT><BR /><FONT POINT-SIZE="8"> Km: 0: 1,</FONT><BR /><FONT POINT-SIZE="8"> Km: 1: 10019,</FONT><BR /><FONT POINT-SIZE="8"> Km: 2: 21828,</FONT><BR /><FONT POINT-SIZE="8"> Km: 3: 32737,</FONT><BR /><FONT POINT-SIZE="8"> Km: 4: 43650,</FONT><BR /><FONT POINT-SIZE="8"> Km: 5: 54956,</FONT><BR /><FONT POINT-SIZE="8"> Km: 6: 65565,</FONT><BR /><FONT POINT-SIZE="8"> Km: 7: 76473,</FONT><BR /><FONT POINT-SIZE="8"> Km: 8: 87282,</FONT><BR /><FONT POINT-SIZE="8"> Km: 9: 98194,</FONT>>]
+}
+
+            fontsize="10"
+            label = "Line 7";
+            }
+            subgraph cluster_0 {
+            style=filled;
+            color=lightgrey;
+            node [style=filled,color=white];
+            subgraph cluster_act_1 {
+label = "Action: 1" 
+step_1_1 [label=<0<BR /><FONT POINT-SIZE="8">ID: 1.1 KEY: 1</FONT><BR /><FONT POINT-SIZE="8">Parents: </FONT><BR /><FONT POINT-SIZE="8">Sons: 19.1</FONT><BR /><FONT POINT-SIZE="8"> Km: 0: 1,</FONT><BR /><FONT POINT-SIZE="8"> Km: 1: 10019,</FONT><BR /><FONT POINT-SIZE="8"> Km: 2: 21828,</FONT><BR /><FONT POINT-SIZE="8"> Km: 3: 32737,</FONT><BR /><FONT POINT-SIZE="8"> Km: 4: 43650,</FONT><BR /><FONT POINT-SIZE="8"> Km: 5: 54956,</FONT><BR /><FONT POINT-SIZE="8"> Km: 6: 65565,</FONT><BR /><FONT POINT-SIZE="8"> Km: 7: 76473,</FONT><BR /><FONT POINT-SIZE="8"> Km: 8: 87282,</FONT><BR /><FONT POINT-SIZE="8"> Km: 9: 98194,</FONT>>]
+}
+
+            fontsize="10"
+            label = "Line 0";
+            }
+            subgraph cluster_9 {
+            style=filled;
+            color=lightgrey;
+            node [style=filled,color=white];
+            subgraph cluster_act_94 {
+label = "Action: 94" 
+step_94_82 [label=<3<BR /><FONT POINT-SIZE="8">ID: 94.82 KEY: 98194</FONT><BR /><FONT POINT-SIZE="8">Parents: 82.73</FONT><BR /><FONT POINT-SIZE="8">Sons: </FONT><BR /><FONT POINT-SIZE="8"> Km: 0: 1,</FONT><BR /><FONT POINT-SIZE="8"> Km: 1: 10019,</FONT><BR /><FONT POINT-SIZE="8"> Km: 2: 21828,</FONT><BR /><FONT POINT-SIZE="8"> Km: 3: 32737,</FONT><BR /><FONT POINT-SIZE="8"> Km: 4: 43650,</FONT><BR /><FONT POINT-SIZE="8"> Km: 5: 54956,</FONT><BR /><FONT POINT-SIZE="8"> Km: 6: 65565,</FONT><BR /><FONT POINT-SIZE="8"> Km: 7: 76473,</FONT><BR /><FONT POINT-SIZE="8"> Km: 8: 87282,</FONT><BR /><FONT POINT-SIZE="8"> Km: 9: 98194,</FONT>>]
+}
+
+            fontsize="10"
+            label = "Line 9";
+            }
+            subgraph cluster_4 {
+            style=filled;
+            color=lightgrey;
+            node [style=filled,color=white];
+            subgraph cluster_act_50 {
+label = "Action: 50" 
+step_50_37 [label=<9<BR /><FONT POINT-SIZE="8">ID: 50.37 KEY: 43650</FONT><BR /><FONT POINT-SIZE="8">Parents: 37.28</FONT><BR /><FONT POINT-SIZE="8">Sons: 56.50</FONT><BR /><FONT POINT-SIZE="8"> Km: 0: 1,</FONT><BR /><FONT POINT-SIZE="8"> Km: 1: 10019,</FONT><BR /><FONT POINT-SIZE="8"> Km: 2: 21828,</FONT><BR /><FONT POINT-SIZE="8"> Km: 3: 32737,</FONT><BR /><FONT POINT-SIZE="8"> Km: 4: 43650,</FONT><BR /><FONT POINT-SIZE="8"> Km: 5: 54956,</FONT><BR /><FONT POINT-SIZE="8"> Km: 6: 65565,</FONT><BR /><FONT POINT-SIZE="8"> Km: 7: 76473,</FONT><BR /><FONT POINT-SIZE="8"> Km: 8: 87282,</FONT><BR /><FONT POINT-SIZE="8"> Km: 9: 98194,</FONT>>]
+}
+
+            fontsize="10"
+            label = "Line 4";
+            }
+            subgraph cluster_1 {
+            style=filled;
+            color=lightgrey;
+            node [style=filled,color=white];
+            subgraph cluster_act_19 {
+label = "Action: 19" 
+step_19_1 [label=<8<BR /><FONT POINT-SIZE="8">ID: 19.1 KEY: 10019</FONT><BR /><FONT POINT-SIZE="8">Parents: 1.1</FONT><BR /><FONT POINT-SIZE="8">Sons: 28.19</FONT><BR /><FONT POINT-SIZE="8"> Km: 0: 1,</FONT><BR /><FONT POINT-SIZE="8"> Km: 1: 10019,</FONT><BR /><FONT POINT-SIZE="8"> Km: 2: 21828,</FONT><BR /><FONT POINT-SIZE="8"> Km: 3: 32737,</FONT><BR /><FONT POINT-SIZE="8"> Km: 4: 43650,</FONT><BR /><FONT POINT-SIZE="8"> Km: 5: 54956,</FONT><BR /><FONT POINT-SIZE="8"> Km: 6: 65565,</FONT><BR /><FONT POINT-SIZE="8"> Km: 7: 76473,</FONT><BR /><FONT POINT-SIZE="8"> Km: 8: 87282,</FONT><BR /><FONT POINT-SIZE="8"> Km: 9: 98194,</FONT>>]
+}
+
+            fontsize="10"
+            label = "Line 1";
+            }
+            subgraph cluster_6 {
+            style=filled;
+            color=lightgrey;
+            node [style=filled,color=white];
+            subgraph cluster_act_65 {
+label = "Action: 65" 
+step_65_56 [label=<4<BR /><FONT POINT-SIZE="8">ID: 65.56 KEY: 65565</FONT><BR /><FONT POINT-SIZE="8">Parents: 56.50</FONT><BR /><FONT POINT-SIZE="8">Sons: 73.65</FONT><BR /><FONT POINT-SIZE="8"> Km: 0: 1,</FONT><BR /><FONT POINT-SIZE="8"> Km: 1: 10019,</FONT><BR /><FONT POINT-SIZE="8"> Km: 2: 21828,</FONT><BR /><FONT POINT-SIZE="8"> Km: 3: 32737,</FONT><BR /><FONT POINT-SIZE="8"> Km: 4: 43650,</FONT><BR /><FONT POINT-SIZE="8"> Km: 5: 54956,</FONT><BR /><FONT POINT-SIZE="8"> Km: 6: 65565,</FONT><BR /><FONT POINT-SIZE="8"> Km: 7: 76473,</FONT><BR /><FONT POINT-SIZE="8"> Km: 8: 87282,</FONT><BR /><FONT POINT-SIZE="8"> Km: 9: 98194,</FONT>>]
+}
+
+            fontsize="10"
+            label = "Line 6";
+            }
+step_19_1 -> step_28_19; 
+step_1_1 -> step_19_1; 
+step_37_28 -> step_50_37; 
+step_73_65 -> step_82_73; 
+step_56_50 -> step_65_56; 
+step_65_56 -> step_73_65; 
+step_82_73 -> step_94_82; 
+step_28_19 -> step_37_28; 
+step_50_37 -> step_56_50; 
+}
+}

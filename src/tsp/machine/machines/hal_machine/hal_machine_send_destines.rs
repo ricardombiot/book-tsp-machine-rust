@@ -33,7 +33,7 @@ impl HamiltonianMachine {
     fn _is_valid_destine(&self, action : &Action, destine : &Color) -> bool {
         if destine == &self.color_origin {
             let valid_destine_as_origin = action.max_length_graph() == self.n as Step;
-            println!("Destine origin [{}] GraphLenght {} ", valid_destine_as_origin, action.max_length_graph());
+            //println!("Destine origin [{}] GraphLenght {} ", valid_destine_as_origin, action.max_length_graph());
             return valid_destine_as_origin;
         }else{
             return true;

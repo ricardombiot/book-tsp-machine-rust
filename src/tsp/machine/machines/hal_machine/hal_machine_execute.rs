@@ -34,7 +34,7 @@ impl HamiltonianMachine {
                 let (is_valid, action_id) = self.timeline.execute(&mut self.db, self.actual_km, origin);
                
                 if is_valid {
-                    println!("Execute KM:{} Cell: {} -> OP: {} ({})", self.actual_km, origin, action_id.unwrap(), is_valid);
+                    //println!("Execute KM:{} Cell: {} -> OP: {} ({})", self.actual_km, origin, action_id.unwrap(), is_valid);
                     self.send_destines(&origin);
                 }
             }

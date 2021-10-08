@@ -27,10 +27,15 @@ impl PathSolutionReader {
             self._fixed_next();
             self._clear_graph_by_owners();
 
-            let name = format!("graph_{}", self.step);
-            self.graph.to_png(name, None);
+            //self._save_graph_as_png();
+
             return true;
         }
+    }
+
+    fn _save_graph_as_png(&self){
+        let name = format!("graph_{}", self.step);
+        self.graph.to_png(name, None);
     }
 
     fn _push_step(&mut self){

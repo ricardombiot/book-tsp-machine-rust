@@ -25,7 +25,7 @@ fn fixed_action_as_executed(db : &mut DatabaseActions, action_id : &ActionId){
 }
 
 fn reduce_map_up_parents(db : &mut DatabaseActions, action_id : &ActionId) {
-    println!("reduce_map_up_parents");
+    //println!("reduce_map_up_parents");
     let action = db.get_action(action_id).unwrap();
 
     let parents = action.props_parents().clone();

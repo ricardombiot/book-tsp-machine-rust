@@ -96,9 +96,9 @@ impl PathGraph {
     }
 
 
-    fn _calc_union_owners(&self, parents_list : Vec<(NodeId,EdgeId)>) -> Option<OwnersByStep> {
+    fn _calc_union_owners(&self, parents_list : Vec<NodeId>) -> Option<OwnersByStep> {
         let mut owners_parents_union : Option<OwnersByStep> = None;
-        for (parent_node_id, _edge_id) in parents_list.iter() {
+        for parent_node_id in parents_list.iter() {
             let action_parent_id = parent_node_id.action_id();
             let node_parent = self.table_nodes_by_action.get_node(&action_parent_id, parent_node_id);
 
@@ -127,8 +127,7 @@ impl PathGraph {
         let sons_list_to_remove = self._calc_edges_arent_owners_node(node,sons_list);
 
         if !sons_list_to_remove.is_empty(){
-            let sons_to_remove = self._delete_edges_sons(sons_list_to_remove, node_id);
-            self.save_to_delete_using_set(sons_to_remove);
+            self._delete_edges_sons_and_save_nodes_with_empty_parents(sons_list_to_remove, node_id);
         }
     }
 
@@ -140,22 +139,19 @@ impl PathGraph {
         let parents_list_to_remove = self._calc_edges_arent_owners_node(node,parents_list);
 
         if !parents_list_to_remove.is_empty(){
-            let parents_to_remove = self._delete_edges_parents(parents_list_to_remove, node_id);
-            self.save_to_delete_using_set(parents_to_remove);
+            self._delete_edges_parents_and_save_nodes_with_empty_sons(parents_list_to_remove, node_id);
         }
     }
 
-    fn _calc_edges_arent_owners_node(&self, node : &Node, list_parents_or_sons : Vec<(NodeId,EdgeId)>) -> Vec<(NodeId,EdgeId)>{
-        let mut list_to_remove : Vec<(NodeId,EdgeId)> = Vec::new();
+    fn _calc_edges_arent_owners_node(&self, node : &Node, list_parents_or_sons : Vec<NodeId>) -> Vec<NodeId> {
+        let mut list_to_remove : Vec<NodeId> = Vec::new();
 
-        for tuple_parent in list_parents_or_sons.iter() {
-            let parent_node_id = &tuple_parent.0;
-
+        for parent_node_id in list_parents_or_sons.iter() {
+        
             let should_be_remove_edge = !node.have_owner(parent_node_id);
             if should_be_remove_edge {
-                list_to_remove.push(tuple_parent.clone());
+                list_to_remove.push(parent_node_id.clone());
             }
-
         }
 
         return list_to_remove;

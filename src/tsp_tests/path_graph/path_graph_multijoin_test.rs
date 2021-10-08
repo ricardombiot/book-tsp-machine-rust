@@ -3,7 +3,7 @@ use crate::tsp::pathset::components::nodes::node_id::{NodeId};
 use crate::tsp::pathset::graph::path_graph::PathGraph;
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 use crate::tsp::utils::generator_ids;
-use crate::tsp_tests::path_graph::test_utils::{check_edge,check_set_nodes, check_dict_edges_by_nodeid, check_have_owners};
+use crate::tsp_tests::path_graph::test_utils::{check_set_nodes, check_dict_edges_by_nodeid, check_have_owners};
 
 
 #[test]

@@ -4,6 +4,7 @@ use crate::tsp::utils::alias::{Color, Weight, Km};
 
 use crate::tsp::pathset::readers::path_reader::PathSolutionReader;
 
+/*
 #[test]
 pub fn test_hal_machine_complete(){
     let n = 4 as Color;
@@ -54,3 +55,5 @@ pub fn test_hal_machine_dode(){
 
     println!("Solution Path: {:?}",path.route());
 }
+
+ */

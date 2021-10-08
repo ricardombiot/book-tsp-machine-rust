@@ -49,12 +49,14 @@ fn main() {
     let path_txt = path_txt + "/test_visual/graph";
     println!("{}",path_txt);
 
-    test_hal_machine_complete();
+    //test_hal_machine_complete();
+
+    test_hal_machine_dode();
 }
 
 
 pub fn test_hal_machine_complete(){
-    let n = 8 as Color;
+    let n = 10 as Color;
     let b_max = n as Km;
     let weight = 1 as Weight;
     let g = Grafo::gen_complete(n, weight);
@@ -73,6 +75,28 @@ pub fn test_hal_machine_complete(){
 
     graph.to_png("hola".to_string(), None);
 
+
+    let path = PathSolutionReader::read(n, b_max, &graph);
+
+    println!("Solution Path: {:?}",path.route());
+}
+
+fn test_hal_machine_dode(){
+    let n = 20 as Color;
+    let b_max = n as Km;
+    let g = Grafo::gen_dodecaedro();
+
+    //println!("{:#?}", g);
+
+    let color_origin = 0;
+    let mut machine = HamiltonianMachine::new(g, color_origin);
+
+    machine.execute();
+
+    let graph = machine.get_one_solution_graph();
+    assert!(graph.is_some());
+    //println!("{:#?}", machine);
+    let graph = graph.unwrap();
 
     let path = PathSolutionReader::read(n, b_max, &graph);
 

@@ -22,7 +22,7 @@ impl PathSolutionReader {
 
     fn _select_next(&self, node : &Node) -> Option<NodeId> {
         if self._have_next(node) {
-            let (node_id, _edge_id)  = node.take_one_son().unwrap();
+            let node_id  = node.take_one_son().unwrap();
             return Some(node_id.clone());
         }else{
             return None;

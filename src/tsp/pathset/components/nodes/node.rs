@@ -1,5 +1,5 @@
 use crate::tsp::utils::alias::{Color, Km, Step, ActionId};
-use crate::tsp::pathset::components::nodes::node_id::NodeId;
+use crate::tsp::pathset::components::nodes::node_id::{NodeId, NodesIdSet};
 use crate::tsp::pathset::components::owners::owners::OwnersByStep;
 use crate::tsp::pathset::components::nodes::node::dict_edgeid_by_nodeid::DictEdgeIdByNodeId;
 
@@ -17,8 +17,11 @@ pub struct Node {
     color : Color,
     step : Step,
 
-    parents : DictEdgeIdByNodeId,
-    sons : DictEdgeIdByNodeId,
+    //parents : DictEdgeIdByNodeId,
+    //sons : DictEdgeIdByNodeId,
+
+    parents : NodesIdSet,
+    sons : NodesIdSet,
 
     owners : OwnersByStep
 }
@@ -33,8 +36,8 @@ impl Node {
     }
 
     pub fn create(n : Color, b_max : Km, step : Step, color : Color, owners_graph : &OwnersByStep, action_id : ActionId, action_parent_id : Option<ActionId>) -> Self {
-        let parents  = DictEdgeIdByNodeId::new();
-        let sons = DictEdgeIdByNodeId::new();
+        let parents  = NodesIdSet::new();
+        let sons = NodesIdSet::new();
         let owners : OwnersByStep = owners_graph.derive();
         
         match action_parent_id {
@@ -79,11 +82,11 @@ impl Node {
     }
 
 
-    pub fn parents(&self) -> &DictEdgeIdByNodeId{
+    pub fn parents(&self) -> &NodesIdSet{
         &self.parents
     }
 
-    pub fn sons(&self) -> &DictEdgeIdByNodeId{
+    pub fn sons(&self) -> &NodesIdSet{
         &self.sons
     }
 

@@ -30,7 +30,7 @@ pub struct PathGraph {
     // dictionary of nodes by actionid and node id
     table_nodes_by_action : TableNodesByAction,
     // dictionary of edges by edge id
-    table_edges : TableEdges,
+    //table_edges : TableEdges,
     // dictionary of node id by line
     table_lines : TableLines,
     // dictionary of node id by color
@@ -89,9 +89,10 @@ impl PathGraph {
         &self.table_nodes_by_action
     }
 
+    /* 
     pub fn table_edges(&self) -> &TableEdges {
         &self.table_edges
-    }
+    }*/
 
     pub fn table_lines(&self) -> &TableLines {
         &self.table_lines
