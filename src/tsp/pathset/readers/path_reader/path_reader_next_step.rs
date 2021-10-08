@@ -26,6 +26,9 @@ impl PathSolutionReader {
             self._push_step();
             self._fixed_next();
             self._clear_graph_by_owners();
+
+            let name = format!("graph_{}", self.step);
+            self.graph.to_png(name, None);
             return true;
         }
     }

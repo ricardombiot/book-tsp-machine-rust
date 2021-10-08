@@ -46,11 +46,13 @@ impl Node {
     }
 
     pub fn delete_parent(&mut self, parent_id : &NodeId) {
-        self.parents.delete(parent_id);
+        self.parents.delete_by_id(parent_id);
+        self.pop_owner(parent_id);
     }
 
     pub fn delete_son(&mut self, son_id : &NodeId) {
-        self.sons.delete(son_id);
+        self.sons.delete_by_id(son_id);
+        self.pop_owner(son_id);
     }
 
     pub fn take_one_son(&self) -> Option<(NodeId,EdgeId)> {

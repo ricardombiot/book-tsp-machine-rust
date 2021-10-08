@@ -18,6 +18,10 @@ impl DictEdgeIdByNodeId {
         let edge_id = EdgeId::new(origin_id, destine_id);
         self.put(key.clone(), edge_id);
     }   
+
+    pub fn delete_by_id(&mut self, key : &NodeId){
+        self.delete(key);
+    }
 }
 
 

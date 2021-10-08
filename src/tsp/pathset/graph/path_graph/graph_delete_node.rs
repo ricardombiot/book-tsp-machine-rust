@@ -18,12 +18,18 @@ impl PathGraph {
             self.table_color_nodes.delete_node(color, node_id);
             self.table_lines.delete_node(step, node_id);
 
-            self._delete_edges_parents(parents);
-            self._delete_edges_sons(sons);
+            //let parents_to_remove = self._delete_edges_parents(parents, node_id);
+            //self.save_to_delete_using_set(parents_to_remove);
+            self._delete_edges_parents_and_save_nodes_with_empty_sons(parents, node_id);
+            self._delete_edges_sons_and_save_nodes_with_empty_parents(sons, node_id);
+            //let sons_to_remove = self._delete_edges_sons
+            //self.save_to_delete_using_set(sons_to_remove);
+
             self._table_nodes_delete_node(node_id);
         }
     }
 
+    
 
     pub(super) fn _have_node(&self, node_id : &NodeId) -> bool {
         self.table_nodes_by_action.have_node(node_id)

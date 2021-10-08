@@ -24,6 +24,12 @@ impl PathGraph {
         }
     }
 
+    pub fn save_to_delete_using_set(&mut self, set: NodesIdSet){
+        for node_id in set{
+            self.save_to_delete(&node_id);
+        }
+    }
+
     pub fn save_to_delete(&mut self, node_id : &NodeId) {
         self.nodes_to_delete.insert(node_id.clone());
         self.owners_graph.pop(node_id);
@@ -48,6 +54,7 @@ impl PathGraph {
         let have_nodes_to_delete = !self.nodes_to_delete.is_empty();
         if self.valid && have_nodes_to_delete {
             let nodes_to_delete =  &self.nodes_to_delete.clone();
+            self.nodes_to_delete = NodesIdSet::new();
             //let table_nodes_by_action =  &mut self.table_nodes_by_action;
 
             for node_id in nodes_to_delete {
@@ -60,7 +67,9 @@ impl PathGraph {
                 }
             }
 
-            self.nodes_to_delete = NodesIdSet::new();
+            if !self.nodes_to_delete.is_empty() {
+                self.apply_node_deletes();
+            }
         }
     }
 

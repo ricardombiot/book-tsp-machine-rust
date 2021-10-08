@@ -54,7 +54,7 @@ fn main() {
 
 
 pub fn test_hal_machine_complete(){
-    let n = 4 as Color;
+    let n = 8 as Color;
     let b_max = n as Km;
     let weight = 1 as Weight;
     let g = Grafo::gen_complete(n, weight);

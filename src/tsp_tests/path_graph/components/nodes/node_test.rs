@@ -68,6 +68,24 @@ pub fn test_node_add_parent_and_son(){
     assert_eq!(node_s1_3.have_parent(&node_root), true);
 
 
+    assert_eq!(node_root.have_son(&node_s1_3), true);
+    node_root.delete_son(node_s1_3.id());
+    assert_eq!(node_root.have_son(&node_s1_3), false);
+    
+
+    let list_parents = node_s1_3.parents_list();
+    assert!(!list_parents.is_empty());
+    //println!("{:#?}", list_parents);
+
+    assert_eq!(node_s1_3.have_parent(&node_root), true);
+    node_s1_3.delete_parent(node_root.id());
+    assert_eq!(node_s1_3.have_parent(&node_root), false);
+
+    let list_parents = node_s1_3.parents_list();
+    assert!(list_parents.is_empty());
+
+
+
     /*
     node_s1_3.for_each_parent(|pointer : &mut Node, node_id, edge_id| {
         println!("{}", edge_id);

@@ -127,7 +127,8 @@ impl PathGraph {
         let sons_list_to_remove = self._calc_edges_arent_owners_node(node,sons_list);
 
         if !sons_list_to_remove.is_empty(){
-            self._delete_edges_sons(sons_list_to_remove)
+            let sons_to_remove = self._delete_edges_sons(sons_list_to_remove, node_id);
+            self.save_to_delete_using_set(sons_to_remove);
         }
     }
 
@@ -139,7 +140,8 @@ impl PathGraph {
         let parents_list_to_remove = self._calc_edges_arent_owners_node(node,parents_list);
 
         if !parents_list_to_remove.is_empty(){
-            self._delete_edges_parents(parents_list_to_remove)
+            let parents_to_remove = self._delete_edges_parents(parents_list_to_remove, node_id);
+            self.save_to_delete_using_set(parents_to_remove);
         }
     }
 
