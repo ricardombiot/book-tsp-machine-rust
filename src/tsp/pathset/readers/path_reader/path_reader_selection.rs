@@ -17,7 +17,7 @@ impl PathSolutionReader {
 
         self.next_node_id = self._select_next(node);
 
-        println!("[{}] Selected: {:?}", self.step, self.next_node_id);
+        //println!("[{}] Selected: {:?}", self.step, self.next_node_id);
     }
 
     fn _select_next(&self, node : &Node) -> Option<NodeId> {

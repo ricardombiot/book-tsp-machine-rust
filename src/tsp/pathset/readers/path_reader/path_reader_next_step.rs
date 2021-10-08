@@ -47,7 +47,7 @@ impl PathSolutionReader {
         self.route.push(node.color());
         self.owners.push(&next_node_id);
 
-        println!("[{}] Push step: {} ({})", self.step, next_node_id.key(), node.color());
+        //println!("[{}] Push step: {} ({})", self.step, next_node_id.key(), node.color());
         self.step += 1 as Step;
     }
 

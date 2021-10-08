@@ -41,8 +41,8 @@ impl DatabaseActions {
         return self.table.get_mut(action_id);
     }
 
-    pub fn remove(&mut self, action_id : ActionId){
-        self.table.delete(&action_id);
+    pub fn remove(&mut self, action_id : &ActionId){
+        self.table.delete(action_id);
     }
 }
 
