@@ -59,6 +59,10 @@ impl OwnersFixedSet {
         //self.nobinary_set.iter().collect()
     }
 
+    pub fn get_set(&self) -> &HashSet<UniqueNodeKey> {
+        &self.nobinary_set
+    }
+
     pub fn count(&self) -> usize {
         return self.nobinary_set.len()
     }

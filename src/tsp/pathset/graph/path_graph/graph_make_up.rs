@@ -61,11 +61,13 @@ impl PathGraph {
         let node_parent = self.table_nodes_by_action.get_node_mut(&action_parent_id, node_parent_id).unwrap();
 
         node_parent.add_son_id(&node_son_id);
+        node_parent.push_owner(&node_son_id);
 
         let action_son_id = node_son_id.action_id();
         let node_son = self.table_nodes_by_action.get_node_mut(&action_son_id, &node_son_id).unwrap();
 
         node_son.add_parent_id(node_parent_id);
+        node_son.push_owner(&node_parent_id);
 
         self.table_edges.build_edge(node_parent_id, node_son_id);
     }

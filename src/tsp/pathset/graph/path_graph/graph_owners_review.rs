@@ -103,8 +103,7 @@ impl PathGraph {
                     }
                         
                     
-                    if self.valid {
-                        //stop_while = true;
+                    if !self.valid {
                         break;
                     }
                 }
