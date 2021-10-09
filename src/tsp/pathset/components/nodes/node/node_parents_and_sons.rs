@@ -1,11 +1,7 @@
 
-use std::any::Any;
 
-use crate::tsp::pathset::components::edges::edge::Edge;
-use crate::tsp::pathset::components::edges::edge_id::EdgeId;
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
 use crate::tsp::pathset::components::nodes::node::Node;
-use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 
 impl Node {
 
@@ -40,7 +36,7 @@ impl Node {
     }
 
     pub fn delete_parent(&mut self, parent_id : &NodeId) {
-        let have_it = self.have_parent_id(parent_id);
+        //let have_it = self.have_parent_id(parent_id);
         //println!("In node {} Delete parent {} have [{}]" ,self.id().key(), parent_id.key(), have_it);
 
         self.parents.remove(parent_id);
@@ -48,7 +44,7 @@ impl Node {
     }
 
     pub fn delete_son(&mut self, son_id : &NodeId) {
-        let have_it = self.have_son_id(son_id);
+        //let have_it = self.have_son_id(son_id);
         //println!("In node {} Delete son {} have [{}]" ,self.id().key(), son_id.key(), have_it);
 
         self.sons.remove(son_id);

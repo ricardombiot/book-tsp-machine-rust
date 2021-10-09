@@ -1,5 +1,4 @@
 use std::fmt;
-use std::collections::HashMap;
 use crate::tsp::utils::alias::{Color, Km, ActionId, ActionsIdSet};
 use crate::tsp::actions::action::Action;
 use crate::tsp::actions::table_actions::TableActions;
@@ -10,7 +9,7 @@ use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 //pub type TableActionIdToAction = HashMap<ActionId, Action>;
 
 use std::fmt::Debug;
-
+use crate::tsp::actions::db_controller::DBController;
 
 
 #[derive(Debug)]
@@ -18,7 +17,9 @@ pub struct DatabaseActions {
     n: Color,
     b_max: Km,
     color_origin: Color,
-    table: TableActions
+    table: TableActions,
+
+    controller: DBController
 }
 
 impl DatabaseActions {
@@ -44,6 +45,38 @@ impl DatabaseActions {
     pub fn remove(&mut self, action_id : &ActionId){
         self.table.delete(action_id);
     }
+
+    pub fn can_use_it(&mut self, action_id : &ActionId) -> bool {
+        return self.table.have(action_id) && self.controller.can_use_it(action_id);
+    }
+
+    pub fn use_it(&mut self, action_id : &ActionId){
+        self.controller.use_it(action_id);
+    }
+
+    pub fn reserve(&mut self, action_id : &ActionId){
+        self.controller.reserve(action_id);
+    }
+
+    pub fn reserve_destines(&mut self, destines : &Vec<ActionId>){
+        for parent_id in destines.iter() {
+            self.controller.reserve(parent_id);
+        }
+    }
+
+    pub fn clean_db(&mut self){
+
+        let pending_to_clean = self.controller.pending_to_clean_ids().clone();
+
+        if !pending_to_clean.is_empty() {
+            for action_id in  pending_to_clean.iter(){
+                //println!("[DB Clean] Free action_id: {}",action_id);
+                self.remove(action_id);
+            }
+
+            self.controller.clean_db_done();
+        }
+    }
 }
 
 impl DatabaseActions {   
@@ -62,6 +95,12 @@ impl DatabaseActions {
 
 }
 
+fn _new(n: Color, b_max: Km, color_origin: Color) -> DatabaseActions { 
+    let table : TableActions = TableActions::new();
+    let controller : DBController = DBController::new();
+    DatabaseActions { n, b_max, color_origin, table, controller } 
+}
+
 
 impl fmt::Display for DatabaseActions {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -74,7 +113,3 @@ impl fmt::Display for DatabaseActions {
     }
 }
 
-fn _new(n: Color, b_max: Km, color_origin: Color) -> DatabaseActions { 
-    let table : TableActions = TableActions::new();
-    DatabaseActions { n, b_max, color_origin, table } 
-}

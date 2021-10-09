@@ -1,10 +1,5 @@
 use crate::tsp::machine::machines::hal_machine::HamiltonianMachine;
-use crate::tsp::machine::machines::hal_machine::Grafo;
-use crate::tsp::pathset::components::nodes::node_id::NodeId;
 use crate::tsp::pathset::graph::path_graph::PathGraph;
-use crate::tsp::utils::alias::{Color, Km};
-use crate::tsp::machine::components::timeline::Timeline;
-use crate::tsp::actions::database_actions::DatabaseActions;
 use crate::tsp::machine::components::timeline::timeline_cell::TimelineCell;
 
 impl HamiltonianMachine {

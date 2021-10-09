@@ -1,8 +1,10 @@
-
+#[cfg(test)]
 pub mod actions {
-    #[cfg(test)]
+
     mod database_actions_test;
     mod action_test;
+
+    mod db_controller_test;
 }
 
 #[cfg(test)]

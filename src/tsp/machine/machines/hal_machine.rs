@@ -1,4 +1,4 @@
-use crate::tsp::utils::alias::{Step, Km, Color};
+use crate::tsp::utils::alias::{Km, Color};
 use crate::tsp::machine::components::graf::Grafo;
 use crate::tsp::machine::components::timeline::Timeline;
 use crate::tsp::actions::database_actions::DatabaseActions;

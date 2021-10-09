@@ -1,8 +1,7 @@
 
-use std::fmt::DebugTuple;
 use std::{collections::HashMap};
 use crate::tsp::pathset::components::owners::owners::OwnersByStep;
-use crate::tsp::utils::alias::{Step, ActionId, UniqueNodeKey};
+use crate::tsp::utils::alias::{Step, ActionId};
 use crate::tsp::pathset::graph::path_graph::PathGraph;
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 use crate::tsp::pathset::components::nodes::node_id::{NodeId, NodesIdSet};
@@ -54,7 +53,7 @@ impl PathGraph {
         let mut list_result : Vec<(NodeId,NodeId)> = Vec::new();
         let list_lines = self.table_lines.dict().to_list();
 
-        for (step, nodes) in list_lines {
+        for (_step, nodes) in list_lines {
             for node_id in nodes {
                 let action_id = node_id.action_id();
                 let node = self.table_nodes_by_action.get_node(&action_id, &node_id);
@@ -234,7 +233,7 @@ impl DotGraph for DictEdgeIdByNodeId {
             dot_content += &node_id.to_dot_with_param(".".to_string());
             dot_content += ","
         }
-        let position_last_coma = dot_content.len();
+        //let position_last_coma = dot_content.len();
         //dot_content.remove(position_last_coma);
         return dot_content;
     }
