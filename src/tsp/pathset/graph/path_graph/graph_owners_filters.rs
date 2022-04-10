@@ -19,7 +19,7 @@ impl PathGraph {
     }
 
     pub(super) fn _filter_by_parents_intersection_owners(&mut self, node_id : &NodeId) -> bool {
-        let mut should_be_filter = true;
+        let should_be_filter: bool;
         let action_id : ActionId = node_id.action_id();
         let node = self.table_nodes_by_action.get_node(&action_id, node_id).unwrap();
         
@@ -58,7 +58,7 @@ impl PathGraph {
 
 
     pub(super) fn _filter_by_sons_intersection_owners(&mut self, node_id : &NodeId) -> bool {
-        let mut should_be_filter = true;
+        let should_be_filter: bool;
         let action_id = node_id.action_id();
         let node = self.table_nodes_by_action.get_node_mut(&action_id, node_id).unwrap();
         

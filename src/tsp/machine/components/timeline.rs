@@ -105,7 +105,7 @@ impl InmutableDictCommons<Km, TableCellsByColor> for Timeline {
         &mut self.table_cells
     }
 
-    fn join_item(table_cells : &mut TableCellsByColor, table_cells_join: &TableCellsByColor) {
+    fn join_item(_table_cells : &mut TableCellsByColor, _table_cells_join: &TableCellsByColor) {
         todo!();
     }
 }

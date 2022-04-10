@@ -1,0 +1,56 @@
+digraph G {
+subgraph cluster_info {
+
+            subgraph cluster_1 {
+            style=filled;
+            color=lightgrey;
+            node [style=filled,color=white];
+            subgraph cluster_act_6 {
+label = "Action: 6" 
+step_6_1 [label=<1<BR /><FONT POINT-SIZE="8">ID: 6.1 KEY: 262</FONT><BR /><FONT POINT-SIZE="8">Parents: 1.1</FONT><BR /><FONT POINT-SIZE="8">Sons: 11.6</FONT><BR /><FONT POINT-SIZE="8"> Km: 0: 1,</FONT><BR /><FONT POINT-SIZE="8"> Km: 1: 262,</FONT><BR /><FONT POINT-SIZE="8"> Km: 2: 603,</FONT><BR /><FONT POINT-SIZE="8"> Km: 3: 944,</FONT>>]
+}
+
+            fontsize="10"
+            label = "Line 1";
+            }
+            subgraph cluster_3 {
+            style=filled;
+            color=lightgrey;
+            node [style=filled,color=white];
+            subgraph cluster_act_16 {
+label = "Action: 16" 
+step_16_11 [label=<3<BR /><FONT POINT-SIZE="8">ID: 16.11 KEY: 944</FONT><BR /><FONT POINT-SIZE="8">Parents: 11.6</FONT><BR /><FONT POINT-SIZE="8">Sons: </FONT><BR /><FONT POINT-SIZE="8"> Km: 0: 1,</FONT><BR /><FONT POINT-SIZE="8"> Km: 1: 262,</FONT><BR /><FONT POINT-SIZE="8"> Km: 2: 603,</FONT><BR /><FONT POINT-SIZE="8"> Km: 3: 944,</FONT>>]
+}
+
+            fontsize="10"
+            label = "Line 3";
+            }
+            subgraph cluster_0 {
+            style=filled;
+            color=lightgrey;
+            node [style=filled,color=white];
+            subgraph cluster_act_1 {
+label = "Action: 1" 
+step_1_1 [label=<0<BR /><FONT POINT-SIZE="8">ID: 1.1 KEY: 1</FONT><BR /><FONT POINT-SIZE="8">Parents: </FONT><BR /><FONT POINT-SIZE="8">Sons: 6.1</FONT><BR /><FONT POINT-SIZE="8"> Km: 0: 1,</FONT><BR /><FONT POINT-SIZE="8"> Km: 1: 262,</FONT><BR /><FONT POINT-SIZE="8"> Km: 2: 603,</FONT><BR /><FONT POINT-SIZE="8"> Km: 3: 944,</FONT>>]
+}
+
+            fontsize="10"
+            label = "Line 0";
+            }
+            subgraph cluster_2 {
+            style=filled;
+            color=lightgrey;
+            node [style=filled,color=white];
+            subgraph cluster_act_11 {
+label = "Action: 11" 
+step_11_6 [label=<2<BR /><FONT POINT-SIZE="8">ID: 11.6 KEY: 603</FONT><BR /><FONT POINT-SIZE="8">Parents: 6.1</FONT><BR /><FONT POINT-SIZE="8">Sons: 16.11</FONT><BR /><FONT POINT-SIZE="8"> Km: 0: 1,</FONT><BR /><FONT POINT-SIZE="8"> Km: 1: 262,</FONT><BR /><FONT POINT-SIZE="8"> Km: 2: 603,</FONT><BR /><FONT POINT-SIZE="8"> Km: 3: 944,</FONT>>]
+}
+
+            fontsize="10"
+            label = "Line 2";
+            }
+step_1_1 -> step_6_1; 
+step_11_6 -> step_16_11; 
+step_6_1 -> step_11_6; 
+}
+}
