@@ -1,11 +1,7 @@
 
 use crate::tsp::pathset::readers::path_reader::PathSolutionReader;
-use crate::tsp::utils::alias::{Step, Color, Km};
 use crate::tsp::pathset::components::nodes::node::Node;
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
-use crate::tsp::pathset::components::owners::owners::OwnersByStep;
-use crate::tsp::pathset::graph::path_graph::PathGraph;
-use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 
 impl PathSolutionReader {
 
@@ -17,12 +13,12 @@ impl PathSolutionReader {
 
         self.next_node_id = self._select_next(node);
 
-        println!("[{}] Selected: {:?}", self.step, self.next_node_id);
+        //println!("[{}] Selected: {:?}", self.step, self.next_node_id);
     }
 
     fn _select_next(&self, node : &Node) -> Option<NodeId> {
         if self._have_next(node) {
-            let (node_id, _edge_id)  = node.take_one_son().unwrap();
+            let node_id  = node.take_one_son().unwrap();
             return Some(node_id.clone());
         }else{
             return None;

@@ -52,6 +52,7 @@ pub trait DictInmutableWapper<K,V> where K : Hash + Eq + Clone, V: Clone{
 
     fn remove(&mut self, key : &K){
         if self.contains_key(&key){
+            //println!("remove it...");
             self.dict_mut().remove(key);
         }
     }

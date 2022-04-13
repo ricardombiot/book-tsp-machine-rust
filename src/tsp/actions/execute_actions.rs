@@ -1,7 +1,5 @@
-use crate::tsp::pathset::graph;
 use crate::tsp::pathset::graph::path_graph::PathGraph;
-use crate::tsp::utils::alias::{Km,Color, ActionsIdSet, ActionId};
-use crate::tsp::actions::action::Action;
+use crate::tsp::utils::alias::{ActionId};
 use crate::tsp::actions::database_actions::DatabaseActions;
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 
@@ -25,7 +23,7 @@ fn fixed_action_as_executed(db : &mut DatabaseActions, action_id : &ActionId){
 }
 
 fn reduce_map_up_parents(db : &mut DatabaseActions, action_id : &ActionId) {
-    println!("reduce_map_up_parents");
+    //println!("reduce_map_up_parents");
     let action = db.get_action(action_id).unwrap();
 
     let parents = action.props_parents().clone();
@@ -33,18 +31,23 @@ fn reduce_map_up_parents(db : &mut DatabaseActions, action_id : &ActionId) {
     let up_color = action.up_color();
 
     for parent_id in parents.iter() {
-        let action_parent = db.get_action(parent_id).unwrap();
+        if db.can_use_it(parent_id) {
+            db.use_it(parent_id);
+            let action_parent = db.get_action(parent_id).unwrap();
 
-        if action_parent.was_execute(){
-            let dict_graphs_by_lenght = action_parent.props_graph();
-
-            let mut list_derive_graphs = dict_graphs_by_lenght.dict().to_list_values();
-            for graph_derive in list_derive_graphs.iter_mut() { 
-                graph_derive.up(up_color, action_id.clone());
-
-                let graph_join = graph_derive.to_owned();
-                push_graph_by_lenght(db, action_id, graph_join);
+            if action_parent.was_execute(){
+                let dict_graphs_by_lenght = action_parent.props_graph();
+    
+                let mut list_derive_graphs = dict_graphs_by_lenght.dict().to_list_values();
+                for graph_derive in list_derive_graphs.iter_mut() { 
+                    graph_derive.up(up_color, action_id.clone());
+    
+                    let graph_join = graph_derive.to_owned();
+                    push_graph_by_lenght(db, action_id, graph_join);
+                }
             }
+        }else{
+            panic!("Cannot use ActionId: {}", &parent_id);
         }
     }
 

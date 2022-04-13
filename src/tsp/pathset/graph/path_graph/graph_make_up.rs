@@ -1,5 +1,3 @@
-
-use crate::tsp::actions::action;
 use crate::tsp::utils::alias::{Color, Step, ActionId};
 use crate::tsp::pathset::graph::path_graph::PathGraph;
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
@@ -69,7 +67,7 @@ impl PathGraph {
         node_son.add_parent_id(node_parent_id);
         node_son.push_owner(&node_parent_id);
 
-        self.table_edges.build_edge(node_parent_id, node_son_id);
+        //self.table_edges.build_edge(node_parent_id, node_son_id);
     }
 
 }

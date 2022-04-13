@@ -5,7 +5,7 @@ use crate::tsp::pathset::components::nodes::node_id::{NodeId};
 use crate::tsp::pathset::graph::path_graph::PathGraph;
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 use crate::tsp::utils::generator_ids;
-use crate::tsp_tests::path_graph::test_utils::{check_edge,check_set_nodes, check_dict_edges_by_nodeid, check_have_owners};
+use crate::tsp_tests::path_graph::test_utils::{check_set_nodes, check_dict_edges_by_nodeid, check_list_by_nodeid, check_have_owners};
 
 
 /*
@@ -90,13 +90,14 @@ fn test_join(){
     let graph_join = build_join();
 
     //testing
-
+    /* 
     let edge_00_12 = check_edge(&graph_join, &node_id_s0_0, &node_id_s1_2);
     let edge_00_14 = check_edge(&graph_join, &node_id_s0_0, &node_id_s1_4);
     let edge_12_24 = check_edge(&graph_join, &node_id_s1_2, &node_id_s2_4);
     let edge_14_22 = check_edge(&graph_join, &node_id_s1_4, &node_id_s2_2);
     let edge_22_36 = check_edge(&graph_join, &node_id_s2_2, &node_id_s3_6_k22);
     let edge_24_36 = check_edge(&graph_join, &node_id_s2_4, &node_id_s3_6_k24);
+    */
 
     // testing nodes by color
 
@@ -125,42 +126,42 @@ fn test_join(){
     let node_s0_0 = graph_join.table_nodes_by_action().get_node(&action_id_s0_0, &node_id_s0_0).unwrap();
     assert_eq!(node_s0_0.have_parents(), false);
     assert_eq!(node_s0_0.have_sons(), true);
-    check_dict_edges_by_nodeid(node_s0_0.sons(), vec![(&node_id_s1_2,&edge_00_12), (&node_id_s1_4,&edge_00_14)]);
+    check_list_by_nodeid(node_s0_0.sons_list(), vec![&node_id_s1_2, &node_id_s1_4]);
 
     let node_s1_2 = graph_join.table_nodes_by_action().get_node(&action_id_s1_2, &node_id_s1_2).unwrap();
     assert_eq!(node_s1_2.have_parents(), true);
-    check_dict_edges_by_nodeid(node_s1_2.parents(), vec![(&node_id_s0_0,&edge_00_12)]);
+    check_list_by_nodeid(node_s1_2.parents_list(), vec![&node_id_s0_0]);
     assert_eq!(node_s1_2.have_sons(), true);
-    check_dict_edges_by_nodeid(node_s1_2.sons(), vec![(&node_id_s2_4,&edge_12_24)]);
+    check_list_by_nodeid(node_s1_2.sons_list(), vec![&node_id_s2_4]);
 
     let node_s1_4 = graph_join.table_nodes_by_action().get_node(&action_id_s1_4, &node_id_s1_4).unwrap();
     assert_eq!(node_s1_4.have_parents(), true);
-    check_dict_edges_by_nodeid(node_s1_4.parents(), vec![(&node_id_s0_0,&edge_00_14)]);
+    check_list_by_nodeid(node_s1_4.parents_list(), vec![&node_id_s0_0]);
     assert_eq!(node_s1_4.have_sons(), true);
-    check_dict_edges_by_nodeid(node_s1_4.sons(), vec![(&node_id_s2_2,&edge_14_22)]);
+    check_list_by_nodeid(node_s1_4.sons_list(), vec![&node_id_s2_2]);
 
     let node_s2_4 = graph_join.table_nodes_by_action().get_node(&action_id_s2_4, &node_id_s2_4).unwrap();
     assert_eq!(node_s2_4.have_parents(), true);
-    check_dict_edges_by_nodeid(node_s2_4.parents(), vec![(&node_id_s1_2,&edge_12_24)]);
+    check_list_by_nodeid(node_s2_4.parents_list(), vec![&node_id_s1_2]);
     assert_eq!(node_s2_4.have_sons(), true);
-    check_dict_edges_by_nodeid(node_s2_4.sons(), vec![(&node_id_s3_6_k24,&edge_24_36)]);
+    check_list_by_nodeid(node_s2_4.sons_list(), vec![&node_id_s3_6_k24]);
 
 
     let node_s2_2 = graph_join.table_nodes_by_action().get_node(&action_id_s2_2, &node_id_s2_2).unwrap();
     assert_eq!(node_s2_2.have_parents(), true);
-    check_dict_edges_by_nodeid(node_s2_2.parents(), vec![(&node_id_s1_4,&edge_14_22)]);
+    check_list_by_nodeid(node_s2_2.parents_list(), vec![&node_id_s1_4]);
     assert_eq!(node_s2_2.have_sons(), true);
-    check_dict_edges_by_nodeid(node_s2_2.sons(), vec![(&node_id_s3_6_k22,&edge_22_36)]);
+    check_list_by_nodeid(node_s2_2.sons_list(), vec![&node_id_s3_6_k22]);
 
 
     let node_s3_6_k24 = graph_join.table_nodes_by_action().get_node(&action_id_s3_6, &node_id_s3_6_k24).unwrap();
     assert_eq!(node_s3_6_k24.have_parents(), true);
-    check_dict_edges_by_nodeid(node_s3_6_k24.parents(), vec![(&node_id_s2_4,&edge_24_36)]);
+    check_list_by_nodeid(node_s3_6_k24.parents_list(), vec![&node_id_s2_4]);
     assert_eq!(node_s3_6_k24.have_sons(), false);
 
     let node_s3_6_k22 = graph_join.table_nodes_by_action().get_node(&action_id_s3_6, &node_id_s3_6_k22).unwrap();
     assert_eq!(node_s3_6_k22.have_parents(), true);
-    check_dict_edges_by_nodeid(node_s3_6_k22.parents(), vec![(&node_id_s2_2,&edge_22_36)]);
+    check_list_by_nodeid(node_s3_6_k22.parents_list(), vec![&node_id_s2_2]);
     assert_eq!(node_s3_6_k22.have_sons(), false);
 
 

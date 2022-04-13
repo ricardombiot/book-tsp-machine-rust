@@ -16,65 +16,21 @@ pub mod tsp {
         pub mod execute_actions;
         pub mod table_graph_by_length;
         pub mod table_actions;
+        
+        pub mod table_controller;
+        pub mod db_controller;
     }
     pub mod pathset;
 }
-//mod tsp;
 
 #[cfg(test)]
 mod tsp_tests;
-
-use crate::tsp::utils::alias::{Weight, Color, Km};
-use crate::tsp::machine::components::graf::Grafo;
-use crate::tsp::machine::machines::hal_machine::HamiltonianMachine;
-use crate::tsp::pathset::readers::path_reader::PathSolutionReader;
-fn main() {
-    //println!("Hello, world!");
-    /*
-
-    let n = 12 as Color;
-    let weight = 1 as Weight;
-    let g = Grafo::gen_complete(n, weight);
-
-    //println!("{:#?}", g);
-
-    let color_origin = 0;
-    let mut machine = HamiltonianMachine::new(g, color_origin);
-
-    machine.execute();*/
-
-
-    let path = std::env::current_exe().unwrap();
-    let path_txt = path.display().to_string();
-    let path_txt = path_txt + "/test_visual/graph";
-    println!("{}",path_txt);
-
-    test_hal_machine_complete();
+mod app {
+    pub mod main; 
+    mod examples;
+    mod bench;
 }
 
-
-pub fn test_hal_machine_complete(){
-    let n = 8 as Color;
-    let b_max = n as Km;
-    let weight = 1 as Weight;
-    let g = Grafo::gen_complete(n, weight);
-
-    //println!("{:#?}", g);
-
-    let color_origin = 0;
-    let mut machine = HamiltonianMachine::new(g, color_origin);
-
-    machine.execute();
-
-    let graph = machine.get_one_solution_graph();
-    assert!(graph.is_some());
-    //println!("{:#?}", machine);
-    let graph = graph.unwrap();
-
-    graph.to_png("hola".to_string(), None);
-
-
-    let path = PathSolutionReader::read(n, b_max, &graph);
-
-    println!("Solution Path: {:?}",path.route());
+fn main() {
+    app::main::run();
 }

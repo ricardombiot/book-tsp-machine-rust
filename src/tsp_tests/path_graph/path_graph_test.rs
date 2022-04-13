@@ -5,7 +5,7 @@ use crate::tsp::pathset::graph::path_graph::PathGraph;
 
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 use crate::tsp::utils::generator_ids;
-use crate::tsp_tests::path_graph::test_utils::{check_edge, should_be_only_node_id};
+use crate::tsp_tests::path_graph::test_utils::{should_be_only_node_id};
 
 
 
@@ -83,7 +83,7 @@ fn test_graph_make_up(){
     assert_eq!(edge.id().destine_id(), destine_id);
     assert_eq!(edge.id().origin_id(), origin_id);*/
 
-    let id_edge = check_edge(&graph, &node_id_s0_0, &node_id_s1_2);
+    //let id_edge = check_edge(&graph, &node_id_s0_0, &node_id_s1_2);
 
     // Parents 
     let node_s0_0 = graph.table_nodes_by_action().get_node(&action_id_s0_0, &node_id_s0_0).unwrap();
@@ -92,11 +92,11 @@ fn test_graph_make_up(){
 
     assert_eq!(node_s0_0.have_parents(), false);
     assert_eq!(node_s0_0.have_sons(), true);
-    assert_eq!(node_s0_0.sons_list(), [(node_id_s1_2.clone(),id_edge.clone())]);
+    assert_eq!(node_s0_0.sons_list(), [node_id_s1_2.clone()]);
 
     assert_eq!(node_s1_2.have_parents(), true);
     assert_eq!(node_s1_2.have_sons(), false);
-    assert_eq!(node_s1_2.parents_list(), [(node_id_s0_0.clone(),id_edge.clone())]);
+    assert_eq!(node_s1_2.parents_list(), [node_id_s0_0.clone()]);
 
 
     // Owners
@@ -157,6 +157,7 @@ fn test_graph_make_second_up(){
 
     // Edges 
 
+    /*
     let origin_id = &node_id_s0_1;
     let destine_id = &node_id_s1_2;
     let id_edge_1_to_2 = EdgeId::new(origin_id, destine_id);
@@ -172,7 +173,7 @@ fn test_graph_make_second_up(){
     let edge_2_to_4 = graph.table_edges().get(&id_edge_2_to_4).unwrap();
     assert_eq!(edge_2_to_4.id().destine_id(), destine_id);
     assert_eq!(edge_2_to_4.id().origin_id(), origin_id);
-
+     */
 
     // Nodes
 
@@ -182,16 +183,16 @@ fn test_graph_make_second_up(){
 
     assert_eq!(node_s0_1.have_parents(), false);
     assert_eq!(node_s0_1.have_sons(), true);
-    assert_eq!(node_s0_1.sons_list(), [(node_id_s1_2.clone(),id_edge_1_to_2.clone())]);
+    assert_eq!(node_s0_1.sons_list(), [node_id_s1_2.clone()]);
 
     assert_eq!(node_s1_2.have_parents(), true);
     assert_eq!(node_s1_2.have_sons(), true);
-    assert_eq!(node_s1_2.parents_list(), [(node_id_s0_1.clone(),id_edge_1_to_2.clone())]);
-    assert_eq!(node_s1_2.sons_list(), [(node_id_s2_4.clone(),id_edge_2_to_4.clone())]);
+    assert_eq!(node_s1_2.parents_list(), [node_id_s0_1.clone()]);
+    assert_eq!(node_s1_2.sons_list(), [node_id_s2_4.clone()]);
 
     assert_eq!(node_s2_4.have_parents(), true);
     assert_eq!(node_s2_4.have_sons(), false);
-    assert_eq!(node_s2_4.parents_list(), [(node_id_s1_2.clone(),id_edge_2_to_4.clone())]);
+    assert_eq!(node_s2_4.parents_list(), [node_id_s1_2.clone()]);
 
     // Owners
     assert!(graph.owners_graph().get_step_owners(0 as Step).unwrap().have(node_id_s0_1.key()));

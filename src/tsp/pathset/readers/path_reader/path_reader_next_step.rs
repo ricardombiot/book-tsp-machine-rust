@@ -1,9 +1,6 @@
 
 use crate::tsp::pathset::readers::path_reader::PathSolutionReader;
-use crate::tsp::utils::alias::{Step, Color, Km};
-use crate::tsp::pathset::components::nodes::node_id::NodeId;
-use crate::tsp::pathset::components::owners::owners::OwnersByStep;
-use crate::tsp::pathset::graph::path_graph::PathGraph;
+use crate::tsp::utils::alias::Step;
 
 impl PathSolutionReader {
 
@@ -27,10 +24,15 @@ impl PathSolutionReader {
             self._fixed_next();
             self._clear_graph_by_owners();
 
-            let name = format!("graph_{}", self.step);
-            self.graph.to_png(name, None);
+            //self._save_graph_as_png();
+
             return true;
         }
+    }
+
+    fn _save_graph_as_png(&self){
+        let name = format!("graph_{}", self.step);
+        let _res = self.graph.to_png(name, None);
     }
 
     fn _push_step(&mut self){
@@ -42,7 +44,7 @@ impl PathSolutionReader {
         self.route.push(node.color());
         self.owners.push(&next_node_id);
 
-        println!("[{}] Push step: {} ({})", self.step, next_node_id.key(), node.color());
+        //println!("[{}] Push step: {} ({})", self.step, next_node_id.key(), node.color());
         self.step += 1 as Step;
     }
 
@@ -53,48 +55,3 @@ impl PathSolutionReader {
         }
     }
 }
-
-/*
-function calc!(path :: PathSolutionReader)
-    if next_step!(path)
-        calc!(path)
-    else
-        close_path!(path)
-    end
-end
-
-function close_path!(path :: PathSolutionReader)
-    if !path.is_origin_join
-        push!(path.route, path.graph.color_origin)
-        path.step += 1
-    end
-end
-
-function next_step!(path :: PathSolutionReader) :: Bool
-    if path.next_node_id != nothing
-        push_step!(path)
-        fixed_next!(path)
-        clear_graph_by_owners!(path)
-        return true
-    else
-        return false
-    end
-end
-
-function is_finished(path :: PathSolutionReader)
-    path.next_node_id == nothing
-end
-
-
-function push_step!(path :: PathSolutionReader)
-    node = PathGraph.get_node(path.graph, path.next_node_id)
-
-    push!(path.route, node.color)
-    Owners.push!(path.owners, path.step, path.next_node_id)
-
-    #println("[$(path.step)] Push step: $(path.next_node_id.key) ($(node.color))")
-    path.step += 1
-end
-
-
-*/

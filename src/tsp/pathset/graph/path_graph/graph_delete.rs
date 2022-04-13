@@ -24,6 +24,12 @@ impl PathGraph {
         }
     }
 
+    pub fn save_nodes_to_delete(&mut self, list: Vec<NodeId>){
+        for node_id in list {
+            self.save_to_delete(&node_id);
+        }
+    }
+
     pub fn save_to_delete_using_set(&mut self, set: NodesIdSet){
         for node_id in set{
             self.save_to_delete(&node_id);

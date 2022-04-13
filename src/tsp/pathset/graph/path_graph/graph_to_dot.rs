@@ -1,8 +1,7 @@
 
-use std::fmt::DebugTuple;
 use std::{collections::HashMap};
 use crate::tsp::pathset::components::owners::owners::OwnersByStep;
-use crate::tsp::utils::alias::{Step, ActionId, UniqueNodeKey};
+use crate::tsp::utils::alias::{Step, ActionId};
 use crate::tsp::pathset::graph::path_graph::PathGraph;
 use crate::tsp::utils::inmutable_dict::InmutableDictCommons;
 use crate::tsp::pathset::components::nodes::node_id::{NodeId, NodesIdSet};
@@ -48,6 +47,30 @@ impl PathGraph {
         //println!("[status: {:#?}]", &output.stdout.take().unwrap());
 
         Ok(())
+    }
+
+    pub(super) fn _get_list_edges(&self) -> Vec<(NodeId,NodeId)> {
+        let mut list_result : Vec<(NodeId,NodeId)> = Vec::new();
+        let list_lines = self.table_lines.dict().to_list();
+
+        for (_step, nodes) in list_lines {
+            for node_id in nodes {
+                let action_id = node_id.action_id();
+                let node = self.table_nodes_by_action.get_node(&action_id, &node_id);
+                if node.is_some() {
+                    let node = node.unwrap();
+                    let origin_id = node_id.clone();
+                    for son_node_id in node.sons_list() {
+                        let destine_id = son_node_id.clone();
+                        let edge_tuple = (origin_id.clone(), destine_id);
+
+                        list_result.push(edge_tuple);
+                    }
+                }
+            }
+        }
+
+        return list_result ;
     }
 
 
@@ -119,9 +142,14 @@ impl DotGraph for PathGraph {
             dot_content += &content;
         }
        
-        dot_content += &"\n".to_string(); 
+        /*dot_content += &"\n".to_string(); 
         for edge in self.table_edges.dict().to_list_values() {
             dot_content += &edge.to_dot(); 
+        }*/
+
+        dot_content += &"\n".to_string(); 
+        for (origin_id, destine_id) in self._get_list_edges(){
+            dot_content += &edge_tuple_to_dot(&origin_id, &destine_id);
         }
 
 
@@ -205,7 +233,7 @@ impl DotGraph for DictEdgeIdByNodeId {
             dot_content += &node_id.to_dot_with_param(".".to_string());
             dot_content += ","
         }
-        let position_last_coma = dot_content.len();
+        //let position_last_coma = dot_content.len();
         //dot_content.remove(position_last_coma);
         return dot_content;
     }
@@ -272,4 +300,17 @@ impl DotGraph for Edge {
     return "$edge_txt \n"
 end
     */
+}
+
+
+fn edge_tuple_to_dot(origin_id: &NodeId, destine_id: &NodeId ) -> String {
+    let id_origin_txt = origin_id.to_dot_with_param("_".to_string());
+    let id_destine_txt = destine_id.to_dot_with_param("_".to_string());
+
+    let node_origin = format!(r#"step_{id_origin_txt}"#,id_origin_txt=id_origin_txt);
+    let node_destine = format!(r#"step_{id_destine_txt}"#,id_destine_txt=id_destine_txt);
+
+    let edge_txt = format!("{node_origin} -> {node_destine}; \n",node_origin=node_origin,node_destine=node_destine);
+
+    return edge_txt;
 }

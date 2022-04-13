@@ -1,7 +1,6 @@
 use crate::tsp::pathset::readers::path_reader::PathSolutionReader;
 use crate::tsp::utils::alias::{Step, Color, Km};
 use crate::tsp::pathset::components::nodes::node_id::NodeId;
-use crate::tsp::pathset::components::owners::owners::OwnersByStep;
 use crate::tsp::pathset::graph::path_graph::PathGraph;
 
 impl PathSolutionReader {

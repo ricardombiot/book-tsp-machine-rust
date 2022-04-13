@@ -4,7 +4,7 @@ use crate::tsp::pathset::graph::path_graph::PathGraph;
 
 
 use crate::tsp::pathset::components::nodes::node_id::NodesIdSet;
-use crate::tsp::pathset::graph::path_graph::table_edges::TableEdges;
+//use crate::tsp::pathset::graph::path_graph::table_edges::TableEdges;
 use crate::tsp::pathset::graph::path_graph::table_lines::TableLines;
 use crate::tsp::pathset::graph::path_graph::table_color_nodes::TableColorNodes;
 use crate::tsp::pathset::graph::path_graph::table_nodes_by_action::TableNodesByAction;
@@ -21,7 +21,7 @@ impl PathGraph {
         let table_nodes_by_action = TableNodesByAction::new();
         let table_color_nodes = TableColorNodes::new();
         let table_lines = TableLines::new();
-        let table_edges = TableEdges::new();
+        //let table_edges = TableEdges::new();
 
         let nodes_to_delete = NodesIdSet::new();
 
@@ -31,7 +31,7 @@ impl PathGraph {
         let max_review_stages = 0;
 
         let mut graph = PathGraph{n, b_max, next_step, color_origin, owners_graph,
-            table_nodes_by_action, table_edges,
+            table_nodes_by_action, 
             table_lines, table_color_nodes,
             action_parent_id, nodes_to_delete, 
             required_review_ownwers, max_review_stages, valid};

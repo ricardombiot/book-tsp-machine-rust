@@ -17,6 +17,7 @@ pub fn should_be_only_node_id(set_nodes : &NodesIdSet, expected_node_id : &NodeI
     assert!(ok_root_id);
 }
 
+/* 
 pub fn check_edge(graph : &PathGraph, origin_id: &NodeId, destine_id : &NodeId) -> EdgeId {
     let id_edge = EdgeId::new(origin_id, destine_id);
 
@@ -25,7 +26,7 @@ pub fn check_edge(graph : &PathGraph, origin_id: &NodeId, destine_id : &NodeId) 
     assert_eq!(edge.id().origin_id(), origin_id);
 
     return id_edge;
-}
+}*/
 
 
 pub fn check_have_owners(owners_to_check : &OwnersByStep, step: Step, list: Vec<&NodeId>){
@@ -34,6 +35,21 @@ pub fn check_have_owners(owners_to_check : &OwnersByStep, step: Step, list: Vec<
     for node_id in list {
         assert!(owners_set.have(node_id.key()));
     }
+}
+
+pub fn check_list_by_nodeid(list: Vec<NodeId>, list_keys : Vec<&NodeId>){
+    let mut set = NodesIdSet::new();
+
+    for node_id in list {
+        set.insert(node_id.clone());
+    }
+
+    for node_id in list_keys {
+        assert!(set.contains(node_id));
+        set.remove(node_id);
+    }
+
+    assert!(set.is_empty());
 }
 
 pub fn check_dict_edges_by_nodeid(dict : &DictEdgeIdByNodeId, list_keys : Vec<(&NodeId, &EdgeId)>){
