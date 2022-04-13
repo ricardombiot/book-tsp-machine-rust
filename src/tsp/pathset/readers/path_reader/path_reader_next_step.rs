@@ -32,7 +32,7 @@ impl PathSolutionReader {
 
     fn _save_graph_as_png(&self){
         let name = format!("graph_{}", self.step);
-        self.graph.to_png(name, None);
+        let _res = self.graph.to_png(name, None);
     }
 
     fn _push_step(&mut self){

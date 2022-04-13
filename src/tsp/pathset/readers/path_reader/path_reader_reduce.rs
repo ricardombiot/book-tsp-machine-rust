@@ -20,14 +20,16 @@ impl PathSolutionReader {
         
         match line {
             Some(line) => {
-                let next_node_id = self.next_node_id.clone().unwrap();
-                for node_id in line.clone() {
-                    if !node_id.eq(&next_node_id) {
-                        self.graph.save_to_delete(&node_id);
-                        //println!(" -> Save to Delete {:?}", &node_id);
-                        nodes_to_delete += 1;
-                    }else{
-                        //println!(" -> Not Save to Delete {:?}", &node_id);
+                if self.next_node_id.is_some(){
+                    let next_node_id = self.next_node_id.clone().unwrap();
+                    for node_id in line.clone() {
+                        if !node_id.eq(&next_node_id) {
+                            self.graph.save_to_delete(&node_id);
+                            //println!(" -> Save to Delete {:?}", &node_id);
+                            nodes_to_delete += 1;
+                        }else{
+                            //println!(" -> Not Save to Delete {:?}", &node_id);
+                        }
                     }
                 }
             },
