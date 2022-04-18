@@ -8,6 +8,7 @@ pub mod tsp {
 
         pub mod machines {
             pub mod hal_machine;
+            pub mod tsp_machine;
         }
     }
     pub mod actions {
