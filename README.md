@@ -11,4 +11,4 @@ Cabe mencionar que posteriormente creamos un [fork]( https://github.com/ricardom
 
 Es importante destacar como, a pesar de realizar la migración a Rust, hemos intentado conservar en la medida de lo posible, por fines didácticos, el mismo estilo arquitectónico del [código en Julia](https://github.com/ricardombiot/book-tsp-machine-julia).
 
-<sub>Advertencia: Esta versión puede incluir muchos spaiks y código muerto. </sub>
+<sub>*Advertencia: En el repositorio se pueden encontrar multiples spaiks y código muerto.*</sub>
